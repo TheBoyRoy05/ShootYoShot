@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+.mario {
+  font-family: "New Super Mario Font U", sans-serif;
+}
