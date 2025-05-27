@@ -19,7 +19,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./Frontend
-        uses: bahmutov/npm-install@v1
+        run: npm install
 
       - name: Build project
         working-directory: ./Frontend
