@@ -3,6 +3,7 @@ import mediapipe as mp
 import numpy as np
 import json
 import argparse
+import os
 
 # Initialize MediaPipe Pose
 mp_drawing = mp.solutions.drawing_utils
@@ -28,19 +29,30 @@ def get_coords(landmarks, idx, shape):
 def main():
     # Set up argument parser
     parser = argparse.ArgumentParser(description='Display and analyze pose data from a video file')
-    parser.add_argument('video_path', help='Path to the input video file')
-    parser.add_argument('output_path', help='Path to save the output video file')
+    parser.add_argument('video_name', help='Name of the video file (without .mp4 extension)')
     args = parser.parse_args()
 
-    cap = cv2.VideoCapture(args.video_path)
+    # Construct input and output paths
+    input_path = os.path.join('..', 'Data', 'Videos', f"{args.video_name}.mp4")
+    output_path = os.path.join('..', 'Data', 'Videos', f"{args.video_name}_Overlay.mp4")
+
+    # Ensure the input file exists
+    if not os.path.exists(input_path):
+        print(f"Error: Video file not found at {input_path}")
+        exit()
+
+    cap = cv2.VideoCapture(input_path)
 
     if not cap.isOpened():
-        print(f"Error: Could not open video {args.video_path}")
+        print(f"Error: Could not open video {input_path}")
         exit()
 
     # Create a video writer to save the output
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # Codec for .mp4
-    out = cv2.VideoWriter(args.output_path, fourcc, 30, (int(cap.get(3)), int(cap.get(4))))
+    out = cv2.VideoWriter(output_path, fourcc, 30, (int(cap.get(3)), int(cap.get(4))))
+
+    print(f"Processing video: {input_path}")
+    print(f"Output will be saved to: {output_path}")
 
     paused = False
     frame_count = 0
@@ -71,6 +83,12 @@ def main():
                     "right_knee": (mp_pose.PoseLandmark.RIGHT_HIP, mp_pose.PoseLandmark.RIGHT_KNEE, mp_pose.PoseLandmark.RIGHT_ANKLE),
                     "left_foot": (mp_pose.PoseLandmark.LEFT_KNEE, mp_pose.PoseLandmark.LEFT_ANKLE, mp_pose.PoseLandmark.LEFT_FOOT_INDEX),
                     "right_foot": (mp_pose.PoseLandmark.RIGHT_KNEE, mp_pose.PoseLandmark.RIGHT_ANKLE, mp_pose.PoseLandmark.RIGHT_FOOT_INDEX),
+                    "left_thumb": (mp_pose.PoseLandmark.LEFT_WRIST, mp_pose.PoseLandmark.LEFT_THUMB, mp_pose.PoseLandmark.LEFT_INDEX),
+                    "right_thumb": (mp_pose.PoseLandmark.RIGHT_WRIST, mp_pose.PoseLandmark.RIGHT_THUMB, mp_pose.PoseLandmark.RIGHT_INDEX),
+                    "left_index": (mp_pose.PoseLandmark.LEFT_WRIST, mp_pose.PoseLandmark.LEFT_INDEX, mp_pose.PoseLandmark.LEFT_PINKY),
+                    "right_index": (mp_pose.PoseLandmark.RIGHT_WRIST, mp_pose.PoseLandmark.RIGHT_INDEX, mp_pose.PoseLandmark.RIGHT_PINKY),
+                    "left_pinky": (mp_pose.PoseLandmark.LEFT_WRIST, mp_pose.PoseLandmark.LEFT_PINKY, mp_pose.PoseLandmark.LEFT_INDEX),
+                    "right_pinky": (mp_pose.PoseLandmark.RIGHT_WRIST, mp_pose.PoseLandmark.RIGHT_PINKY, mp_pose.PoseLandmark.RIGHT_INDEX),
                 }
 
                 frame_angles = {}
@@ -106,6 +124,7 @@ def main():
     cap.release()
     out.release()
     cv2.destroyAllWindows()
+    print("Processing complete!")
 
 if __name__ == "__main__":
     main()
