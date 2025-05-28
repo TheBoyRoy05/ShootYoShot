@@ -2,11 +2,10 @@ import cv2
 import mediapipe as mp
 import json
 import argparse
+import os
 
 # Remove hardcoded paths
-# VIDEO_PATH = "../Data/Steph.mp4"
-# OUTPUT_JSON = "../data/APT.json"
-FRAME_INTERVAL = 1  # Process every 5th frame
+FRAME_INTERVAL = 1  # Process every frame
 
 mp_pose = mp.solutions.pose
 POSE_LANDMARKS = mp_pose.PoseLandmark
@@ -25,6 +24,12 @@ KEYPOINTS = [
     "RIGHT_KNEE",
     "LEFT_ANKLE",
     "RIGHT_ANKLE",
+    "LEFT_THUMB",
+    "RIGHT_THUMB",
+    "LEFT_INDEX",
+    "RIGHT_INDEX",
+    "LEFT_PINKY",
+    "RIGHT_PINKY",
     # "NOSE",
 ]
 
@@ -43,14 +48,25 @@ def extract_landmarks(results):
 def main():
     # Set up argument parser
     parser = argparse.ArgumentParser(description='Extract pose data from a video file')
-    parser.add_argument('video_path', help='Path to the input video file')
-    parser.add_argument('output_path', help='Path to save the output JSON file')
+    parser.add_argument('video_name', help='Name of the video file (without .mp4 extension)')
     args = parser.parse_args()
 
-    cap = cv2.VideoCapture(args.video_path)
+    # Construct input and output paths
+    input_path = os.path.join('..', 'Data', 'Videos', f"{args.video_name}.mp4")
+    output_path = os.path.join('..', 'Data', f"{args.video_name}.json")
+
+    # Ensure the input file exists
+    if not os.path.exists(input_path):
+        print(f"Error: Video file not found at {input_path}")
+        exit()
+
+    cap = cv2.VideoCapture(input_path)
     fps = cap.get(cv2.CAP_PROP_FPS)
     frame_number = 0
     output = []
+
+    print(f"Processing video: {input_path}")
+    print(f"Output will be saved to: {output_path}")
 
     with mp_pose.Pose(
         static_image_mode=False,
@@ -80,10 +96,10 @@ def main():
             frame_number += 1
     cap.release()
 
-    with open(args.output_path, "w") as f:
+    with open(output_path, "w") as f:
         json.dump(output, f, indent=2)
 
-    print(f"Saved {len(output)} frames to {args.output_path}")
+    print(f"Saved {len(output)} frames to {output_path}")
 
 if __name__ == "__main__":
     main()
