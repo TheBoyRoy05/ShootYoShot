@@ -4,16 +4,15 @@ import { useStore } from "../Hooks/useStore";
 
 const Model = () => {
   const { userPose } = useStore();
+  const pose = userPose[userPose.length - 1];
+  if (!pose?.landmarks) return null;
   
-  console.log(userPose);
-  if (!userPose?.landmarks) return null;
-  
-  type LandmarkKey = keyof typeof userPose["landmarks"];
-  const getPoint = (idx: LandmarkKey) => new Vector3(...userPose.landmarks[idx]);
+  type LandmarkKey = keyof typeof pose.landmarks;
+  const getPoint = (idx: LandmarkKey) => new Vector3(...pose.landmarks[idx]);
   
   return (
     <>
-      {Object.values(userPose.landmarks).map((point, i) => (
+      {Object.values(pose.landmarks).map((point, i) => (
         <mesh key={i} position={new Vector3(...point)}>
           <sphereGeometry args={[0.1, 16, 16]} />
           <meshStandardMaterial color="hotpink" />

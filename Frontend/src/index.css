@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
 .mario {
   font-family: "New Super Mario Font U", sans-serif;
