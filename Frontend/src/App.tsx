@@ -33,15 +33,14 @@ const App = () => {
   };
 
   return (
-    <div className="flex flex-col">
-      <div>
-        <h1>Shoot Yo' Shot</h1>
-        <p>Want to learn how to shoot a basketball?</p>
-        <p>Learn the history of good shooting form and how to shoot like the best in the game.</p>
+    <div className="flex flex-col p-[5vw]">
+      <div className="flex flex-col items-center justify-center gap-4">
+        <h1 className="hero-text-shadow text-4xl font-bold">Shoot Yo' Shot</h1>
+        <p className="text-xl max-w-xl text-center">Learn the history of good shooting form and how to shoot like the best in the game.</p>
         <History />
       </div>
       <div className="flex relative">
-        <div className="w-[50vw] h-[calc(3/4*50vw)]">
+        <div className="w-[45vw] h-[calc(3/4*45vw)]">
           <Scene />
         </div>
         <PoseCamera />

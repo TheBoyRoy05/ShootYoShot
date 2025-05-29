@@ -121,8 +121,8 @@ export function useCameraCapture() {
             await pose.send({ image: videoRef.current });
           }
         },
-        width: 640,
-        height: 480,
+        width: 600,
+        height: 450,
       });
       cameraRef.current.start();
     }
@@ -132,5 +132,5 @@ export function useCameraCapture() {
     };
   }, []);
 
-  return { videoRef, canvasRef, cameraRef, frameCounter, startTime };
+  return { videoRef, canvasRef };
 }

@@ -9,9 +9,9 @@ export default function PoseCamera() {
       <canvas
         ref={canvasRef}
         style={{ position: "absolute", top: 0, left: 0 }}
-        width={640}
-        height={480}
-        className="w-[50vw]"
+        width={600}
+        height={450}
+        className="w-[45vw]"
       />
     </div>
   );
