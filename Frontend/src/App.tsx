@@ -7,6 +7,8 @@ import { sleep } from "./Utils/functions";
 import useHTTP from "./Hooks/useHTTP";
 import playerData from "./Assets/tempPlayerData.json";
 import PlayerCard from "./Components/PlayerCard";
+import AlternatingVideoText from "./Components/AlternatingVideoText";
+import { historySections } from "./Components/HistorySections";
 
 const App = () => {
   const { collect, setCollect, userPoseRef, setUserPose } = useStore();
@@ -40,6 +42,7 @@ const App = () => {
         <h1 className="hero-text-shadow text-4xl font-bold">Shoot Yo' Shot</h1>
         <p className="text-xl max-w-xl text-center">Learn the history of good shooting form and how to shoot like the best in the game.</p>
         <History />
+        <AlternatingVideoText sections={historySections} />
       </div>
       <div className="flex relative">
         <div className="w-[45vw] h-[calc(3/4*45vw)]">
