@@ -56,7 +56,13 @@ const PlayerCard = ({ name, score, stats, image, video }: PlayerCardProps) => {
 
         {/* Back Side */}
         <div className={twMerge(cardClass, "[transform:rotateY(180deg)]")}>
-          <video src={video} className="w-full h-full object-cover" />
+          <video 
+            src={video} 
+            className="w-full h-full object-cover" 
+            autoPlay
+            muted
+            loop
+          />
         </div>
       </div>
     </div>

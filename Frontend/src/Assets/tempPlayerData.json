@@ -1,29 +1,32 @@
 {
   "Steph Curry": {
     "score": 100,
+    "image": "/ShootYoShot/Images/Steph.webp",
     "stats": {
       "Points": "30",
       "Rebounds": "5",
       "Assists": "7"
     },
-    "video": "/ShootYoShot/Steph.mp4"
+    "video": "/ShootYoShot/Videos/Steph.mp4"
   },
   "LeBron James": {
     "score": 95,
+    "image": "/ShootYoShot/Images/Lebron.webp",
     "stats": {
       "Points": "25",
       "Rebounds": "8",
       "Assists": "10"
     },
-    "video": "/ShootYoShot/LeBron.mp4"
+    "video": "/ShootYoShot/Videos/Lebron.mp4"
   },
   "Kobe Bryant": {
     "score": 90,
+    "image": "/ShootYoShot/Images/Kobe.webp",
     "stats": {
       "Points": "20",
       "Rebounds": "6",
       "Assists": "8"
     },
-    "video": "/ShootYoShot/Kobe.mp4"
+    "video": "/ShootYoShot/Videos/Kobe.mp4"
   }
 }
