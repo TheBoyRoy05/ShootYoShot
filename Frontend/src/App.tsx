@@ -5,11 +5,13 @@ import Scene from "./Components/Scene";
 import { useState } from "react";
 import { sleep } from "./Utils/functions";
 import useHTTP from "./Hooks/useHTTP";
+import playerData from "./Assets/tempPlayerData.json";
+import PlayerCard from "./Components/PlayerCard";
 
 const App = () => {
   const { collect, setCollect, userPoseRef, setUserPose } = useStore();
-  const { http } = useHTTP();
   const [text, setText] = useState("");
+  const { http } = useHTTP();
 
   const run = async () => {
     setText("Ready...");
@@ -48,10 +50,17 @@ const App = () => {
           <h1 className="flex-1 text-[7vw] z-50 text-center mario text-red-500 drop-shadow-[3px_3px_0_#000] font-bold">{text}</h1>
         </div>
       </div>
+
       <div className="flex justify-center">
         <button className="btn btn-primary w-fit" disabled={collect} onClick={run}>
           Start
         </button>
+      </div>
+
+      <div className="flex flex-wrap justify-around gap-4 w-full mt-10">
+        {Object.entries(playerData).map(([name, data], index) => (
+          <PlayerCard key={index} name={name} {...data} />
+        ))}
       </div>
     </div>
   );

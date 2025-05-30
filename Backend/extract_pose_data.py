@@ -52,8 +52,8 @@ def main():
     args = parser.parse_args()
 
     # Construct input and output paths
-    input_path = os.path.join('..', 'Data', 'Videos', f"{args.video_name}.mp4")
-    output_path = os.path.join('..', 'Data', f"{args.video_name}.json")
+    input_path = os.path.join('..', 'Frontend', 'public', 'Videos', f"{args.video_name}.mp4")
+    output_path = os.path.join('..', 'Frontend', 'public', 'Videos', f"{args.video_name}.json")
 
     # Ensure the input file exists
     if not os.path.exists(input_path):
