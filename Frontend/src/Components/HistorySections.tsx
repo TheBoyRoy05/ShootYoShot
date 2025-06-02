@@ -1,6 +1,8 @@
 // src/Content/historySections.ts
 import type { Section } from "./AlternatingVideoText";
 import video1 from "../Videos/60sShots.mp4";
+import video2 from "../Videos/90sShots.mp4"
+import video3 from "../Videos/2010sShots.mp4"
 
 export const historySections: Section[] = [
   {
@@ -14,7 +16,7 @@ export const historySections: Section[] = [
     isVideoLeft: true,
   },
   {
-    videoSrc: "/Videos/1990s_jump_shot.mp4",
+    videoSrc: video2,
     title: "1990s – Developing the Jump Shot",
     description: `
     The 1990s marked a turning point in basketball, as the jump shot became a fundamental skill for players. This decade saw the emergence of iconic shooters like Ray Allen and Reggie Miller, who mastered the art of the jump shot. Their ability to shoot from long range and create their own shots revolutionized the game.
@@ -24,7 +26,7 @@ export const historySections: Section[] = [
     isVideoLeft: false,
   },
   {
-    videoSrc: "/Videos/2000s_jump_shot.mp4",
+    videoSrc: video3,
     title: "2020s – The Modern Jump Shot",
     description: `
     The 2020s saw the jump shot evolve into a powerful weapon, with players like Stephen Curry and Klay Thompson redefining what it meant to be a shooter. This era was characterized by the rise of the 3-point shot, as teams began to prioritize spacing and shooting over traditional post play.
