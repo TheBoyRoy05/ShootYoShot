@@ -1,6 +1,6 @@
 // src/Content/historySections.ts
 import type { Section } from "./AlternatingVideoText";
-import video1 from "../Videos/60s Shots.mp4";
+import video1 from "../Videos/60sShots.mp4";
 
 export const historySections: Section[] = [
   {
