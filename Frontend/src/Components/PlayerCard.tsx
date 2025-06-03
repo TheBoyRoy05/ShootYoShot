@@ -3,10 +3,11 @@ import { twMerge } from "tailwind-merge";
 
 interface PlayerCardProps {
   name: string;
-  score: number;
+  score?: number;
   image?: string;
   video?: string;
   stats: Record<string, string>;
+  free_throw: number;
 }
 
 const PlayerCard = ({ name, score, stats, image, video }: PlayerCardProps) => {

@@ -3,30 +3,82 @@
     "score": 100,
     "image": "/ShootYoShot/Images/Steph.webp",
     "stats": {
-      "Points": "30",
+      "Points": "25",
       "Rebounds": "5",
-      "Assists": "7"
+      "Assists": "6"
     },
-    "video": "/ShootYoShot/Videos/Steph.mp4"
+    "video": "/ShootYoShot/Videos/Steph.mp4",
+    "free_throw": 0.911
   },
   "LeBron James": {
     "score": 95,
     "image": "/ShootYoShot/Images/Lebron.webp",
     "stats": {
-      "Points": "25",
+      "Points": "27",
       "Rebounds": "8",
-      "Assists": "10"
+      "Assists": "7"
     },
-    "video": "/ShootYoShot/Videos/Lebron.mp4"
+    "video": "/ShootYoShot/Videos/Lebron.mp4",
+    "free_throw": 0.737
   },
   "Kobe Bryant": {
     "score": 90,
     "image": "/ShootYoShot/Images/Kobe.webp",
     "stats": {
-      "Points": "20",
-      "Rebounds": "6",
-      "Assists": "8"
+      "Points": "25",
+      "Rebounds": "5",
+      "Assists": "5"
     },
-    "video": "/ShootYoShot/Videos/Kobe.mp4"
+    "video": "/ShootYoShot/Videos/Kobe.mp4",
+    "free_throw": 0.837
+  },
+
+  "DeAndre Jordan": {
+    "stats": {
+      "Points": "9",
+      "Rebounds": "10",
+      "Assists": "1"
+    },
+    "free_throw": 0.475
+  },
+  "Shaquille O'Neal": {
+    "stats": {
+      "Points": "24",
+      "Rebounds": "11",
+      "Assists": "3"
+    },
+    "free_throw": 0.527
+  },
+  "Rudy Gobert": {
+    "stats": {
+      "Points": "13",
+      "Rebounds": "12",
+      "Assists": "1"
+    },
+    "free_throw": 0.641
+  },
+  "Giannis Antetokounmpo": {
+    "stats": {
+      "Points": "24",
+      "Rebounds": "10",
+      "Assists": "5"
+    },
+    "free_throw": 0.693
+  },
+  "Anthony Edwards": {
+    "stats": {
+      "Points": "24",
+      "Rebounds": "5",
+      "Assists": "4"
+    },
+    "free_throw": 0.804
+  },
+  "Shai Gilgeous Alexander": {
+    "stats": {
+      "Points": "24",
+      "Rebounds": "5",
+      "Assists": "5"
+    },
+    "free_throw": 0.862
   }
 }
