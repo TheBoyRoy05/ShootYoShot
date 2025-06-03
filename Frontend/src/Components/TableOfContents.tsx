@@ -9,26 +9,30 @@ const TableOfContents = ({ contents }: TableOfContentsProps) => {
   const [activeSection, setActiveSection] = useState<string>("");
 
   useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0.6,
+    const handleScroll = () => {
+      let closestSection = "";
+      let minDistance = Infinity;
+
+      Object.entries(contents).forEach(([name, ref]) => {
+        if (ref.current) {
+          const rect = ref.current.getBoundingClientRect();
+          const distance = Math.abs(rect.top);
+          
+          if (distance < minDistance) {
+            minDistance = distance;
+            closestSection = name;
+          }
+        }
+      });
+
+      setActiveSection(closestSection);
     };
 
-    const observers: IntersectionObserver[] = [];
-    Object.entries(contents).forEach(([name, ref]) => {
-      if (ref.current) {
-        const observer = new IntersectionObserver(([entry]) => {
-          if (entry.isIntersecting) setActiveSection(name);
-        }, observerOptions);
-
-        observer.observe(ref.current);
-        observers.push(observer);
-      }
-    });
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Initial check
 
     return () => {
-      observers.forEach((observer) => observer.disconnect());
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [contents]);
 

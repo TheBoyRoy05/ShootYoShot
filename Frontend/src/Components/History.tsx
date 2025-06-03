@@ -1,3 +1,5 @@
+import historySections from "../Assets/historySections.json";
+
 const History = () => {
   return (
     <div className="flex flex-col gap-4 mt-4">
@@ -13,6 +15,37 @@ const History = () => {
           emphasizing balance and mechanics. Today, players like Steph Curry continue to perfect
           their craft through advanced training methods.
         </p>
+      </div>
+
+      <div className="h-[1px] bg-gray-200/50 my-16" />
+
+      <div className="container mx-auto flex flex-col space-y-24">
+        {historySections.map(({ videoSrc, title, description }, index) => (
+          <div
+            key={index}
+            className={`flex flex-col gap-10 items-center ${
+              index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+            }`}
+          >
+            <video
+              src={videoSrc}
+              autoPlay
+              muted
+              loop
+              className="flex-1 w-full rounded-2xl shadow-lg"
+              poster="/fallbacks/video_placeholder.png"
+            />
+
+            <div className="flex-1 w-full flex flex-col gap-4">
+              <h2 className="text-2xl font-semibold">{title}</h2>
+              <div className="leading-relaxed font-light flex flex-col gap-4">
+                {description.map((paragraph, i) => (
+                  <p key={i}>{paragraph}</p>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
