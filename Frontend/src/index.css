@@ -1,10 +1,40 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-.mario {
-  font-family: "New Super Mario Font U", sans-serif;
-}
-
 .hero-text-shadow {
   text-shadow: 0 5px 20px #0057ff33, 0 -5px 15px #ff5a0026, 0 0 30px #ffffff4d;
+}
+
+.sporting-outline {
+  font-family: "Sporting Outline", sans-serif;
+}
+
+.brokstate {
+  font-family: 'BROKSTATE', sans-serif;
+}
+
+.page-bg {
+  background-image: radial-gradient(circle farthest-side at 50% 0, rgba(0, 99, 155, 0.3), transparent 70vh);
+  background-attachment: local;
+}
+
+.glare {
+  height: 1px;
+  background-image: linear-gradient(90deg, #0000 0%, #dbdbdb 50%, #0000 100%);
+}
+
+.fade-in-up {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

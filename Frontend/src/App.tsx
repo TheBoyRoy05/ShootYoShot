@@ -2,13 +2,15 @@ import { useStore } from "./Hooks/useStore";
 import History from "./Components/History";
 import PoseCamera from "./Components/PoseCamera";
 import Scene from "./Components/Scene";
-import { useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { sleep } from "./Utils/functions";
 import useHTTP from "./Hooks/useHTTP";
 import playerData from "./Assets/tempPlayerData.json";
 import PlayerCard from "./Components/PlayerCard";
 import AlternatingVideoText from "./Components/AlternatingVideoText";
 import { historySections } from "./Components/HistorySections";
+import TableOfContents from "./Components/TableOfContents";
+import Frame from "./Components/Frame";
 
 type PlayerData = {
   score?: number;
@@ -66,28 +68,41 @@ const App = () => {
     choosePlayers(randomRate);
   };
 
+  const historyRef = useRef<HTMLDivElement>(null!);
+  const visualRef = useRef<HTMLDivElement>(null!);
+
+  const contents = {
+    history: historyRef,
+    visual: visualRef,
+  };
+
   return (
-    <div className="flex flex-col p-[5vw]">
-      <div className="flex flex-col items-center justify-center gap-4">
-        <h1 className="hero-text-shadow text-4xl font-bold">Shoot Yo' Shot</h1>
-        <p className="text-xl max-w-xl text-center">
-          Learn the history of good shooting form and how to shoot like the best
-          in the game.
-        </p>
-        <History />
-        <AlternatingVideoText sections={historySections} />
-      </div>
-      <div className="flex relative">
-        <div className="w-[45vw] h-[calc(3/4*45vw)]">
-          <Scene />
+    <div className="page-bg">
+      <TableOfContents contents={contents} />
+      <div className="flex flex-col items-center py-[10vh] w-[70vw] mx-auto">
+        <div className="flex flex-col items-center gap-4">
+          <h1 className="hero-text-shadow text-6xl sporting-outline">Shoot Yo' Shot</h1>
+          <p className="text-lg max-w-lg text-center">
+            Learn the history of good shooting form and how to shoot like the best in the game.
+          </p>
         </div>
-        <PoseCamera />
-        <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center">
-          <h1 className="flex-1 text-[7vw] z-50 text-center mario text-red-500 drop-shadow-[3px_3px_0_#000] font-bold">
-            {text}
-          </h1>
+        <div className="fade-in-up pt-10 flex flex-col items-center justify-center gap-10" ref={historyRef}>
+          <Frame midClass={"w-full min-w-[325px]"}>
+            <div className="glare w-1/3" />
+            <img src={"/ShootYoShot/Images/ShootYoShot.png"} className="border border-slate-500 rounded-xl" />
+          </Frame>
+          <History />
+          <AlternatingVideoText sections={historySections} />
         </div>
-      </div>
+        <div className="flex relative" ref={visualRef}>
+          <div className="w-[50%] aspect-[4/3]">
+            <Scene />
+          </div>
+          <PoseCamera />
+          <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center">
+            <h1 className="flex-1 text-[7vw] z-50 text-center sporting-outline">{text}</h1>
+          </div>
+        </div>
 
       <div className="flex justify-center">
         <button
