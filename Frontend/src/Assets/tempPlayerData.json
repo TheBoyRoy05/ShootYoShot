@@ -10,6 +10,37 @@
     "video": "/ShootYoShot/Videos/Steph.mp4",
     "free_throw": 0.911
   },
+  "Shai Gilgeous Alexander": {
+    "score": 80,
+    "image": "/ShootYoShot/Images/Shai.webp",
+    "stats": {
+      "Points": "24",
+      "Rebounds": "5",
+      "Assists": "5"
+    },
+    "free_throw": 0.862
+  },
+  "Kobe Bryant": {
+    "score": 90,
+    "image": "/ShootYoShot/Images/Kobe.jpg",
+    "stats": {
+      "Points": "25",
+      "Rebounds": "5",
+      "Assists": "5"
+    },
+    "video": "/ShootYoShot/Videos/Kobe.mp4",
+    "free_throw": 0.837
+  },
+  "Anthony Edwards": {
+    "score": 80,
+    "image": "/ShootYoShot/Images/Ant.webp",
+    "stats": {
+      "Points": "24",
+      "Rebounds": "5",
+      "Assists": "4"
+    },
+    "free_throw": 0.804
+  },
   "LeBron James": {
     "score": 95,
     "image": "/ShootYoShot/Images/Lebron.webp",
@@ -21,43 +52,9 @@
     "video": "/ShootYoShot/Videos/Lebron.mp4",
     "free_throw": 0.737
   },
-  "Kobe Bryant": {
-    "score": 90,
-    "image": "/ShootYoShot/Images/Kobe.webp",
-    "stats": {
-      "Points": "25",
-      "Rebounds": "5",
-      "Assists": "5"
-    },
-    "video": "/ShootYoShot/Videos/Kobe.mp4",
-    "free_throw": 0.837
-  },
-
-  "DeAndre Jordan": {
-    "stats": {
-      "Points": "9",
-      "Rebounds": "10",
-      "Assists": "1"
-    },
-    "free_throw": 0.475
-  },
-  "Shaquille O'Neal": {
-    "stats": {
-      "Points": "24",
-      "Rebounds": "11",
-      "Assists": "3"
-    },
-    "free_throw": 0.527
-  },
-  "Rudy Gobert": {
-    "stats": {
-      "Points": "13",
-      "Rebounds": "12",
-      "Assists": "1"
-    },
-    "free_throw": 0.641
-  },
   "Giannis Antetokounmpo": {
+    "score": 55,
+    "image": "/ShootYoShot/Images/Giannis.webp",
     "stats": {
       "Points": "24",
       "Rebounds": "10",
@@ -65,20 +62,34 @@
     },
     "free_throw": 0.693
   },
-  "Anthony Edwards": {
+  "Rudy Gobert": {
+    "score": 45,
+    "image": "/ShootYoShot/Images/Rudy.jpg",
     "stats": {
-      "Points": "24",
-      "Rebounds": "5",
-      "Assists": "4"
+      "Points": "13",
+      "Rebounds": "12",
+      "Assists": "1"
     },
-    "free_throw": 0.804
+    "free_throw": 0.641
   },
-  "Shai Gilgeous Alexander": {
+  "Shaquille O'Neal": {
+    "score": 25,
+    "image": "/ShootYoShot/Images/Shaq.webp",
     "stats": {
       "Points": "24",
-      "Rebounds": "5",
-      "Assists": "5"
+      "Rebounds": "11",
+      "Assists": "3"
     },
-    "free_throw": 0.862
+    "free_throw": 0.527
+  },
+  "DeAndre Jordan": {
+    "score": 40,
+    "image": "/ShootYoShot/Images/DeAndre.jpg",
+    "stats": {
+      "Points": "9",
+      "Rebounds": "10",
+      "Assists": "1"
+    },
+    "free_throw": 0.475
   }
 }
