@@ -19,7 +19,7 @@ const PlayerCard = ({ name, score, stats, image, video }: PlayerCardProps) => {
 
   return (
     <div
-      className="h-[480px] [perspective:1000px] cursor-pointer w-[360px]"
+      className="h-[450px] [perspective:1000px] cursor-pointer w-[300px]"
       onClick={() => setIsLockedFlipped((prev) => !prev)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

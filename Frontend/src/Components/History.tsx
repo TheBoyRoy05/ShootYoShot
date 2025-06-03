@@ -1,22 +1,21 @@
-
-
 const History = () => {
-    return (
-        <div>
-        <h2>History of Good Shooting Form</h2>
-        <p>
-            The history of good shooting form in basketball is a fascinating journey that has evolved over the years. 
-            From the early days of the sport, players have experimented with different techniques to improve their shooting accuracy.
+  return (
+    <div className="flex flex-col gap-4 mt-4">
+      <h2 className="text-2xl font-semibold">History of Shooting Form</h2>
+      <div className="flex gap-8 font-light">
+        <p className="flex-1">
+          From the early days of the sport, players have experimented with different techniques to
+          improve their shooting accuracy. In the early 20th century, players like Naismith and
+          Mikan laid the groundwork for modern shooting techniques.
         </p>
-        <p>
-            In the early 20th century, players like Naismith and Mikan laid the groundwork for modern shooting techniques. 
-            As the game progressed, players like Jerry West and Larry Bird refined their shooting forms, emphasizing balance, follow-through, and shot mechanics.
+        <p className="flex-1">
+          As the game evolved, players like Jerry West and Larry Bird refined their shooting forms,
+          emphasizing balance and mechanics. Today, players like Steph Curry continue to perfect
+          their craft through advanced training methods.
         </p>
-        <p>
-            Today, players like Steph Curry and Klay Thompson continue to push the boundaries of shooting form, incorporating advanced analytics and training methods to perfect their craft.
-        </p>
-        </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default History;
