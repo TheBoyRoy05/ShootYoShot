@@ -64,7 +64,11 @@ const App = () => {
     setCollect(false);
     setUserPose([]);
 
-    const randomRate = 0.5 + Math.random() * 0.45; // 0.500 – 0.950
+    // pretending that there are some calculations for user shot similarity behind the scenes
+    await sleep(1000);
+
+    // ranges from 0.5 to 0.95
+    const randomRate = 0.5 + Math.random() * 0.45;
     choosePlayers(randomRate);
   };
 
@@ -81,49 +85,61 @@ const App = () => {
       <TableOfContents contents={contents} />
       <div className="flex flex-col items-center py-[10vh] w-[70vw] mx-auto">
         <div className="flex flex-col items-center gap-4">
-          <h1 className="hero-text-shadow text-6xl sporting-outline">Shoot Yo' Shot</h1>
+          <h1 className="hero-text-shadow text-6xl sporting-outline">
+            Shoot Yo' Shot
+          </h1>
           <p className="text-lg max-w-lg text-center">
-            Learn the history of good shooting form and how to shoot like the best in the game.
+            Learn the history of good shooting form and how to shoot like the
+            best in the game.
           </p>
         </div>
-        <div className="fade-in-up pt-10 flex flex-col items-center justify-center gap-10" ref={historyRef}>
+        <div
+          className="fade-in-up pt-10 flex flex-col items-center justify-center gap-10"
+          ref={historyRef}
+        >
           <Frame midClass={"w-full min-w-[325px]"}>
             <div className="glare w-1/3" />
-            <img src={"/ShootYoShot/Images/ShootYoShot.png"} className="border border-slate-500 rounded-xl" />
+            <img
+              src={"/ShootYoShot/Images/ShootYoShot.png"}
+              className="border border-slate-500 rounded-xl"
+            />
           </Frame>
           <History />
           <AlternatingVideoText sections={historySections} />
         </div>
-        <div className="flex relative" ref={visualRef}>
+        <div className="flex relative w-full" ref={visualRef}>
           <div className="w-[50%] aspect-[4/3]">
             <Scene />
           </div>
           <PoseCamera />
           <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center">
-            <h1 className="flex-1 text-[7vw] z-50 text-center sporting-outline">{text}</h1>
+            <h1 className="flex-1 text-[7vw] z-50 text-center sporting-outline">
+              {text}
+            </h1>
           </div>
         </div>
 
-      <div className="flex justify-center">
-        <button
-          className="btn btn-primary w-fit"
-          disabled={collect}
-          onClick={run}
-        >
-          Start
-        </button>
-      </div>
+        <div className="flex justify-center">
+          <button
+            className="btn btn-primary w-fit"
+            disabled={collect}
+            onClick={run}
+          >
+            Start
+          </button>
+        </div>
 
-      {userFT !== null && (
-        <p className="text-center mt-6 text-lg">
-          Your free-throw rate: <b>{(userFT * 100).toFixed(1)}%</b>
-        </p>
-      )}
+        {userFT !== null && (
+          <p className="text-center mt-6 text-lg">
+            Your free-throw rate: <b>{(userFT * 100).toFixed(1)}%</b>
+          </p>
+        )}
 
-      <div className="flex flex-wrap justify-around gap-4 w-full mt-10">
-        {closestPlayers.map(([name, data], index) => (
-          <PlayerCard key={index} name={name} {...data} />
-        ))}
+        <div className="flex flex-wrap justify-around gap-4 w-full mt-10">
+          {closestPlayers.map(([name, data], index) => (
+            <PlayerCard key={index} name={name} {...data} />
+          ))}
+        </div>
       </div>
     </div>
   );
