@@ -56,7 +56,11 @@ const App = () => {
     setCollect(false);
     userPoseRef.current = [];
 
-    const randomRate = 0.5 + Math.random() * 0.45; // 0.500 – 0.950
+    // pretending that there are some calculations for user shot similarity behind the scenes
+    await sleep(1000);
+
+    // ranges from 0.5 to 0.95
+    const randomRate = 0.5 + Math.random() * 0.45;
     choosePlayers(randomRate);
   };
 
@@ -79,7 +83,8 @@ const App = () => {
         <div className="fade-in-up flex flex-col items-center gap-4 pt-[10vh]" ref={titleRef}>
           <h1 className="hero-text-shadow text-6xl sporting-outline">Shoot Yo' Shot</h1>
           <p className="text-lg max-w-lg text-center">
-            Learn the history of good shooting form and how to shoot like the best in the game.
+            Learn the history of good shooting form and how to shoot like the
+            best in the game.
           </p>
         </div>
 
