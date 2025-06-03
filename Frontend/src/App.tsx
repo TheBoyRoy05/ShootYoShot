@@ -1,7 +1,5 @@
 import { useStore } from "./Hooks/useStore";
 import History from "./Components/History";
-import PoseCamera from "./Components/PoseCamera";
-import Scene from "./Components/Scene";
 import { useRef, useState } from "react";
 import { sleep } from "./Utils/functions";
 import useHTTP from "./Hooks/useHTTP";
@@ -9,6 +7,7 @@ import playerData from "./Assets/tempPlayerData.json";
 import PlayerCard from "./Components/PlayerCard";
 import TableOfContents from "./Components/TableOfContents";
 import Frame from "./Components/Frame";
+import CV from "./Components/CV/CV";
 
 type PlayerData = {
   score?: number;
@@ -21,20 +20,15 @@ type PlayerData = {
 const getClosestPlayers = (userRate: number): [string, PlayerData][] =>
   Object.entries(playerData as Record<string, PlayerData>)
     .filter(([, p]) => typeof p.free_throw === "number") // safety
-    .sort(
-      ([, a], [, b]) =>
-        Math.abs(a.free_throw - userRate) - Math.abs(b.free_throw - userRate)
-    )
+    .sort(([, a], [, b]) => Math.abs(a.free_throw - userRate) - Math.abs(b.free_throw - userRate))
     .slice(0, 3);
 
 const App = () => {
-  const { collect, setCollect, userPoseRef, setUserPose } = useStore();
+  const { collect, setCollect, userPoseRef } = useStore();
   const [text, setText] = useState("");
   const { http } = useHTTP();
   const [userFT, setUserFT] = useState<number | null>(null);
-  const [closestPlayers, setClosestPlayers] = useState<[string, PlayerData][]>(
-    []
-  );
+  const [closestPlayers, setClosestPlayers] = useState<[string, PlayerData][]>([]);
 
   const choosePlayers = (rate: number) => {
     const randomFT = Number(rate.toFixed(3));
@@ -60,7 +54,7 @@ const App = () => {
       retries: 0,
     });
     setCollect(false);
-    setUserPose([]);
+    userPoseRef.current = [];
 
     // pretending that there are some calculations for user shot similarity behind the scenes
     await sleep(1000);
@@ -72,11 +66,13 @@ const App = () => {
 
   const titleRef = useRef<HTMLDivElement>(null!);
   const historyRef = useRef<HTMLDivElement>(null!);
+  const instructionsRef = useRef<HTMLDivElement>(null!);
   const visualRef = useRef<HTMLDivElement>(null!);
 
   const contents = {
     title: titleRef,
     history: historyRef,
+    instructions: instructionsRef,
     visual: visualRef,
   };
 
@@ -92,7 +88,10 @@ const App = () => {
           </p>
         </div>
 
-        <div className="fade-in-up pt-10 flex flex-col items-center justify-center gap-10" ref={historyRef}>
+        <div
+          className="fade-in-up pt-10 flex flex-col items-center justify-center gap-10"
+          ref={historyRef}
+        >
           <Frame midClass={"w-full min-w-[325px]"}>
             <div className="glare w-1/3" />
             <img
@@ -103,37 +102,36 @@ const App = () => {
           <History />
         </div>
 
-        <div className="h-[1px] w-full bg-gray-200/50 my-16" />
-        
-        <div className="flex relative w-full" ref={visualRef}>
-          <div className="w-[50%] aspect-[4/3]">
-            <Scene />
-          </div>
-          <PoseCamera />
-          <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center">
-            <h1 className="flex-1 text-[7vw] z-50 text-center sporting-outline">
-              {text}
-            </h1>
+        <div className="h-[1px] w-full bg-gray-200/50 mt-16" />
+
+        <div className="flex flex-col items-center gap-4 w-full py-16" ref={instructionsRef}>
+          <h1 className="text-6xl sporting-outline">Try it out!</h1>
+          <div className="flex justify-around w-full gap-4 font-semibold text-lg">
+            <div className="flex flex-col gap-2">
+              <p>1. Press the start button to begin</p>
+              <p>2. Make sure you are fully in the frame</p>
+            </div>
+            <div className="flex flex-col gap-2">
+              <p>3. You now have 5 seconds to Shoot Yo' Shot</p>
+              <p>4. See how you compare to the NBA players</p>
+            </div>
           </div>
         </div>
 
-        <div className="flex justify-center">
-          <button
-            className="btn btn-primary w-fit"
-            disabled={collect}
-            onClick={run}
-          >
+        <div className="flex flex-col items-center gap-4 w-full" ref={visualRef}>
+          <CV text={text} />
+          <button className="btn btn-success btn-lg font-semibold text-white w-fit" disabled={collect} onClick={run}>
             Start
           </button>
         </div>
 
-        {userFT !== null && (
+        {userFT && (
           <p className="text-center mt-6 text-lg">
             Your free-throw rate: <b>{(userFT * 100).toFixed(1)}%</b>
           </p>
         )}
 
-        <div className="flex flex-wrap justify-around gap-4 w-full mt-10">
+        <div className="flex flex-wrap justify-around gap-4 w-full mt-10 pb-8">
           {closestPlayers.map(([name, data], index) => (
             <PlayerCard key={index} name={name} {...data} />
           ))}

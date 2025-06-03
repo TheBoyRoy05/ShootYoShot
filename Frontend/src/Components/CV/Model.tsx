@@ -1,18 +1,17 @@
 import { Connector } from "./Connector";
 import { Vector3 } from "three";
-import { useStore } from "../Hooks/useStore";
+import { useStore } from "../../Hooks/useStore";
 
 const Model = () => {
-  const { userPose } = useStore();
-  const pose = userPose[userPose.length - 1];
-  if (!pose?.landmarks) return null;
+  const { currentPose } = useStore();
+  if (Object.keys(currentPose).length === 0) return null;
   
-  type LandmarkKey = keyof typeof pose.landmarks;
-  const getPoint = (idx: LandmarkKey) => new Vector3(...pose.landmarks[idx]);
+  type LandmarkKey = keyof typeof currentPose;
+  const getPoint = (idx: LandmarkKey) => new Vector3(...currentPose[idx]);
   
   return (
     <>
-      {Object.values(pose.landmarks).map((point, i) => (
+      {Object.values(currentPose).map((point, i) => (
         <mesh key={i} position={new Vector3(...point)}>
           <sphereGeometry args={[0.1, 16, 16]} />
           <meshStandardMaterial color="hotpink" />

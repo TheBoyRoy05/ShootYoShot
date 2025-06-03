@@ -12,7 +12,7 @@ export const Connector: React.FC<ConnectorProps> = ({
   start,
   end,
   color = 'skyblue',
-  radius = 0.08,
+  radius = 0.07,
 }) => {
   const position = useMemo(() => {
     return new Vector3().addVectors(start, end).multiplyScalar(0.5);
