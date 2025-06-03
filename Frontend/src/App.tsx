@@ -10,10 +10,37 @@ import PlayerCard from "./Components/PlayerCard";
 import TableOfContents from "./Components/TableOfContents";
 import Frame from "./Components/Frame";
 
+type PlayerData = {
+  score?: number;
+  image?: string;
+  video?: string;
+  stats: Record<string, string>;
+  free_throw: number;
+};
+
+const getClosestPlayers = (userRate: number): [string, PlayerData][] =>
+  Object.entries(playerData as Record<string, PlayerData>)
+    .filter(([, p]) => typeof p.free_throw === "number") // safety
+    .sort(
+      ([, a], [, b]) =>
+        Math.abs(a.free_throw - userRate) - Math.abs(b.free_throw - userRate)
+    )
+    .slice(0, 3);
+
 const App = () => {
   const { collect, setCollect, userPoseRef, setUserPose } = useStore();
   const [text, setText] = useState("");
   const { http } = useHTTP();
+  const [userFT, setUserFT] = useState<number | null>(null);
+  const [closestPlayers, setClosestPlayers] = useState<[string, PlayerData][]>(
+    []
+  );
+
+  const choosePlayers = (rate: number) => {
+    const randomFT = Number(rate.toFixed(3));
+    setUserFT(randomFT);
+    setClosestPlayers(getClosestPlayers(randomFT));
+  };
 
   const run = async () => {
     setText("Ready...");
@@ -34,6 +61,9 @@ const App = () => {
     });
     setCollect(false);
     setUserPose([]);
+
+    const randomRate = 0.5 + Math.random() * 0.45; // 0.500 – 0.950
+    choosePlayers(randomRate);
   };
 
   const titleRef = useRef<HTMLDivElement>(null!);
@@ -77,17 +107,26 @@ const App = () => {
           </div>
         </div>
 
-        <div className="flex justify-center">
-          <button className="btn btn-primary w-fit" disabled={collect} onClick={run}>
-            Start
-          </button>
-        </div>
+      <div className="flex justify-center">
+        <button
+          className="btn btn-primary w-fit"
+          disabled={collect}
+          onClick={run}
+        >
+          Start
+        </button>
+      </div>
 
-        <div className="flex flex-wrap justify-around gap-4 w-full mt-10">
-          {Object.entries(playerData).map(([name, data], index) => (
-            <PlayerCard key={index} name={name} {...data} />
-          ))}
-        </div>
+      {userFT !== null && (
+        <p className="text-center mt-6 text-lg">
+          Your free-throw rate: <b>{(userFT * 100).toFixed(1)}%</b>
+        </p>
+      )}
+
+      <div className="flex flex-wrap justify-around gap-4 w-full mt-10">
+        {closestPlayers.map(([name, data], index) => (
+          <PlayerCard key={index} name={name} {...data} />
+        ))}
       </div>
     </div>
   );
