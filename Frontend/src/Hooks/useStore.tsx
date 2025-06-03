@@ -6,20 +6,19 @@ const userPoseRef = { current: [] as PoseType[] };
 
 interface StoreType {
   collect: boolean;
-  userPose: PoseType[];
+  currentPose: Record<string, number[]>;
   userPoseRef: typeof userPoseRef;
   setCollect: (collect: boolean | ((prev: boolean) => boolean)) => void;
-  setUserPose: (pose: PoseType[] | ((prev: PoseType[]) => PoseType[])) => void;
+  setCurrentPose: (pose: Record<string, number[]> | ((prev: Record<string, number[]>) => Record<string, number[]>)) => void;
 }
 
 export const useStore = create<StoreType>((set, get) => ({
   userPoseRef,
-  userPose: [],
   collect: false,
+  currentPose: {} as Record<string, number[]>,
   setCollect: createSetter<StoreType>(set)("collect"),
-  setUserPose: (update) => {
-    const newValue = typeof update === "function" ? update(get().userPose) : update;
-    userPoseRef.current = newValue;
-    set({ userPose: newValue });
+  setCurrentPose: (update) => {
+    const newValue = typeof update === "function" ? update(get().currentPose) : update;
+    set({ currentPose: newValue });
   },
 }));
