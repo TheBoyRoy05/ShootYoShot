@@ -131,7 +131,7 @@ const App = () => {
           </p>
         )}
 
-        <div className="flex flex-wrap justify-around gap-4 w-full mt-10">
+        <div className="flex flex-wrap justify-around gap-4 w-full mt-10 pb-8">
           {closestPlayers.map(([name, data], index) => (
             <PlayerCard key={index} name={name} {...data} />
           ))}
