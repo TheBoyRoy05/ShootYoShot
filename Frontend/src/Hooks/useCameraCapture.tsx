@@ -26,7 +26,7 @@ const KEYPOINTS = [
 ];
 
 export function useCameraCapture() {
-  const { collect, setUserPose } = useStore();
+  const { collect, userPoseRef, setCurrentPose } = useStore();
   const collectRef = useRef(collect); // track the latest collect value
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -86,10 +86,7 @@ export function useCameraCapture() {
         ctx.fill();
       }
 
-      if (collectRef.current && worldLandmarks) {
-        const now = performance.now();
-        if (startTime.current === null) startTime.current = now;
-
+      if (worldLandmarks) {
         const data: PoseType["landmarks"] = {};
         for (const key of KEYPOINTS) {
           const index = POSE_LANDMARKS[key as keyof typeof POSE_LANDMARKS];
@@ -97,15 +94,22 @@ export function useCameraCapture() {
           data[key] = [lm.x, -lm.y, -lm.z];
         }
 
-        const timestamp = ((now - startTime.current) / 1000).toFixed(3);
-        setUserPose((prev) => [
-          ...prev,
-          {
-            frame: frameCounter.current++,
-            timestamp: parseFloat(timestamp),
-            landmarks: data,
-          },
-        ]);
+        if (collectRef.current) {
+          const now = performance.now();
+          if (startTime.current === null) startTime.current = now;
+          const timestamp = ((now - startTime.current) / 1000).toFixed(3);
+          
+          userPoseRef.current = [
+            ...userPoseRef.current,
+            {
+              frame: frameCounter.current++,
+              timestamp: parseFloat(timestamp),
+              landmarks: data,
+            },
+          ];
+        }
+
+        setCurrentPose(data);
       }
 
       if (!collectRef.current) {
