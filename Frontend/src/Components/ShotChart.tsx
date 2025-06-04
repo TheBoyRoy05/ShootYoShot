@@ -34,8 +34,12 @@ interface ZoneBreakdownData {
   'ATTEMPT%': number;
 }
 
+interface ShotChartProps {
+  defaultPlayer?: string;
+}
+
 const PLAYERS = [
-  'Stephen Curry',
+  'Steph Curry',
   'Shaquille O\'Neal',
   'Shai Gilgeous-Alexander',
   'Jeremy Lin',
@@ -46,15 +50,22 @@ const PLAYERS = [
   'Kobe Bryant'
 ];
 
-const ShotChart: React.FC = () => {
+const ShotChart: React.FC<ShotChartProps> = ({ defaultPlayer }) => {
   const svgRef = useRef<SVGSVGElement>(null);
-  const [selectedPlayer, setSelectedPlayer] = useState('Stephen Curry');
+  const [selectedPlayer, setSelectedPlayer] = useState('Steph Curry');
   const [shotData, setShotData] = useState<ShotData[]>([]);
   const [loading, setLoading] = useState(false);
   const [visualizationMode, setVisualizationMode] = useState<'points' | 'zones'>('points');
   const [playerShotCache, setPlayerShotCache] = useState<Record<string, ShotData[]>>({});
   const [zoneBreakdownData, setZoneBreakdownData] = useState<ZoneBreakdownData[]>([]);
   const [selectedPlayerZones, setSelectedPlayerZones] = useState<Record<string, number>>({});
+
+  // Update selected player when defaultPlayer prop changes
+  useEffect(() => {
+    if (defaultPlayer && PLAYERS.includes(defaultPlayer)) {
+      setSelectedPlayer(defaultPlayer);
+    }
+  }, [defaultPlayer]);
 
   // Transform NBA coordinates to our court visualization using known data ranges
   const transformCoordinates = (x: number, y: number) => {
@@ -115,7 +126,7 @@ const ShotChart: React.FC = () => {
           const selectedLower = selectedPlayer.toLowerCase();
           
           // Use same name matching logic as shot data
-          if (selectedPlayer === 'Stephen Curry') {
+          if (selectedPlayer === 'Steph Curry') {
             return name.includes('curry') || name.includes('stephen');
           } else if (selectedPlayer === 'Shaquille O\'Neal') {
             return name.includes('shaquille') || name.includes('o\'neal');
@@ -200,7 +211,7 @@ const ShotChart: React.FC = () => {
           const selectedLower = selectedPlayer.toLowerCase();
           
           // Handle different name matching strategies
-          if (selectedPlayer === 'Stephen Curry') {
+          if (selectedPlayer === 'Steph Curry') {
             return name.includes('curry') || name.includes('stephen') || name === 'stephen curry';
           } else if (selectedPlayer === 'Shaquille O\'Neal') {
             return name.includes('shaquille') || name.includes('o\'neal') || name.includes('oneal');
@@ -683,7 +694,7 @@ const ShotChart: React.FC = () => {
           const attemptPercentage = selectedPlayerZones[zoneName] || 0;
           const zonePath = createZonePath(zoneName);
           
-          if (zonePath && attemptPercentage > 0) {
+          if (zonePath) {
             const zoneColor = getZoneColor(attemptPercentage);
             
             console.log(`Drawing ${zoneName}: ${(attemptPercentage * 100).toFixed(1)}% attempts, color: ${zoneColor}`);
@@ -712,35 +723,33 @@ const ShotChart: React.FC = () => {
         
         zoneLabels.forEach(({ zone, displayName, x, y, anchor }) => {
           const attemptPercentage = selectedPlayerZones[zone] || 0;
-          if (attemptPercentage > 0) {
-            // Zone name label (above)
-            court
-              .append('text')
-              .attr('x', x)
-              .attr('y', y - 8)
-              .attr('text-anchor', anchor)
-              .attr('font-size', '12px')
-              .attr('font-weight', 'bold')
-              .attr('fill', '#000')
-              .attr('stroke', '#fff')
-              .attr('stroke-width', 2)
-              .attr('paint-order', 'stroke')
-              .text(displayName);
-            
-            // Percentage label (below)
-            court
-              .append('text')
-              .attr('x', x)
-              .attr('y', y + 8)
-              .attr('text-anchor', anchor)
-              .attr('font-size', '12px')
-              .attr('font-weight', 'bold')
-              .attr('fill', '#000')
-              .attr('stroke', '#fff')
-              .attr('stroke-width', 3)
-              .attr('paint-order', 'stroke')
-              .text(`${(attemptPercentage * 100).toFixed(1)}%`);
-          }
+          // Zone name label (above)
+          court
+            .append('text')
+            .attr('x', x)
+            .attr('y', y - 8)
+            .attr('text-anchor', anchor)
+            .attr('font-size', '12px')
+            .attr('font-weight', 'bold')
+            .attr('fill', '#000')
+            .attr('stroke', '#fff')
+            .attr('stroke-width', 2)
+            .attr('paint-order', 'stroke')
+            .text(displayName);
+          
+          // Percentage label (below)
+          court
+            .append('text')
+            .attr('x', x)
+            .attr('y', y + 8)
+            .attr('text-anchor', anchor)
+            .attr('font-size', '12px')
+            .attr('font-weight', 'bold')
+            .attr('fill', '#000')
+            .attr('stroke', '#fff')
+            .attr('stroke-width', 3)
+            .attr('paint-order', 'stroke')
+            .text(`${(attemptPercentage * 100).toFixed(1)}%`);
         });
       }
     } else {
@@ -755,6 +764,7 @@ const ShotChart: React.FC = () => {
   return (
     <div className="flex flex-col items-center gap-4">
       <h3 className="text-5xl sporting-outline">Basketball Shot Chart</h3>
+      <div className="text-lg font-semibold">Learn more about your similar players!</div>
       
       {/* Controls */}
       <div className="flex gap-4 mb-4">
@@ -782,7 +792,7 @@ const ShotChart: React.FC = () => {
         <div className="text-lg font-semibold">
           {loading ? 'Loading shot data...' : 
            visualizationMode === 'zones' ? 
-             `Shot Attempt Percentages for Court Zones Across Career for ${selectedPlayer}` : 
+             `Percentage of Shots Attempted from Court Zones Across Career for ${selectedPlayer}` : 
              `Sample of 500 Made Shots Across Career for ${selectedPlayer}`}
         </div>
       )}

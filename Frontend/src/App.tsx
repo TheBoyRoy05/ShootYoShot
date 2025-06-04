@@ -142,7 +142,7 @@ const App = () => {
 
         {/* Shot Chart Section */}
         <div className="w-full mt-16 mb-8" ref={shotChartRef}>
-          <ShotChart />
+          <ShotChart defaultPlayer={closestPlayers.length > 0 ? closestPlayers[0][0] : undefined} />
         </div>
       </div>
     </div>
