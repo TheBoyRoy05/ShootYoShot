@@ -330,11 +330,12 @@ const ShotChart: React.FC = () => {
   const getZoneColor = (attemptPercentage: number): string => {
     if (attemptPercentage === 0) return 'rgba(0, 150, 0, 0.1)'; // Very light green for 0%
     
-    // Normalize attempt percentage to opacity range (0.1 to 0.7)
-    // Most players have attempt percentages between 0% and 50% per zone
-    const maxAttemptPercentage = 0.5; // 50% is very high for any single zone
+    // Use a more sensitive opacity calculation for better granularity
+    // Square the normalized percentage to make differences more pronounced
+    const maxAttemptPercentage = 0.4; // 40% is very high for any single zone
     const normalizedPercentage = Math.min(attemptPercentage, maxAttemptPercentage) / maxAttemptPercentage;
-    const opacity = 0.1 + (normalizedPercentage * 0.6); // Range from 0.1 to 0.7
+    const squaredPercentage = normalizedPercentage * normalizedPercentage; // Square for more dramatic differences
+    const opacity = 0.15 + (squaredPercentage * 0.65); // Range from 0.15 to 0.8
     
     return `rgba(0, 150, 0, ${opacity})`;
   };
@@ -356,18 +357,25 @@ const ShotChart: React.FC = () => {
                 Z`;
       
       case 'In The Paint (Non-RA)': {
-        // Paint area minus restricted area
+        // Paint area minus restricted area - single continuous path
         const paintLeft = (width - COURT_DIMENSIONS.paintWidth) / 2;
         const paintRight = (width + COURT_DIMENSIONS.paintWidth) / 2;
         const paintTop = height - 24 - COURT_DIMENSIONS.freeThrowLineDistance;
         const paintBottom = height - 24;
+        const restrictedY = height - 40;
+        const restrictedRadius = COURT_DIMENSIONS.restrictedAreaRadius;
+        const centerX = width / 2;
         
+        // Create path that goes around paint area and around restricted area
         return `M ${paintLeft} ${paintTop} 
                 L ${paintRight} ${paintTop} 
                 L ${paintRight} ${paintBottom} 
-                L ${paintLeft} ${paintBottom} Z
-                M ${width/2 - COURT_DIMENSIONS.restrictedAreaRadius} ${height - 40} 
-                A ${COURT_DIMENSIONS.restrictedAreaRadius} ${COURT_DIMENSIONS.restrictedAreaRadius} 0 1 0 ${width/2 + COURT_DIMENSIONS.restrictedAreaRadius} ${height - 40} Z`;
+                L ${centerX + restrictedRadius} ${paintBottom}
+                L ${centerX + restrictedRadius} ${restrictedY}
+                A ${restrictedRadius} ${restrictedRadius} 0 0 0 ${centerX - restrictedRadius} ${restrictedY}
+                L ${centerX - restrictedRadius} ${paintBottom}
+                L ${paintLeft} ${paintBottom}
+                L ${paintLeft} ${paintTop} Z`;
       }
       
       case 'Mid-Range': {
@@ -714,8 +722,7 @@ const ShotChart: React.FC = () => {
           const attemptPercentage = selectedPlayerZones[zoneName] || 0;
           const zonePath = createZonePath(zoneName);
           
-          // Skip shading for restricted area, but still show other zones
-          if (zonePath && attemptPercentage > 0 && zoneName !== 'Restricted Area') {
+          if (zonePath && attemptPercentage > 0) {
             const zoneColor = getZoneColor(attemptPercentage);
             
             console.log(`Drawing ${zoneName}: ${(attemptPercentage * 100).toFixed(1)}% attempts, color: ${zoneColor}`);
@@ -736,10 +743,10 @@ const ShotChart: React.FC = () => {
         const zoneLabels = [
           { zone: 'Above the Break 3', x: width/2, y: height * 0.15, anchor: 'middle' },
           { zone: 'Mid-Range', x: width/2, y: height * 0.6, anchor: 'middle' },
-          { zone: 'In The Paint (Non-RA)', x: width/2, y: height - 100, anchor: 'middle' },
+          { zone: 'In The Paint (Non-RA)', x: width/2, y: height - 130, anchor: 'middle' },
           { zone: 'Restricted Area', x: width/2, y: height - 60, anchor: 'middle' },
-          { zone: 'Left Corner 3', x: 50, y: height - 50, anchor: 'start' },
-          { zone: 'Right Corner 3', x: width - 50, y: height - 50, anchor: 'end' }
+          { zone: 'Left Corner 3', x: 10, y: height - 50, anchor: 'start' },
+          { zone: 'Right Corner 3', x: width - 10, y: height - 50, anchor: 'end' }
         ];
         
         zoneLabels.forEach(({ zone, x, y, anchor }) => {
