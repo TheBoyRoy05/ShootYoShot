@@ -34,7 +34,9 @@ const App = () => {
   const choosePlayers = (rate: number) => {
     const randomFT = Number(rate.toFixed(3));
     setUserFT(randomFT);
-    setClosestPlayers(getClosestPlayers(randomFT));
+    let selectedPlayers = getClosestPlayers(randomFT);
+    selectedPlayers.sort((a, b) => (b[1].score || 0) - (a[1].score || 0));
+    setClosestPlayers(selectedPlayers);
   };
 
   const run = async () => {
