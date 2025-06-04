@@ -14,7 +14,7 @@ const Model = () => {
       {Object.values(currentPose).map((point, i) => (
         <mesh key={i} position={new Vector3(...point)}>
           <sphereGeometry args={[0.1, 16, 16]} />
-          <meshStandardMaterial color="hotpink" />
+          <meshStandardMaterial color="orange" transparent opacity={0.7} />
         </mesh>
       ))}
       <Connector start={getPoint("LEFT_SHOULDER")} end={getPoint("RIGHT_SHOULDER")} />

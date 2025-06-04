@@ -6,6 +6,7 @@ interface ConnectorProps {
   end: Vector3;
   color?: string;
   radius?: number;
+  opacity?: number;
 }
 
 export const Connector: React.FC<ConnectorProps> = ({
@@ -13,6 +14,7 @@ export const Connector: React.FC<ConnectorProps> = ({
   end,
   color = 'skyblue',
   radius = 0.07,
+  opacity = 0.7,
 }) => {
   const position = useMemo(() => {
     return new Vector3().addVectors(start, end).multiplyScalar(0.5);
@@ -28,7 +30,7 @@ export const Connector: React.FC<ConnectorProps> = ({
   return (
     <mesh position={position} quaternion={rotation}>
       <cylinderGeometry args={[radius, radius, start.distanceTo(end)]} />
-      <meshStandardMaterial color={color} />
+      <meshStandardMaterial color={color} transparent opacity={opacity} />
     </mesh>
   );
 };
