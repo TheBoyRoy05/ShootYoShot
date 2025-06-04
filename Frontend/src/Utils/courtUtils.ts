@@ -58,6 +58,8 @@ export const matchesPlayerName = (shotPlayerName: string, selectedPlayer: string
     return name.includes('rudy') && name.includes('gobert');
   } else if (selectedPlayer === 'Kobe Bryant') {
     return name.includes('kobe') || name.includes('bryant');
+  } else if (selectedPlayer === 'Anthony Edwards') {
+    return name.includes('anthony') && name.includes('edwards');
   }
 
   // Fallback: check if selected player name parts are in the shot player name

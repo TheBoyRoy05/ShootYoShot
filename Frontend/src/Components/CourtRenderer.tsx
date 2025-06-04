@@ -2,7 +2,7 @@ import * as d3 from "d3";
 import { COURT_DIMENSIONS, SVG_DIMENSIONS } from '../Utils/courtConstants';
 
 interface CourtRendererProps {
-  svgRef: React.RefObject<SVGSVGElement>;
+  svgRef: React.RefObject<SVGSVGElement | null>;
 }
 
 export const CourtRenderer = ({ svgRef }: CourtRendererProps) => {

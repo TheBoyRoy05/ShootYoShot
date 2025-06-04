@@ -28,7 +28,8 @@ export const PLAYERS = [
   'Giannis Antetokounmpo',
   'LeBron James',
   'Rudy Gobert',
-  'Kobe Bryant'
+  'Kobe Bryant',
+  'Anthony Edwards'
 ];
 
 export const ZONE_ORDER = [
