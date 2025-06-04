@@ -52,6 +52,9 @@ const PLAYERS = [
 
 const ShotChart: React.FC<ShotChartProps> = ({ defaultPlayer }) => {
   const svgRef = useRef<SVGSVGElement>(null);
+  const svgWidth = 780;
+  const svgHeight = 650;
+
   const [selectedPlayer, setSelectedPlayer] = useState('Steph Curry');
   const [shotData, setShotData] = useState<ShotData[]>([]);
   const [loading, setLoading] = useState(false);
@@ -477,10 +480,14 @@ const ShotChart: React.FC<ShotChartProps> = ({ defaultPlayer }) => {
       backboardWidth,
     } = COURT_DIMENSIONS;
 
-    const margin = { top: 40, right: 40, bottom: 40, left: 40 };
+    // Calculate center offset to position court in middle of SVG
+    const horizontalOffset = (svgWidth - width) / 2;
+    const verticalOffset = (svgHeight - height) / 2;
 
-    // Create main group
-    const court = svg.append("g").attr("transform", `translate(${margin.left}, ${margin.top})`);
+    // Create main group with centering transform
+    const court = svg
+      .append("g")
+      .attr("transform", `translate(${horizontalOffset}, ${verticalOffset})`);
 
     // Court background - restored to full height
     court
@@ -784,11 +791,11 @@ const ShotChart: React.FC<ShotChartProps> = ({ defaultPlayer }) => {
         // Add zone labels
         const zoneLabels = [
           { zone: 'Above the Break 3', displayName: 'Above the Break 3', x: width/2, y: height * 0.15, anchor: 'middle' },
-          { zone: 'Mid-Range', displayName: 'Mid-Range', x: width/2, y: height * 0.6, anchor: 'middle' },
-          { zone: 'In The Paint (Non-RA)', displayName: 'The Paint', x: width/2, y: height - 130, anchor: 'middle' },
-          { zone: 'Restricted Area', displayName: 'Restricted Area', x: width/2, y: height - 60, anchor: 'middle' },
-          { zone: 'Left Corner 3', displayName: 'Left Corner 3', x: 10, y: height - 235, anchor: 'start' },
-          { zone: 'Right Corner 3', displayName: 'Right Corner 3', x: width - 10, y: height - 235, anchor: 'end' }
+          { zone: 'Mid-Range', displayName: 'Mid-Range', x: width/2, y: height * 0.5, anchor: 'middle' },
+          { zone: 'In The Paint (Non-RA)', displayName: 'The Paint', x: width/2, y: height - 180, anchor: 'middle' },
+          { zone: 'Restricted Area', displayName: 'Restricted Area', x: width/2, y: height - 90, anchor: 'middle' },
+          { zone: 'Left Corner 3', displayName: 'Left Corner 3', x: 10, y: height - 200, anchor: 'start' },
+          { zone: 'Right Corner 3', displayName: 'Right Corner 3', x: width - 10, y: height - 200, anchor: 'end' }
         ];
         
         zoneLabels.forEach(({ zone, displayName, x, y, anchor }) => {
@@ -876,8 +883,8 @@ const ShotChart: React.FC<ShotChartProps> = ({ defaultPlayer }) => {
       {/* Court SVG */}
       <svg
         ref={svgRef}
-        width={800}
-        height={660}
+        width={svgWidth}
+        height={svgHeight}
         className="border border-gray-300 rounded-lg bg-base-300 shadow-lg"
       />
     </div>
