@@ -40,11 +40,10 @@ const PlayerCard = ({ name, score, stats, image, video }: PlayerCardProps) => {
               onLoad={(e) => (e.currentTarget.style.display = "block")}
             />
           </div>
-          <div className="relative z-10 text-center px-8 h-[95%] flex flex-col gap-4 justify-start w-full">
-            <h3 className="text-2xl font-bold">
-              {name} - {score}% Similarity
-            </h3>
-            <ul className="flex flex-col gap-2">
+          <div className="relative z-10 text-center px-8 h-[95%] flex flex-col justify-start w-full">
+            <h3 className="text-2xl font-bold">{name}</h3>
+            <p className="text-lg">{score}% Similarity</p>
+            <ul className="flex flex-col gap-2 mt-auto">
               {Object.entries(stats).map(([key, value]) => (
                 <li key={key}>
                   <span className="font-bold">{key}: </span>
@@ -57,13 +56,7 @@ const PlayerCard = ({ name, score, stats, image, video }: PlayerCardProps) => {
 
         {/* Back Side */}
         <div className={twMerge(cardClass, "[transform:rotateY(180deg)]")}>
-          <video 
-            src={video} 
-            className="w-full h-full object-cover" 
-            autoPlay
-            muted
-            loop
-          />
+          <video src={video} className="w-full h-full object-cover" autoPlay muted loop />
         </div>
       </div>
     </div>
