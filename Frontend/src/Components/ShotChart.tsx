@@ -376,14 +376,19 @@ const ShotChart: React.FC = () => {
       }
       
       case 'Left Corner 3': {
-        // Left corner 3: outside 3-point line, from sideline to wing line intersection
+        // Left corner 3: continuous path tracing actual boundaries
         const arcStartAngle = Math.asin((width/2 - COURT_DIMENSIONS.threePointStraightDistance) / COURT_DIMENSIONS.threePointRadius);
         const arcStartX = width/2 - Math.sin(arcStartAngle) * COURT_DIMENSIONS.threePointRadius;
         const arcStartY = height - 24 - Math.cos(arcStartAngle) * COURT_DIMENSIONS.threePointRadius;
         
+        // Calculate wing intersection angle and point on arc
+        const wingIntersectionAngle = Math.acos((height - 24 - wingLineY) / COURT_DIMENSIONS.threePointRadius);
+        const wingArcX = width/2 - Math.sin(wingIntersectionAngle) * COURT_DIMENSIONS.threePointRadius;
+        
         return `M 0 ${wingLineY}
                 L ${leftWingEndX} ${wingLineY}
-                L ${arcStartX} ${arcStartY}
+                L ${wingArcX} ${height - 24 - Math.cos(wingIntersectionAngle) * COURT_DIMENSIONS.threePointRadius}
+                A ${COURT_DIMENSIONS.threePointRadius} ${COURT_DIMENSIONS.threePointRadius} 0 0 0 ${arcStartX} ${arcStartY}
                 L ${COURT_DIMENSIONS.threePointStraightDistance} ${arcStartY}
                 L ${COURT_DIMENSIONS.threePointStraightDistance} ${height - 24}
                 L 0 ${height - 24}
@@ -391,10 +396,14 @@ const ShotChart: React.FC = () => {
       }
       
       case 'Right Corner 3': {
-        // Right corner 3: outside 3-point line, from wing line intersection to sideline
+        // Right corner 3: continuous path tracing actual boundaries
         const arcStartAngle = Math.asin((width/2 - COURT_DIMENSIONS.threePointStraightDistance) / COURT_DIMENSIONS.threePointRadius);
         const arcEndX = width/2 + Math.sin(arcStartAngle) * COURT_DIMENSIONS.threePointRadius;
         const arcEndY = height - 24 - Math.cos(arcStartAngle) * COURT_DIMENSIONS.threePointRadius;
+        
+        // Calculate wing intersection angle and point on arc
+        const wingIntersectionAngle = Math.acos((height - 24 - wingLineY) / COURT_DIMENSIONS.threePointRadius);
+        const wingArcX = width/2 + Math.sin(wingIntersectionAngle) * COURT_DIMENSIONS.threePointRadius;
         
         return `M ${rightWingEndX} ${wingLineY}
                 L ${width} ${wingLineY}
@@ -402,6 +411,7 @@ const ShotChart: React.FC = () => {
                 L ${width - COURT_DIMENSIONS.threePointStraightDistance} ${height - 24}
                 L ${width - COURT_DIMENSIONS.threePointStraightDistance} ${arcEndY}
                 L ${arcEndX} ${arcEndY}
+                A ${COURT_DIMENSIONS.threePointRadius} ${COURT_DIMENSIONS.threePointRadius} 0 0 0 ${wingArcX} ${height - 24 - Math.cos(wingIntersectionAngle) * COURT_DIMENSIONS.threePointRadius}
                 L ${rightWingEndX} ${wingLineY} Z`;
       }
       
@@ -692,21 +702,36 @@ const ShotChart: React.FC = () => {
         
         // Add zone labels
         const zoneLabels = [
-          { zone: 'Above the Break 3', x: width/2, y: height * 0.15, anchor: 'middle' },
-          { zone: 'Mid-Range', x: width/2, y: height * 0.6, anchor: 'middle' },
-          { zone: 'In The Paint (Non-RA)', x: width/2, y: height - 130, anchor: 'middle' },
-          { zone: 'Restricted Area', x: width/2, y: height - 60, anchor: 'middle' },
-          { zone: 'Left Corner 3', x: 10, y: height - 50, anchor: 'start' },
-          { zone: 'Right Corner 3', x: width - 10, y: height - 50, anchor: 'end' }
+          { zone: 'Above the Break 3', displayName: 'Above the Break 3', x: width/2, y: height * 0.15, anchor: 'middle' },
+          { zone: 'Mid-Range', displayName: 'Mid-Range', x: width/2, y: height * 0.6, anchor: 'middle' },
+          { zone: 'In The Paint (Non-RA)', displayName: 'The Paint', x: width/2, y: height - 130, anchor: 'middle' },
+          { zone: 'Restricted Area', displayName: 'Restricted Area', x: width/2, y: height - 60, anchor: 'middle' },
+          { zone: 'Left Corner 3', displayName: 'Left Corner 3', x: 10, y: height - 235, anchor: 'start' },
+          { zone: 'Right Corner 3', displayName: 'Right Corner 3', x: width - 10, y: height - 235, anchor: 'end' }
         ];
         
-        zoneLabels.forEach(({ zone, x, y, anchor }) => {
+        zoneLabels.forEach(({ zone, displayName, x, y, anchor }) => {
           const attemptPercentage = selectedPlayerZones[zone] || 0;
           if (attemptPercentage > 0) {
+            // Zone name label (above)
             court
               .append('text')
               .attr('x', x)
-              .attr('y', y)
+              .attr('y', y - 8)
+              .attr('text-anchor', anchor)
+              .attr('font-size', '12px')
+              .attr('font-weight', 'bold')
+              .attr('fill', '#000')
+              .attr('stroke', '#fff')
+              .attr('stroke-width', 2)
+              .attr('paint-order', 'stroke')
+              .text(displayName);
+            
+            // Percentage label (below)
+            court
+              .append('text')
+              .attr('x', x)
+              .attr('y', y + 8)
               .attr('text-anchor', anchor)
               .attr('font-size', '12px')
               .attr('font-weight', 'bold')
@@ -748,14 +773,17 @@ const ShotChart: React.FC = () => {
           value={visualizationMode}
           onChange={(e) => setVisualizationMode(e.target.value as 'points' | 'zones')}
         >
-          <option value="points">Shot Points</option>
+          <option value="points">Shot Sample</option>
           <option value="zones">Shot Zones</option>
         </select>
       </div>
 
       {shotData.length > 0 && (
         <div className="text-lg font-semibold">
-          {loading ? 'Loading shot data...' : `Showing ${shotData.length} made shots for ${selectedPlayer}`}
+          {loading ? 'Loading shot data...' : 
+           visualizationMode === 'zones' ? 
+             `Shot Attempt Percentages for Court Zones Across Career for ${selectedPlayer}` : 
+             `Sample of 500 Made Shots Across Career for ${selectedPlayer}`}
         </div>
       )}
 
