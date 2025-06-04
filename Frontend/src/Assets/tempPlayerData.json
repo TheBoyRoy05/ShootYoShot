@@ -1,6 +1,6 @@
 {
   "Steph Curry": {
-    "score": 90,
+    "score": 80,
     "image": "/ShootYoShot/Images/Steph.webp",
     "stats": {
       "Points": "25",
@@ -11,7 +11,7 @@
     "free_throw": 0.911
   },
   "Shai Gilgeous Alexander": {
-    "score": 80,
+    "score": 85,
     "image": "/ShootYoShot/Images/Shai.webp",
     "stats": {
       "Points": "24",
@@ -22,7 +22,7 @@
     "free_throw": 0.862
   },
   "Kobe Bryant": {
-    "score": 90,
+    "score": 75,
     "image": "/ShootYoShot/Images/Kobe.jpg",
     "stats": {
       "Points": "25",
@@ -55,7 +55,7 @@
     "free_throw": 0.804
   },
   "LeBron James": {
-    "score": 95,
+    "score": 85,
     "image": "/ShootYoShot/Images/Lebron.webp",
     "stats": {
       "Points": "27",
@@ -66,7 +66,7 @@
     "free_throw": 0.737
   },
   "Giannis Antetokounmpo": {
-    "score": 55,
+    "score": 75,
     "image": "/ShootYoShot/Images/Giannis.webp",
     "stats": {
       "Points": "24",
@@ -77,7 +77,7 @@
     "free_throw": 0.693
   },
   "Rudy Gobert": {
-    "score": 45,
+    "score": 60,
     "image": "/ShootYoShot/Images/Rudy.jpg",
     "stats": {
       "Points": "13",
@@ -88,7 +88,7 @@
     "free_throw": 0.641
   },
   "Shaquille O'Neal": {
-    "score": 25,
+    "score": 30,
     "image": "/ShootYoShot/Images/Shaq.webp",
     "stats": {
       "Points": "24",
@@ -99,7 +99,7 @@
     "free_throw": 0.527
   },
   "DeAndre Jordan": {
-    "score": 40,
+    "score": 70,
     "image": "/ShootYoShot/Images/DeAndre.jpg",
     "stats": {
       "Points": "9",

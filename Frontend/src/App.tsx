@@ -129,8 +129,8 @@ const App = () => {
         </div>
 
         {userFT && (
-          <p className="text-center mt-6 text-lg">
-            Your free-throw rate: <b>{(userFT * 100).toFixed(1)}%</b>
+          <p className="text-center mt-6 text-3xl sporting-outline">
+            Your Shot Is Most Similar To:
           </p>
         )}
 
