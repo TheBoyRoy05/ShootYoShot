@@ -34,27 +34,38 @@ interface ZoneBreakdownData {
   "ATTEMPT%": number;
 }
 
+interface ShotChartProps {
+  defaultPlayer?: string;
+}
+
 const PLAYERS = [
-  "Stephen Curry",
-  "Shaquille O'Neal",
-  "Shai Gilgeous-Alexander",
-  "Jeremy Lin",
-  "DeAndre Jordan",
-  "Giannis Antetokounmpo",
-  "LeBron James",
-  "Rudy Gobert",
-  "Kobe Bryant",
+  'Steph Curry',
+  'Shaquille O\'Neal',
+  'Shai Gilgeous-Alexander',
+  'Jeremy Lin',
+  'DeAndre Jordan',
+  'Giannis Antetokounmpo',
+  'LeBron James',
+  'Rudy Gobert',
+  'Kobe Bryant'
 ];
 
-const ShotChart: React.FC = () => {
+const ShotChart: React.FC<ShotChartProps> = ({ defaultPlayer }) => {
   const svgRef = useRef<SVGSVGElement>(null);
-  const [selectedPlayer, setSelectedPlayer] = useState("Stephen Curry");
+  const [selectedPlayer, setSelectedPlayer] = useState('Steph Curry');
   const [shotData, setShotData] = useState<ShotData[]>([]);
   const [loading, setLoading] = useState(false);
   const [visualizationMode, setVisualizationMode] = useState<"points" | "zones">("points");
   const [playerShotCache, setPlayerShotCache] = useState<Record<string, ShotData[]>>({});
   const [zoneBreakdownData, setZoneBreakdownData] = useState<ZoneBreakdownData[]>([]);
   const [selectedPlayerZones, setSelectedPlayerZones] = useState<Record<string, number>>({});
+
+  // Update selected player when defaultPlayer prop changes
+  useEffect(() => {
+    if (defaultPlayer && PLAYERS.includes(defaultPlayer)) {
+      setSelectedPlayer(defaultPlayer);
+    }
+  }, [defaultPlayer]);
 
   // Transform NBA coordinates to our court visualization using known data ranges
   const transformCoordinates = (x: number, y: number) => {
@@ -115,24 +126,24 @@ const ShotChart: React.FC = () => {
           const selectedLower = selectedPlayer.toLowerCase();
 
           // Use same name matching logic as shot data
-          if (selectedPlayer === "Stephen Curry") {
-            return name.includes("curry") || name.includes("stephen");
-          } else if (selectedPlayer === "Shaquille O'Neal") {
-            return name.includes("shaquille") || name.includes("o'neal");
-          } else if (selectedPlayer === "Shai Gilgeous-Alexander") {
-            return name.includes("shai") || name.includes("gilgeous");
-          } else if (selectedPlayer === "Jeremy Lin") {
-            return name.includes("jeremy") && name.includes("lin");
-          } else if (selectedPlayer === "DeAndre Jordan") {
-            return name.includes("deandre") || name.includes("jordan");
-          } else if (selectedPlayer === "Giannis Antetokounmpo") {
-            return name.includes("giannis") || name.includes("antetokounmpo");
-          } else if (selectedPlayer === "LeBron James") {
-            return name.includes("lebron") || name.includes("james");
-          } else if (selectedPlayer === "Rudy Gobert") {
-            return name.includes("rudy") && name.includes("gobert");
-          } else if (selectedPlayer === "Kobe Bryant") {
-            return name.includes("kobe") || name.includes("bryant");
+          if (selectedPlayer === 'Steph Curry') {
+            return name.includes('curry') || name.includes('stephen');
+          } else if (selectedPlayer === 'Shaquille O\'Neal') {
+            return name.includes('shaquille') || name.includes('o\'neal');
+          } else if (selectedPlayer === 'Shai Gilgeous-Alexander') {
+            return name.includes('shai') || name.includes('gilgeous');
+          } else if (selectedPlayer === 'Jeremy Lin') {
+            return name.includes('jeremy') && name.includes('lin');
+          } else if (selectedPlayer === 'DeAndre Jordan') {
+            return name.includes('deandre') || name.includes('jordan');
+          } else if (selectedPlayer === 'Giannis Antetokounmpo') {
+            return name.includes('giannis') || name.includes('antetokounmpo');
+          } else if (selectedPlayer === 'LeBron James') {
+            return name.includes('lebron') || name.includes('james');
+          } else if (selectedPlayer === 'Rudy Gobert') {
+            return name.includes('rudy') && name.includes('gobert');
+          } else if (selectedPlayer === 'Kobe Bryant') {
+            return name.includes('kobe') || name.includes('bryant');
           }
 
           const selectedParts = selectedLower.split(" ");
@@ -203,28 +214,24 @@ const ShotChart: React.FC = () => {
           const selectedLower = selectedPlayer.toLowerCase();
 
           // Handle different name matching strategies
-          if (selectedPlayer === "Stephen Curry") {
-            return name.includes("curry") || name.includes("stephen") || name === "stephen curry";
-          } else if (selectedPlayer === "Shaquille O'Neal") {
-            return name.includes("shaquille") || name.includes("o'neal") || name.includes("oneal");
-          } else if (selectedPlayer === "Shai Gilgeous-Alexander") {
-            return name.includes("shai") || name.includes("gilgeous") || name.includes("alexander");
-          } else if (selectedPlayer === "Jeremy Lin") {
-            return name.includes("jeremy") && name.includes("lin");
-          } else if (selectedPlayer === "DeAndre Jordan") {
-            return (
-              name.includes("deandre") ||
-              (name.includes("de") && name.includes("andre")) ||
-              name.includes("jordan")
-            );
-          } else if (selectedPlayer === "Giannis Antetokounmpo") {
-            return name.includes("giannis") || name.includes("antetokounmpo");
-          } else if (selectedPlayer === "LeBron James") {
-            return name.includes("lebron") || name.includes("james");
-          } else if (selectedPlayer === "Rudy Gobert") {
-            return name.includes("rudy") && name.includes("gobert");
-          } else if (selectedPlayer === "Kobe Bryant") {
-            return name.includes("kobe") || name.includes("bryant");
+          if (selectedPlayer === 'Steph Curry') {
+            return name.includes('curry') || name.includes('stephen') || name === 'stephen curry';
+          } else if (selectedPlayer === 'Shaquille O\'Neal') {
+            return name.includes('shaquille') || name.includes('o\'neal') || name.includes('oneal');
+          } else if (selectedPlayer === 'Shai Gilgeous-Alexander') {
+            return name.includes('shai') || name.includes('gilgeous') || name.includes('alexander');
+          } else if (selectedPlayer === 'Jeremy Lin') {
+            return name.includes('jeremy') && name.includes('lin');
+          } else if (selectedPlayer === 'DeAndre Jordan') {
+            return name.includes('deandre') || (name.includes('de') && name.includes('andre')) || name.includes('jordan');
+          } else if (selectedPlayer === 'Giannis Antetokounmpo') {
+            return name.includes('giannis') || name.includes('antetokounmpo');
+          } else if (selectedPlayer === 'LeBron James') {
+            return name.includes('lebron') || name.includes('james');
+          } else if (selectedPlayer === 'Rudy Gobert') {
+            return name.includes('rudy') && name.includes('gobert');
+          } else if (selectedPlayer === 'Kobe Bryant') {
+            return name.includes('kobe') || name.includes('bryant');
           }
 
           // Fallback: check if selected player name parts are in the shot player name
@@ -406,40 +413,44 @@ const ShotChart: React.FC = () => {
                 A ${COURT_DIMENSIONS.threePointRadius} ${COURT_DIMENSIONS.threePointRadius} 0 0 0 ${arcStartX} ${arcStartY}
                 L ${leftWingEndX} ${wingLineY} Z`;
       }
-
-      case "Left Corner 3": {
-        // Left corner 3: outside 3-point line, from sideline to wing line intersection
-        const arcStartAngle = Math.asin(
-          (width / 2 - COURT_DIMENSIONS.threePointStraightDistance) /
-            COURT_DIMENSIONS.threePointRadius
-        );
-        const arcStartX = width / 2 - Math.sin(arcStartAngle) * COURT_DIMENSIONS.threePointRadius;
+      
+      case 'Left Corner 3': {
+        // Left corner 3: continuous path tracing actual boundaries
+        const arcStartAngle = Math.asin((width/2 - COURT_DIMENSIONS.threePointStraightDistance) / COURT_DIMENSIONS.threePointRadius);
+        const arcStartX = width/2 - Math.sin(arcStartAngle) * COURT_DIMENSIONS.threePointRadius;
         const arcStartY = height - 24 - Math.cos(arcStartAngle) * COURT_DIMENSIONS.threePointRadius;
-
+        
+        // Calculate wing intersection angle and point on arc
+        const wingIntersectionAngle = Math.acos((height - 24 - wingLineY) / COURT_DIMENSIONS.threePointRadius);
+        const wingArcX = width/2 - Math.sin(wingIntersectionAngle) * COURT_DIMENSIONS.threePointRadius;
+        
         return `M 0 ${wingLineY}
                 L ${leftWingEndX} ${wingLineY}
-                L ${arcStartX} ${arcStartY}
+                L ${wingArcX} ${height - 24 - Math.cos(wingIntersectionAngle) * COURT_DIMENSIONS.threePointRadius}
+                A ${COURT_DIMENSIONS.threePointRadius} ${COURT_DIMENSIONS.threePointRadius} 0 0 0 ${arcStartX} ${arcStartY}
                 L ${COURT_DIMENSIONS.threePointStraightDistance} ${arcStartY}
                 L ${COURT_DIMENSIONS.threePointStraightDistance} ${height - 24}
                 L 0 ${height - 24}
                 L 0 ${wingLineY} Z`;
       }
-
-      case "Right Corner 3": {
-        // Right corner 3: outside 3-point line, from wing line intersection to sideline
-        const arcStartAngle = Math.asin(
-          (width / 2 - COURT_DIMENSIONS.threePointStraightDistance) /
-            COURT_DIMENSIONS.threePointRadius
-        );
-        const arcEndX = width / 2 + Math.sin(arcStartAngle) * COURT_DIMENSIONS.threePointRadius;
+      
+      case 'Right Corner 3': {
+        // Right corner 3: continuous path tracing actual boundaries
+        const arcStartAngle = Math.asin((width/2 - COURT_DIMENSIONS.threePointStraightDistance) / COURT_DIMENSIONS.threePointRadius);
+        const arcEndX = width/2 + Math.sin(arcStartAngle) * COURT_DIMENSIONS.threePointRadius;
         const arcEndY = height - 24 - Math.cos(arcStartAngle) * COURT_DIMENSIONS.threePointRadius;
-
+        
+        // Calculate wing intersection angle and point on arc
+        const wingIntersectionAngle = Math.acos((height - 24 - wingLineY) / COURT_DIMENSIONS.threePointRadius);
+        const wingArcX = width/2 + Math.sin(wingIntersectionAngle) * COURT_DIMENSIONS.threePointRadius;
+        
         return `M ${rightWingEndX} ${wingLineY}
                 L ${width} ${wingLineY}
                 L ${width} ${height - 24}
                 L ${width - COURT_DIMENSIONS.threePointStraightDistance} ${height - 24}
                 L ${width - COURT_DIMENSIONS.threePointStraightDistance} ${arcEndY}
                 L ${arcEndX} ${arcEndY}
+                A ${COURT_DIMENSIONS.threePointRadius} ${COURT_DIMENSIONS.threePointRadius} 0 0 0 ${wingArcX} ${height - 24 - Math.cos(wingIntersectionAngle) * COURT_DIMENSIONS.threePointRadius}
                 L ${rightWingEndX} ${wingLineY} Z`;
       }
 
@@ -746,8 +757,8 @@ const ShotChart: React.FC = () => {
         zoneOrder.forEach((zoneName) => {
           const attemptPercentage = selectedPlayerZones[zoneName] || 0;
           const zonePath = createZonePath(zoneName);
-
-          if (zonePath && attemptPercentage > 0) {
+          
+          if (zonePath) {
             const zoneColor = getZoneColor(attemptPercentage);
 
             console.log(
@@ -772,30 +783,43 @@ const ShotChart: React.FC = () => {
 
         // Add zone labels
         const zoneLabels = [
-          { zone: "Above the Break 3", x: width / 2, y: height * 0.15, anchor: "middle" },
-          { zone: "Mid-Range", x: width / 2, y: height * 0.6, anchor: "middle" },
-          { zone: "In The Paint (Non-RA)", x: width / 2, y: height - 130, anchor: "middle" },
-          { zone: "Restricted Area", x: width / 2, y: height - 60, anchor: "middle" },
-          { zone: "Left Corner 3", x: 10, y: height - 50, anchor: "start" },
-          { zone: "Right Corner 3", x: width - 10, y: height - 50, anchor: "end" },
+          { zone: 'Above the Break 3', displayName: 'Above the Break 3', x: width/2, y: height * 0.15, anchor: 'middle' },
+          { zone: 'Mid-Range', displayName: 'Mid-Range', x: width/2, y: height * 0.6, anchor: 'middle' },
+          { zone: 'In The Paint (Non-RA)', displayName: 'The Paint', x: width/2, y: height - 130, anchor: 'middle' },
+          { zone: 'Restricted Area', displayName: 'Restricted Area', x: width/2, y: height - 60, anchor: 'middle' },
+          { zone: 'Left Corner 3', displayName: 'Left Corner 3', x: 10, y: height - 235, anchor: 'start' },
+          { zone: 'Right Corner 3', displayName: 'Right Corner 3', x: width - 10, y: height - 235, anchor: 'end' }
         ];
-
-        zoneLabels.forEach(({ zone, x, y, anchor }) => {
+        
+        zoneLabels.forEach(({ zone, displayName, x, y, anchor }) => {
           const attemptPercentage = selectedPlayerZones[zone] || 0;
-          if (attemptPercentage > 0) {
-            court
-              .append("text")
-              .attr("x", x)
-              .attr("y", y)
-              .attr("text-anchor", anchor)
-              .attr("font-size", "12px")
-              .attr("font-weight", "bold")
-              .attr("fill", "#000")
-              .attr("stroke", "#fff")
-              .attr("stroke-width", 3)
-              .attr("paint-order", "stroke")
-              .text(`${(attemptPercentage * 100).toFixed(1)}%`);
-          }
+          // Zone name label (above)
+          court
+            .append('text')
+            .attr('x', x)
+            .attr('y', y - 8)
+            .attr('text-anchor', anchor)
+            .attr('font-size', '12px')
+            .attr('font-weight', 'bold')
+            .attr('fill', '#000')
+            .attr('stroke', '#fff')
+            .attr('stroke-width', 2)
+            .attr('paint-order', 'stroke')
+            .text(displayName);
+          
+          // Percentage label (below)
+          court
+            .append('text')
+            .attr('x', x)
+            .attr('y', y + 8)
+            .attr('text-anchor', anchor)
+            .attr('font-size', '12px')
+            .attr('font-weight', 'bold')
+            .attr('fill', '#000')
+            .attr('stroke', '#fff')
+            .attr('stroke-width', 3)
+            .attr('paint-order', 'stroke')
+            .text(`${(attemptPercentage * 100).toFixed(1)}%`);
         });
       }
     } else {
@@ -810,7 +834,8 @@ const ShotChart: React.FC = () => {
   return (
     <div className="flex flex-col items-center gap-4">
       <h3 className="text-5xl sporting-outline">Basketball Shot Chart</h3>
-
+      <div className="text-lg font-semibold">Learn more about your similar players!</div>
+      
       {/* Controls */}
       <div className="flex gap-4 mb-4">
         <select
@@ -830,16 +855,17 @@ const ShotChart: React.FC = () => {
           value={visualizationMode}
           onChange={(e) => setVisualizationMode(e.target.value as "points" | "zones")}
         >
-          <option value="points">Shot Points</option>
+          <option value="points">Shot Sample</option>
           <option value="zones">Shot Zones</option>
         </select>
       </div>
 
       {shotData.length > 0 && (
         <div className="text-lg font-semibold">
-          {loading
-            ? "Loading shot data..."
-            : `Showing ${shotData.length} made shots for ${selectedPlayer}`}
+          {loading ? 'Loading shot data...' : 
+           visualizationMode === 'zones' ? 
+             `Percentage of Shots Attempted from Court Zones Across Career for ${selectedPlayer}` : 
+             `Sample of 500 Made Shots Across Career for ${selectedPlayer}`}
         </div>
       )}
 
