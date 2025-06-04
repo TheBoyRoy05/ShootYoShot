@@ -42,7 +42,7 @@ const App = () => {
     await sleep(1000);
     setText("Set...");
     await sleep(1000);
-    setText("Go!");
+    setText("Shoot!");
     await sleep(1000);
     setText("");
 
@@ -105,17 +105,19 @@ const App = () => {
           <History />
         </div>
 
-        <div className="h-[1px] w-full bg-gray-200/50 mt-16" />
+        <div className="w-full pt-16" ref={instructionsRef}>
+          <div className="h-[1px] w-full bg-gray-200/50" />
+        </div>
 
-        <div className="flex flex-col items-center gap-4 w-full py-16" ref={instructionsRef}>
+        <div className="flex flex-col items-center gap-4 w-full py-16" >
           <h1 className="text-6xl sporting-outline">Try it out!</h1>
           <div className="flex justify-around w-full gap-4 font-semibold text-lg">
             <div className="flex flex-col gap-2">
-              <p>1. Press the start button to begin</p>
+              <p>1. Allow the website to access your camera</p>
               <p>2. Make sure you are fully in the frame</p>
             </div>
             <div className="flex flex-col gap-2">
-              <p>3. You now have 5 seconds to Shoot Yo' Shot</p>
+              <p>3. Press the start button to Shoot Yo' Shot</p>
               <p>4. See how you compare to the NBA players</p>
             </div>
           </div>
@@ -134,11 +136,13 @@ const App = () => {
           </p>
         )}
 
-        <div className="flex flex-wrap justify-around gap-4 w-full mt-10 pb-8">
+        <div className="flex flex-wrap justify-around gap-4 w-full mt-10">
           {closestPlayers.map(([name, data], index) => (
             <PlayerCard key={index} name={name} {...data} />
           ))}
         </div>
+
+        <div className="h-[1px] w-full bg-gray-200/50 mt-16" />
 
         {/* Shot Chart Section */}
         <div className="w-full mt-16 mb-8" ref={shotChartRef}>
