@@ -27,16 +27,18 @@ const History = () => {
               index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
             }`}
           >
-            <video
-              src={videoSrc}
-              autoPlay
-              muted
-              loop
-              className="flex-1 w-full rounded-2xl shadow-lg"
-              poster="/fallbacks/video_placeholder.png"
-            />
+            <div className="flex-1 w-full md:w-1/2">
+              <video
+                src={videoSrc}
+                autoPlay
+                muted
+                loop
+                className="w-full rounded-2xl shadow-lg"
+                poster="/fallbacks/video_placeholder.png"
+              />
+            </div>
 
-            <div className="flex-1 w-full flex flex-col gap-4">
+            <div className="flex-1 w-full md:w-1/2 flex flex-col gap-4">
               <h2 className="text-2xl font-semibold">{title}</h2>
               <div className="leading-relaxed font-light flex flex-col gap-4">
                 {description.map((paragraph, i) => (
