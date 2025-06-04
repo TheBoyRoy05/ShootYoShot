@@ -8,6 +8,7 @@ import PlayerCard from "./Components/PlayerCard";
 import TableOfContents from "./Components/TableOfContents";
 import Frame from "./Components/Frame";
 import CV from "./Components/CV/CV";
+import ShotChart from "./Components/ShotChart";
 
 type PlayerData = {
   score?: number;
@@ -135,6 +136,11 @@ const App = () => {
           {closestPlayers.map(([name, data], index) => (
             <PlayerCard key={index} name={name} {...data} />
           ))}
+        </div>
+
+        {/* Shot Chart Section */}
+        <div className="w-full mt-16 mb-8">
+          <ShotChart />
         </div>
       </div>
     </div>
