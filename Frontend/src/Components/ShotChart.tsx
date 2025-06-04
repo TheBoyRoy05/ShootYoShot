@@ -278,54 +278,6 @@ const ShotChart: React.FC = () => {
     loadShotData();
   }, [selectedPlayer]);
 
-  // Define shooting zones
-  const classifyShot = (x: number, y: number): string => {
-    const coords = transformCoordinates(x, y);
-    const { width, height } = COURT_DIMENSIONS;
-    
-    // Wing line is 2/5 up from bottom of court
-    const wingLineY = height - (2/5) * height;
-    
-    // Calculate 3-point line intersection points for wing line
-    const arcIntersectionY = height - 24 - Math.sqrt(COURT_DIMENSIONS.threePointRadius * COURT_DIMENSIONS.threePointRadius - (width/2 - COURT_DIMENSIONS.threePointStraightDistance) * (width/2 - COURT_DIMENSIONS.threePointStraightDistance));
-    const leftWingEndX = width/2 - Math.sqrt(COURT_DIMENSIONS.threePointRadius * COURT_DIMENSIONS.threePointRadius - (height - 24 - wingLineY) * (height - 24 - wingLineY));
-    const rightWingEndX = width/2 + Math.sqrt(COURT_DIMENSIONS.threePointRadius * COURT_DIMENSIONS.threePointRadius - (height - 24 - wingLineY) * (height - 24 - wingLineY));
-    
-    // Check if point is inside restricted area
-    const distanceFromBasket = Math.sqrt(Math.pow(coords.x - width/2, 2) + Math.pow(coords.y - (height - 40), 2));
-    if (distanceFromBasket <= COURT_DIMENSIONS.restrictedAreaRadius) {
-      return 'Restricted Area';
-    }
-    
-    // Check if point is in the paint (non-RA)
-    if (coords.x >= (width - COURT_DIMENSIONS.paintWidth) / 2 && 
-        coords.x <= (width + COURT_DIMENSIONS.paintWidth) / 2 && 
-        coords.y >= height - 24 - COURT_DIMENSIONS.freeThrowLineDistance &&
-        coords.y <= height - 24) {
-      return 'In The Paint (Non-RA)';
-    }
-    
-    // Check if point is inside 3-point line
-    const distanceFrom3Point = Math.sqrt(Math.pow(coords.x - width/2, 2) + Math.pow(coords.y - (height - 24), 2));
-    const isInside3Point = distanceFrom3Point <= COURT_DIMENSIONS.threePointRadius;
-    
-    if (isInside3Point) {
-      return 'Mid-Range';
-    }
-    
-    // Check corner 3s
-    if (coords.y > wingLineY) {
-      if (coords.x < leftWingEndX) {
-        return 'Left Corner 3';
-      } else if (coords.x > rightWingEndX) {
-        return 'Right Corner 3';
-      }
-    }
-    
-    // Everything else is above the break 3
-    return 'Above the Break 3';
-  };
-
   // Helper function to get zone color based on attempt percentage
   const getZoneColor = (attemptPercentage: number): string => {
     if (attemptPercentage === 0) return 'rgba(0, 150, 0, 0.1)'; // Very light green for 0%
@@ -459,8 +411,7 @@ const ShotChart: React.FC = () => {
     const { 
       width, 
       height, 
-      paintWidth, 
-      paintHeight,
+      paintWidth,
       freeThrowLineDistance,
       threePointRadius, 
       threePointStraightDistance,
@@ -771,7 +722,7 @@ const ShotChart: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <h3 className="text-xl font-semibold">Basketball Shot Chart</h3>
+      <h3 className="text-5xl sporting-outline">Basketball Shot Chart</h3>
       
       {/* Controls */}
       <div className="flex gap-4 mb-4">
@@ -795,13 +746,9 @@ const ShotChart: React.FC = () => {
         </select>
       </div>
 
-      {loading && (
-        <div className="text-sm text-gray-600">Loading shot data...</div>
-      )}
-
       {shotData.length > 0 && (
-        <div className="text-sm text-gray-600">
-          Showing {shotData.length} made shots for {selectedPlayer}
+        <div className="text-lg font-semibold">
+          {loading ? 'Loading shot data...' : `Showing ${shotData.length} made shots for ${selectedPlayer}`}
         </div>
       )}
 

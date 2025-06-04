@@ -69,12 +69,14 @@ const App = () => {
   const historyRef = useRef<HTMLDivElement>(null!);
   const instructionsRef = useRef<HTMLDivElement>(null!);
   const visualRef = useRef<HTMLDivElement>(null!);
+  const shotChartRef = useRef<HTMLDivElement>(null!);
 
   const contents = {
     title: titleRef,
     history: historyRef,
     instructions: instructionsRef,
     visual: visualRef,
+    "Shot Chart": shotChartRef,
   };
 
   return (
@@ -139,7 +141,7 @@ const App = () => {
         </div>
 
         {/* Shot Chart Section */}
-        <div className="w-full mt-16 mb-8">
+        <div className="w-full mt-16 mb-8" ref={shotChartRef}>
           <ShotChart />
         </div>
       </div>
