@@ -197,7 +197,7 @@ const App = () => {
 
         {userFT && (
           <p className="text-center mt-6 text-3xl sporting-outline">
-            Your Shot Is Most Similar To:
+            Your Archetype Is Most Similar To:
           </p>
         )}
 
