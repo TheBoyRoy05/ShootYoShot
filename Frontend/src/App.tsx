@@ -21,7 +21,10 @@ type PlayerData = {
 const getClosestPlayers = (userRate: number): [string, PlayerData][] =>
   Object.entries(playerData as Record<string, PlayerData>)
     .filter(([, p]) => typeof p.free_throw === "number") // safety
-    .sort(([, a], [, b]) => Math.abs(a.free_throw - userRate) - Math.abs(b.free_throw - userRate))
+    .sort(
+      ([, a], [, b]) =>
+        Math.abs(a.free_throw - userRate) - Math.abs(b.free_throw - userRate)
+    )
     .slice(0, 3);
 
 const App = () => {
@@ -29,7 +32,11 @@ const App = () => {
   const [text, setText] = useState("");
   const { http } = useHTTP();
   const [userFT, setUserFT] = useState<number | null>(null);
-  const [closestPlayers, setClosestPlayers] = useState<[string, PlayerData][]>([]);
+  const [closestPlayers, setClosestPlayers] = useState<[string, PlayerData][]>(
+    []
+  );
+  const [height, setHeight] = useState(72);
+  const [weight, setWeight] = useState(180);
 
   const choosePlayers = (rate: number) => {
     const randomFT = Number(rate.toFixed(3));
@@ -85,8 +92,13 @@ const App = () => {
     <div className="page-bg">
       <TableOfContents contents={contents} />
       <div className="flex flex-col items-center w-[70vw] mx-auto">
-        <div className="fade-in-up flex flex-col items-center gap-4 pt-[10vh]" ref={titleRef}>
-          <h1 className="hero-text-shadow text-6xl sporting-outline">Shoot Yo' Shot</h1>
+        <div
+          className="fade-in-up flex flex-col items-center gap-4 pt-[10vh]"
+          ref={titleRef}
+        >
+          <h1 className="hero-text-shadow text-6xl sporting-outline">
+            Shoot Yo' Shot
+          </h1>
           <p className="text-lg max-w-lg text-center">
             Learn the history of good shooting form and how to shoot like the
             best in the game.
@@ -111,23 +123,74 @@ const App = () => {
           <div className="h-[1px] w-full bg-gray-200/50" />
         </div>
 
-        <div className="flex flex-col items-center gap-4 w-full py-16" >
+        <div className="flex flex-col items-center gap-4 w-full py-16">
           <h1 className="text-6xl sporting-outline">Try it out!</h1>
           <div className="flex justify-around w-full gap-4 font-semibold text-lg">
             <div className="flex flex-col gap-2">
               <p>1. Allow the website to access your camera</p>
-              <p>2. Make sure you are fully in the frame</p>
+              <p>2. Enter your height and weight</p>
+              <p>3. Make sure you are fully in the frame</p>
             </div>
             <div className="flex flex-col gap-2">
-              <p>3. Press the start button to Shoot Yo' Shot</p>
-              <p>4. See how you compare to the NBA players</p>
+              <p>4. Press the start button to Shoot Yo' Shot</p>
+              <p>5. Let the program predict your player archetype</p>
+              <p>6. See how you compare to NBA players</p>
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col items-center gap-4 w-full" ref={visualRef}>
+        <div
+          className="flex flex-col items-center gap-4 w-full"
+          ref={visualRef}
+        >
+          {/* Height & Weight controls */}
+          <div
+            className="grid  gap-y-2 gap-x-8
+                grid-cols-[16rem_10rem]   /* 1️⃣ column widths */
+                justify-center"
+          >
+            {/* ─────────── Row 1 – labels ─────────── */}
+            <label htmlFor="height" className="font-semibold text-center">
+              Height&nbsp;(in)
+            </label>
+
+            <label htmlFor="weight" className="font-semibold text-center">
+              Weight&nbsp;(lbs)
+            </label>
+
+            {/* ─────────── Row 2 – inputs ─────────── */}
+            <div className="flex items-center gap-3">
+              {/* value bubble */}
+              <span className="w-10 text-right tabular-nums">
+                {height}&quot;
+              </span>
+              <input
+                id="height"
+                type="range"
+                min={48}
+                max={96}
+                step={1}
+                value={height}
+                onChange={(e) => setHeight(+e.target.value)}
+                className="range range-primary grow"
+              />
+            </div>
+
+            <input
+              id="weight"
+              type="number"
+              value={weight}
+              onChange={(e) => setWeight(+e.target.value)}
+              className="input input-bordered w-full text-center"
+            />
+          </div>
+
           <CV text={text} />
-          <button className="btn btn-success btn-lg font-semibold text-white w-fit" disabled={collect} onClick={run}>
+          <button
+            className="btn btn-success btn-lg font-semibold text-white w-fit"
+            disabled={collect}
+            onClick={run}
+          >
             Start
           </button>
         </div>
@@ -148,7 +211,11 @@ const App = () => {
 
         {/* Shot Chart Section */}
         <div className="w-full mt-16 mb-8" ref={shotChartRef}>
-          <ShotChart defaultPlayer={closestPlayers.length > 0 ? closestPlayers[0][0] : undefined} />
+          <ShotChart
+            defaultPlayer={
+              closestPlayers.length > 0 ? closestPlayers[0][0] : undefined
+            }
+          />
         </div>
       </div>
     </div>
