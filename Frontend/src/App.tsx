@@ -3,7 +3,6 @@ import History from "./Components/History";
 import { useRef, useState } from "react";
 import { sleep } from "./Utils/functions";
 import useHTTP from "./Hooks/useHTTP";
-import playerData from "./Assets/tempPlayerData.json";
 import PlayerCard from "./Components/PlayerCard";
 import TableOfContents from "./Components/TableOfContents";
 import Frame from "./Components/Frame";
@@ -18,33 +17,13 @@ type PlayerData = {
   free_throw: number;
 };
 
-const getClosestPlayers = (userRate: number): [string, PlayerData][] =>
-  Object.entries(playerData as Record<string, PlayerData>)
-    .filter(([, p]) => typeof p.free_throw === "number") // safety
-    .sort(
-      ([, a], [, b]) =>
-        Math.abs(a.free_throw - userRate) - Math.abs(b.free_throw - userRate)
-    )
-    .slice(0, 3);
-
 const App = () => {
   const { collect, setCollect, userPoseRef } = useStore();
   const [text, setText] = useState("");
   const { http } = useHTTP();
-  const [userFT, setUserFT] = useState<number | null>(null);
-  const [closestPlayers, setClosestPlayers] = useState<[string, PlayerData][]>(
-    []
-  );
+  const [closestPlayers, setClosestPlayers] = useState<Record<string, PlayerData>>({});
   const [height, setHeight] = useState(72);
   const [weight, setWeight] = useState(180);
-
-  const choosePlayers = (rate: number) => {
-    const randomFT = Number(rate.toFixed(3));
-    setUserFT(randomFT);
-    const selectedPlayers = getClosestPlayers(randomFT);
-    selectedPlayers.sort((a, b) => (b[1].score || 0) - (a[1].score || 0));
-    setClosestPlayers(selectedPlayers);
-  };
 
   const run = async () => {
     setText("Ready...");
@@ -56,23 +35,21 @@ const App = () => {
     setText("");
 
     setCollect(true);
-    await sleep(1000);
+    await sleep(3000);
+    console.log(userPoseRef.current);
     await http({
       url: "/score",
       method: "POST",
       body: { move: userPoseRef.current },
+      handleData: (data) => {
+        setClosestPlayers(data.scores);
+        console.log(data.scores);
+      },
       retries: 0,
     });
+    
     setCollect(false);
-    console.log(userPoseRef.current);
     userPoseRef.current = [];
-
-    // pretending that there are some calculations for user shot similarity behind the scenes
-    await sleep(1000);
-
-    // ranges from 0.5 to 0.95
-    const randomRate = 0.5 + Math.random() * 0.45;
-    choosePlayers(randomRate);
   };
 
   const titleRef = useRef<HTMLDivElement>(null!);
@@ -93,16 +70,10 @@ const App = () => {
     <div className="page-bg">
       <TableOfContents contents={contents} />
       <div className="flex flex-col items-center w-[70vw] mx-auto">
-        <div
-          className="fade-in-up flex flex-col items-center gap-4 pt-[10vh]"
-          ref={titleRef}
-        >
-          <h1 className="hero-text-shadow text-6xl sporting-outline">
-            Shoot Yo' Shot
-          </h1>
+        <div className="fade-in-up flex flex-col items-center gap-4 pt-[10vh]" ref={titleRef}>
+          <h1 className="hero-text-shadow text-6xl sporting-outline">Shoot Yo' Shot</h1>
           <p className="text-lg max-w-lg text-center">
-            Learn the history of good shooting form and how to shoot like the
-            best in the game.
+            Learn the history of good shooting form and how to shoot like the best in the game.
           </p>
         </div>
 
@@ -140,14 +111,11 @@ const App = () => {
           </div>
         </div>
 
-        <div
-          className="flex flex-col items-center gap-4 w-full"
-          ref={visualRef}
-        >
+        <div className="flex flex-col items-center gap-4 w-full" ref={visualRef}>
           {/* Height & Weight controls */}
           <div
             className="grid  gap-y-2 gap-x-8
-                grid-cols-[16rem_10rem]   /* 1️⃣ column widths */
+                grid-cols-[16rem_10rem]   /* 1 column widths */
                 justify-center"
           >
             {/* ─────────── Row 1 – labels ─────────── */}
@@ -162,9 +130,7 @@ const App = () => {
             {/* ─────────── Row 2 – inputs ─────────── */}
             <div className="flex items-center gap-3">
               {/* value bubble */}
-              <span className="w-10 text-right tabular-nums">
-                {height}&quot;
-              </span>
+              <span className="w-10 text-right tabular-nums">{height}&quot;</span>
               <input
                 id="height"
                 type="range"
@@ -196,14 +162,14 @@ const App = () => {
           </button>
         </div>
 
-        {userFT && (
+        {
           <p className="text-center mt-6 text-3xl sporting-outline">
             Your Archetype Is Most Similar To:
           </p>
-        )}
+        }
 
         <div className="flex flex-wrap justify-around gap-4 w-full mt-10">
-          {closestPlayers.map(([name, data], index) => (
+          {Object.entries(closestPlayers).map(([name, data], index) => (
             <PlayerCard key={index} name={name} {...data} />
           ))}
         </div>
@@ -214,7 +180,7 @@ const App = () => {
         <div className="w-full mt-16 mb-8" ref={shotChartRef}>
           <ShotChart
             defaultPlayer={
-              closestPlayers.length > 0 ? closestPlayers[0][0] : undefined
+              Object.keys(closestPlayers).length > 0 ? Object.keys(closestPlayers)[0] : undefined
             }
           />
         </div>
