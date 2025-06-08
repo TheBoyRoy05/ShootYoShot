@@ -1,6 +1,6 @@
 import { useStore } from "./Hooks/useStore";
 import History from "./Components/History";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { sleep } from "./Utils/functions";
 import useHTTP from "./Hooks/useHTTP";
 import PlayerCard from "./Components/PlayerCard";
@@ -9,7 +9,6 @@ import Frame from "./Components/Frame";
 import CV from "./Components/CV/CV";
 import ShotChart from "./Components/ShotChart";
 import Inputs from "./Components/Inputs";
-import PlayerStats from "../../Backend/Data/stats.json";
 import type { FormInputs } from "./Utils/types";
 
 type PlayerData = {
