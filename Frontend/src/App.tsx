@@ -83,6 +83,7 @@ const App = () => {
   const instructionsRef = useRef<HTMLDivElement>(null!);
   const visualRef = useRef<HTMLDivElement>(null!);
   const shotChartRef = useRef<HTMLDivElement>(null!);
+  const takeawayRef = useRef<HTMLDivElement>(null!);
 
   const contents = {
     title: titleRef,
@@ -90,6 +91,7 @@ const App = () => {
     instructions: instructionsRef,
     "Shot Visual": visualRef,
     "Shot Chart": shotChartRef,
+    takeaway: takeawayRef,
   };
 
   return (
@@ -187,6 +189,33 @@ const App = () => {
         {/* Shot Chart Section */}
         <div className="w-full mt-16 mb-8" ref={shotChartRef}>
           <ShotChart />
+        </div>
+
+        <div
+          className="fade-in-up w-full pb-20 flex flex-col items-center"
+          ref={takeawayRef}
+        >
+          <h2 className="text-4xl sporting-outline mb-4">Takeaways</h2>
+
+          <p className="max-w-2xl text-center text-lg leading-relaxed">
+            Great shooters share three things: balanced <strong>base</strong>,
+            consistent <strong>release point</strong>, and a smooth
+            <strong> follow-through</strong>. Our model compares your motion
+            frame-by-frame against the best of the best, because who better is there
+            to learn from? Use the model to tweak your stance, record
+            another attempt, and watch your similarity score climb.
+          </p>
+
+          <p className="max-w-2xl text-center text-lg leading-relaxed mt-6">
+            Keep experimenting with your shot! Minor adjustments in elbow alignment or release
+            speed can move you closer to your favorite archetype and favorite players. Don't forget
+            to get <em> real-court reps</em>. No algorithm can replace muscle memory.
+          </p>
+
+          <p className="italic mt-8 text-center">
+            "Don't practice until you get it right; practice until you can't get
+            it wrong."
+          </p>
         </div>
       </div>
     </div>
