@@ -1,11 +1,10 @@
+import type { FormInputs } from "../Utils/types"
+
 interface InputsProps {
-  inputs: {
-    gender: string;
-    height: number;
-    weight: number;
-  };
-  setInputs: (inputs: { gender: string; height: number; weight: number }) => void;
+  inputs: FormInputs;
+  setInputs: React.Dispatch<React.SetStateAction<FormInputs>>;
 }
+
 const Inputs = ({ inputs, setInputs }: InputsProps) => {
   return (
     <div
@@ -36,8 +35,8 @@ const Inputs = ({ inputs, setInputs }: InputsProps) => {
         <option value="" disabled hidden>
           Select...
         </option>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
       </select>
 
       <input
