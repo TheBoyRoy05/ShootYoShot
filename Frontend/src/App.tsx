@@ -9,6 +9,7 @@ import Frame from "./Components/Frame";
 import CV from "./Components/CV/CV";
 import ShotChart from "./Components/ShotChart";
 import Inputs from "./Components/Inputs";
+import type { FormInputs } from "./Utils/types";
 
 type PlayerData = {
   score?: number;
@@ -23,17 +24,31 @@ const App = () => {
   const [text, setText] = useState("");
   const { collect, setCollect, userPoseRef } = useStore();
   const [closestPlayers, setClosestPlayers] = useState<Record<string, PlayerData>>({});
+  const [predictedPosition, setPredictedPosition] = useState<string>("");
 
-  const [inputs, setInputs] = useState({
+  const [inputs, setInputs] = useState<FormInputs>({
     gender: "",
-    height: 0,
-    weight: 0,
+    height: null,
+    weight: null,
   });
 
   const paramsEntered =
-    inputs.gender !== "" && inputs.height !== 0 && inputs.weight !== 0 && !collect;
+    inputs.gender !== "" && inputs.height !== null && inputs.weight !== null && !collect;
 
   const run = async () => {
+    // First get position prediction
+    await http({
+      url: "/predict_position",
+      method: "POST",
+      body: inputs,
+      handleData: (data) => {
+        if (data.position) {
+          setPredictedPosition(data.position);
+        }
+      },
+    });
+
+    // Then start the shooting sequence
     setText("Ready...");
     await sleep(1000);
     setText("Set...");
@@ -121,6 +136,11 @@ const App = () => {
 
         <div className="flex flex-col items-center gap-4 w-full" ref={visualRef}>
           <Inputs inputs={inputs} setInputs={setInputs} />
+          {predictedPosition && (
+            <div className="text-xl font-semibold text-center">
+              Predicted Position: {predictedPosition}
+            </div>
+          )}
           <CV text={text} />
 
           <button
