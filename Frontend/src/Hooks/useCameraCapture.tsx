@@ -83,10 +83,11 @@ export function useCameraCapture() {
         for (const key of KEYPOINTS) {
           const index = POSE_LANDMARKS[key as keyof typeof POSE_LANDMARKS];
           const lm = worldLandmarks[index];
-          data[key] = [lm.x, -lm.y, -lm.z];
+          const sign = collectRef.current === "Left" ? -1 : 1;
+          data[key] = [sign * lm.x, -lm.y, -lm.z];
         }
 
-        if (collectRef.current) {
+        if (collectRef.current != "") {
           const now = performance.now();
           if (startTime.current === null) startTime.current = now;
           const timestamp = ((now - startTime.current) / 1000).toFixed(3);

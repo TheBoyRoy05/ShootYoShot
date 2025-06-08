@@ -30,27 +30,19 @@ const App = () => {
 
   const [inputs, setInputs] = useState<FormInputs>({
     gender: "",
+    hand: "",
     height: null,
     weight: null,
   });
 
   const paramsEntered =
-    inputs.gender !== "" && inputs.height !== null && inputs.weight !== null && !collect;
+    inputs.gender !== "" &&
+    inputs.height !== null &&
+    inputs.weight !== null &&
+    inputs.hand !== "" &&
+    !collect;
 
   const run = async () => {
-    // First get position prediction
-    await http({
-      url: "/predict_position",
-      method: "POST",
-      body: inputs,
-      handleData: (data) => {
-        if (data.position) {
-          setPredictedPosition(data.position);
-        }
-      },
-    });
-
-    // Then start the shooting sequence
     setText("Ready...");
     await sleep(1000);
     setText("Set...");
@@ -59,21 +51,31 @@ const App = () => {
     await sleep(1000);
     setText("");
 
-    setCollect(true);
+    setCollect(inputs.hand);
     await sleep(3000);
-    console.log(userPoseRef.current);
+    setText("Analyzing...");
+
     await http({
       url: "/score",
       method: "POST",
       body: { move: userPoseRef.current },
       handleData: (data) => {
         setClosestPlayers(data.scores);
-        console.log(data.scores);
       },
       retries: 0,
     });
 
-    setCollect(false);
+    http({
+      url: "/predict_position",
+      method: "POST",
+      body: inputs,
+      handleData: (data: { position: string }) => {
+        setPredictedPosition(data.position);
+      },
+    });
+
+    setText("");
+    setCollect("");
     userPoseRef.current = [];
   };
 
@@ -193,11 +195,6 @@ const App = () => {
 
         <div className="flex flex-col items-center gap-4 w-full" ref={visualRef}>
           <Inputs inputs={inputs} setInputs={setInputs} />
-          {predictedPosition && (
-            <div className="text-xl font-semibold text-center">
-              Predicted Position: {predictedPosition}
-            </div>
-          )}
           <CV text={text} />
 
           <button
@@ -209,10 +206,15 @@ const App = () => {
           </button>
         </div>
 
-        {Object.keys(closestPlayers).length > 0 && (
-          <p className="text-center mt-6 text-3xl sporting-outline">
-            Your Archetype Is Most Similar To:
-          </p>
+        {predictedPosition && (
+          <div className="mt-6 flex flex-col items-center gap-2">
+            <p className="text-center text-3xl sporting-outline">
+              Your Best Position: {predictedPosition}
+            </p>
+            <p className="text-center">
+              (Relative to the average {inputs.gender.toLowerCase()} human)
+            </p>
+          </div>
         )}
 
         <div className="flex flex-wrap justify-around gap-4 w-full mt-10">

@@ -60,11 +60,11 @@ def main():
         args.display = True
 
     # Construct input and output paths
-    input_path = os.path.join(
-        "..", "..", "Frontend", "public", "Videos", f"{args.video_name}.mp4"
-    )
+    input_path = os.path.join("..", "Videos", f"{args.video_name}.mp4")
     json_output_path = os.path.join("..", "Data", f"{args.video_name}.json")
-    overlay_output_path = os.path.join("..", "Videos", f"{args.video_name}_Overlay.mp4")
+    overlay_output_path = os.path.join(
+        "..", "Videos", "Overlays", f"{args.video_name}_Overlay.mp4"
+    )
 
     # Ensure the input file exists
     if not os.path.exists(input_path):

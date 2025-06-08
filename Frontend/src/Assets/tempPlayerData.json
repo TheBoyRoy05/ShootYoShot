@@ -2,8 +2,6 @@
   "Steph Curry": {
     "score": 80,
     "image": "/ShootYoShot/Images/Steph.webp",
-    "position": "Guard",
-    "archetype": "Sharpshooter",
     "stats": {
       "Points": "25",
       "Rebounds": "5",
@@ -15,8 +13,6 @@
   "Shai Gilgeous-Alexander": {
     "score": 85,
     "image": "/ShootYoShot/Images/Shai.webp",
-    "position": "Guard",
-    "archetype": "Midrange Maestro",
     "stats": {
       "Points": "24",
       "Rebounds": "5",
@@ -28,8 +24,6 @@
   "Kobe Bryant": {
     "score": 75,
     "image": "/ShootYoShot/Images/Kobe.jpg",
-    "position": "Guard",
-    "archetype": "Midrange Maestro",
     "stats": {
       "Points": "25",
       "Rebounds": "5",
@@ -41,8 +35,6 @@
   "Jeremy Lin": {
     "score": 85,
     "image": "/ShootYoShot/Images/Jeremy.jpg",
-    "position": "Guard",
-    "archetype": "Sharpshooter",
     "stats": {
       "Points": "12",
       "Rebounds": "3",
@@ -54,8 +46,6 @@
   "Anthony Edwards": {
     "score": 80,
     "image": "/ShootYoShot/Images/Ant.webp",
-    "position": "Guard",
-    "archetype": "Sharpshooter",
     "stats": {
       "Points": "24",
       "Rebounds": "5",
@@ -64,24 +54,9 @@
     "video": "/ShootYoShot/Videos/Anthony.mp4",
     "free_throw": 0.804
   },
-  "Jayson Tatum": {
-    "score": 85,
-    "image": "/ShootYoShot/Images/Jayson.jpg",
-    "position": "Forward",
-    "stats": {
-      "Points": "24",
-      "Rebounds": "7",
-      "Assists": "4"
-    },
-    "video": "/ShootYoShot/Videos/Jayson.mp4",
-    "free_throw": 0.840
-
-  },
   "LeBron James": {
     "score": 85,
     "image": "/ShootYoShot/Images/Lebron.webp",
-    "position": "Forward",
-    "archetype": "Bruiser",
     "stats": {
       "Points": "27",
       "Rebounds": "8",
@@ -93,8 +68,6 @@
   "Giannis Antetokounmpo": {
     "score": 75,
     "image": "/ShootYoShot/Images/Giannis.webp",
-    "position": "Forward",
-    "archetype": "Bruiser",
     "stats": {
       "Points": "24",
       "Rebounds": "10",
@@ -106,8 +79,6 @@
   "Rudy Gobert": {
     "score": 60,
     "image": "/ShootYoShot/Images/Rudy.jpg",
-    "position": "Center",
-    "archetype": "Sky Scraper",
     "stats": {
       "Points": "13",
       "Rebounds": "12",
@@ -119,8 +90,6 @@
   "Shaquille O'Neal": {
     "score": 30,
     "image": "/ShootYoShot/Images/Shaq.webp",
-    "position": "Center",
-    "archetype": "Bruiser",
     "stats": {
       "Points": "24",
       "Rebounds": "11",
@@ -132,8 +101,6 @@
   "DeAndre Jordan": {
     "score": 70,
     "image": "/ShootYoShot/Images/DeAndre.jpg",
-    "position": "Center",
-    "archetype": "Sky Scraper",
     "stats": {
       "Points": "9",
       "Rebounds": "10",

@@ -8,13 +8,17 @@ interface InputsProps {
 const Inputs = ({ inputs, setInputs }: InputsProps) => {
   return (
     <div
-      className="grid  gap-y-2 gap-x-8
-                grid-cols-3
+      className="grid gap-y-2 gap-x-8
+                grid-cols-4
                 justify-center"
     >
       {/* ─────────── Row 1 – labels ─────────── */}
       <label htmlFor="gender" className="font-semibold text-center">
         Gender
+      </label>
+
+      <label htmlFor="hand" className="font-semibold text-center">
+        Dominant Hand
       </label>
 
       <label htmlFor="height" className="font-semibold text-center">
@@ -37,6 +41,19 @@ const Inputs = ({ inputs, setInputs }: InputsProps) => {
         </option>
         <option value="Male">Male</option>
         <option value="Female">Female</option>
+      </select>
+
+      <select
+        id="hand"
+        value={inputs.hand}
+        onChange={(e) => setInputs({ ...inputs, hand: e.target.value as "Left" | "Right" })}
+        className="select select-bordered w-full text-center"
+      >
+        <option value="" disabled hidden>
+          Select...
+        </option>
+        <option value="Left">Left</option>
+        <option value="Right">Right</option>
       </select>
 
       <input

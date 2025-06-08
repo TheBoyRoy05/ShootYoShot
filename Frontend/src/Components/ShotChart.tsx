@@ -174,7 +174,7 @@ const ShotChart: React.FC<ShotChartProps> = ({ defaultPlayer }) => {
               Math.round(
                 (Math.sqrt(shot.loc_x * shot.loc_x + shot.loc_y * shot.loc_y) /
                   14.4) *
-                  100
+                  150
               ) / 100
             } feet from the basket`
           );
@@ -274,6 +274,16 @@ const ShotChart: React.FC<ShotChartProps> = ({ defaultPlayer }) => {
       "Notice how Kobe Bryant takes shots from all over the court but loved the mid-range, where he took the largest percentage of his shots.",
     "LeBron James":
       "See how well-rounded Lebron James' game is, as he takes shots from all over the court.",
+    "Shai Gilgeous-Alexander":
+      "Shai Gilgeous-Alexander loves to attack the basket and take shots from every pocket of the midrange, but he's not afraid to launch from 3 either.",
+    "Jeremy Lin":
+      "A dynamic scorer, Jeremy Lin was able to get a bucket from all over the court whenever he wanted.",
+    "DeAndre Jordan":
+      "An elite rebounder, DeAndre Jordan mostly gets his buckets from within the paint",
+    "Giannis Antetokounmpo":
+      "An extremely strong and aggresive attacker, Giannis Antetokounmpo focuses his energy on driving hard to the paint, taking a majority of his shots from this area.",
+    "Rudy Gobert":
+      "The big man from France is an elite defender, but offensively his game is limited to scoring within the paint."
   };
 
   const annotation = playerAnnotations[selectedPlayer] ?? "";
