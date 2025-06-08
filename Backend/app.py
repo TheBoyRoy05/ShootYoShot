@@ -1,9 +1,11 @@
 from fastapi import FastAPI, Body
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from typing import List, Dict, Tuple
 import numpy as np
 import json
 import os
+
 from Scripts.predict_position import predict_position
 
 Pose = Dict[str, List[float]]
@@ -11,14 +13,13 @@ Move = Dict[float, Pose]
 
 app = FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# Serve static frontend files
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
+# Serve index.html on root
+@app.get("/")
+def read_index():
+    return FileResponse("static/index.html")
 
 @app.get("/health")
 def health():
