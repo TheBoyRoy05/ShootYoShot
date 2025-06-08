@@ -3,7 +3,7 @@ import historySections from "../Assets/historySections.json";
 const History = () => {
   return (
     <div className="flex flex-col gap-4 mt-4">
-      <h2 className="text-2xl font-semibold">History of Shooting Form</h2>
+      <h2 className="text-5xl sporting-outline text-center">History of Shooting Form</h2>
       <div className="flex gap-8 font-light">
         <p className="flex-1">
           From the early days of the sport, players have experimented with different techniques to
@@ -17,9 +17,7 @@ const History = () => {
         </p>
       </div>
 
-      <div className="h-[1px] bg-gray-200/50 my-16" />
-
-      <div className="container mx-auto flex flex-col space-y-24">
+      <div className="container mx-auto flex flex-col space-y-24 mt-16">
         {historySections.map(({ videoSrc, title, description }, index) => (
           <div
             key={index}

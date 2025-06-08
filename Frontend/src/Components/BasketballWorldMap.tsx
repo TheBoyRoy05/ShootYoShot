@@ -304,8 +304,8 @@ const BasketballWorldMap: React.FC = () => {
 
   return (
     <div className="w-full">
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <h3 className="text-3xl font-semibold mb-4 text-center text-black">Basketball Popularity Worldwide</h3>
+      <div className="bg-white rounded-lg shadow-lg p-4 md:p-6">
+        <h3 className="text-2xl md:text-3xl font-semibold mb-4 text-center text-black">Basketball Popularity Worldwide</h3>
         
         {error && (
           <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
@@ -313,25 +313,26 @@ const BasketballWorldMap: React.FC = () => {
           </div>
         )}
         
-        {/* World Map container and Top Countries side by side */}
-        <div className="flex justify-center items-start gap-8 mb-6 w-full">
-          {/* Map */}
-          <div className="flex-shrink-0">
+        {/* World Map container and Top Countries side by side - responsive */}
+        <div className="flex flex-col xl:flex-row justify-center items-start gap-4 xl:gap-8 mb-6 w-full">
+          {/* Map - responsive sizing */}
+          <div className="flex-1 xl:flex-[2] w-full flex justify-center">
             <svg
               ref={svgRef}
-              width="720"
-              height="450"
-              className="border border-gray-200 rounded"
-              style={{ background: '#f8fafc' }}
+              width="100%"
+              height="auto"
+              viewBox="0 0 720 450"
+              className="border border-gray-200 rounded max-w-full h-auto"
+              style={{ background: '#f8fafc', minWidth: '600px' }}
             />
           </div>
 
-          {/* Top countries list - vertical layout */}
-          <div className="flex-shrink-0">
-            <h4 className="text-xl font-semibold mb-3 text-center text-black leading-tight">
+          {/* Top countries list - responsive layout */}
+          <div className="flex-shrink-0 w-full xl:w-auto xl:flex-[1] xl:min-w-[288px] flex flex-col items-center">
+            <h4 className="text-lg md:text-xl font-semibold mb-3 text-center text-black leading-tight">
               Top 10 Countries by<br />Basketball Popularity
             </h4>
-            <div className="flex flex-col gap-2 text-base w-72">
+            <div className="flex flex-col gap-2 text-sm md:text-base w-full max-w-xs xl:w-72">
               {Object.entries(basketballData)
                 .filter(([country, _]) => !["United States", "United States of America", "Republic of Korea", "North Macedonia", "Côte d'Ivoire", "Czech Republic", "Türkiye", "Palestine", "Russian Federation", "Vietnam"].includes(country))
                 .sort((a, b) => b[1] - a[1])
@@ -353,18 +354,18 @@ const BasketballWorldMap: React.FC = () => {
           </div>
         </div>
 
-        {/* Legend */}
+        {/* Legend - responsive */}
         <div className="mb-6">
-          <p className="text-lg text-gray-600 mb-3 text-center font-semibold">
+          <p className="text-base md:text-lg text-gray-600 mb-3 text-center font-semibold">
             Regional Popularity Score (Basketball search interest relative to other sports):
           </p>
-          <div className="flex justify-center items-center space-x-2">
-            <span className="text-base text-black">Low (1)</span>
+          <div className="flex flex-wrap justify-center items-center gap-2">
+            <span className="text-sm md:text-base text-black">Low (1)</span>
             <div className="flex">
               {[1, 20, 40, 60, 80, 100].map((value) => (
                 <div
                   key={value}
-                  className="w-8 h-4"
+                  className="w-6 h-4 md:w-8 md:h-4"
                   style={{
                     backgroundColor: colorScale(value)
                   }}
@@ -372,16 +373,16 @@ const BasketballWorldMap: React.FC = () => {
                 />
               ))}
             </div>
-            <span className="text-base text-black">High (100)</span>
-            <div className="ml-4 flex items-center space-x-1">
+            <span className="text-sm md:text-base text-black">High (100)</span>
+            <div className="ml-2 md:ml-4 flex items-center gap-1">
               <div className="w-4 h-4 bg-gray-300"></div>
-              <span className="text-base text-black">No data</span>
+              <span className="text-sm md:text-base text-black">No data</span>
             </div>
           </div>
         </div>
 
-        {/* Data source */}
-        <div className="mb-6 text-base text-gray-500 text-center">
+        {/* Data source - responsive */}
+        <div className="mb-6 text-sm md:text-base text-gray-500 text-center">
           <p>* Regional Popularity based on Google search traffic for 'Basketball' relative to other sports by country.</p>
           <p>Data source: TopEndSports.com (Google Insights for Search, 2007-2011)</p>
         </div>

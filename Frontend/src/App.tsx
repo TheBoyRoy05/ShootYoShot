@@ -154,9 +154,9 @@ const App = () => {
           
           <div className="text-center max-w-4xl">
             <h2 className="text-5xl sporting-outline mb-6">What We Do</h2>
-            <p className="text-2xl font-bold text-white">
+            <p className="text-2xl font-semibold text-white">
               THEREFORE, we personalize basketball training by comparing your shooting form and body measurements to NBA players 
-              in order to help you understand your player archetype and improve your game.
+              in order to help you understand your player archetype and improve your game, all on a free website.
             </p>
           </div>
         </div>
