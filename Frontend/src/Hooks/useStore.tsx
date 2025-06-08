@@ -2,12 +2,13 @@ import { create } from "zustand";
 import { createSetter } from "../Utils/functions";
 
 const userPoseRef = { current: {} as Record<number, Record<string, number[]>> };
+type Collect = "" | "Left" | "Right";
 
 interface StoreType {
-  collect: boolean;
+  collect: Collect;
   currentPose: Record<string, number[]>;
   userPoseRef: typeof userPoseRef;
-  setCollect: (collect: boolean | ((prev: boolean) => boolean)) => void;
+  setCollect: (collect: Collect | ((prev: Collect) => Collect)) => void;
   setCurrentPose: (
     pose: Record<string, number[]> | ((prev: Record<string, number[]>) => Record<string, number[]>)
   ) => void;
@@ -15,7 +16,7 @@ interface StoreType {
 
 export const useStore = create<StoreType>((set, get) => ({
   userPoseRef,
-  collect: false,
+  collect: "" as Collect,
   currentPose: {} as Record<string, number[]>,
   setCollect: createSetter<StoreType>(set)("collect"),
   setCurrentPose: (update) => {
