@@ -21,9 +21,14 @@ const App = () => {
   const { collect, setCollect, userPoseRef } = useStore();
   const [text, setText] = useState("");
   const { http } = useHTTP();
+  const [userFT, setUserFT] = useState<number | null>(null);
   const [closestPlayers, setClosestPlayers] = useState<Record<string, PlayerData>>({});
-  const [height, setHeight] = useState(72);
-  const [weight, setWeight] = useState(180);
+
+  const [gender, setGender] = useState<"Male" | "Female" | "">("");
+  const [height, setHeight] = useState<number | null>(null);
+  const [weight, setWeight] = useState<number | null>(null);
+
+  const paramsEntered = gender !== "" && height !== null && weight !== null && !collect;
 
   const run = async () => {
     setText("Ready...");
@@ -100,7 +105,7 @@ const App = () => {
           <div className="flex justify-around w-full gap-4 font-semibold text-lg">
             <div className="flex flex-col gap-2">
               <p>1. Allow the website to access your camera</p>
-              <p>2. Enter your height and weight</p>
+              <p>2. Enter your gender, height, and weight</p>
               <p>3. Make sure you are fully in the frame</p>
             </div>
             <div className="flex flex-col gap-2">
@@ -115,10 +120,14 @@ const App = () => {
           {/* Height & Weight controls */}
           <div
             className="grid  gap-y-2 gap-x-8
-                grid-cols-[16rem_10rem]   /* 1 column widths */
+                grid-cols-3
                 justify-center"
           >
             {/* ─────────── Row 1 – labels ─────────── */}
+            <label htmlFor="gender" className="font-semibold text-center">
+              Gender
+            </label>
+
             <label htmlFor="height" className="font-semibold text-center">
               Height&nbsp;(in)
             </label>
@@ -128,25 +137,31 @@ const App = () => {
             </label>
 
             {/* ─────────── Row 2 – inputs ─────────── */}
-            <div className="flex items-center gap-3">
-              {/* value bubble */}
-              <span className="w-10 text-right tabular-nums">{height}&quot;</span>
-              <input
-                id="height"
-                type="range"
-                min={48}
-                max={96}
-                step={1}
-                value={height}
-                onChange={(e) => setHeight(+e.target.value)}
-                className="range range-primary grow"
-              />
-            </div>
+            <select
+              id="gender"
+              value={gender}
+              onChange={(e) => setGender(e.target.value as "Male" | "Female")}
+              className="select select-bordered w-full text-center"
+            >
+              <option value="" disabled hidden>Select...</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
 
+            <input
+              id="height"
+              type="number"
+              min={48}
+              max={96}
+              step={1}
+              value={height ?? ""}
+              onChange={(e) => setHeight(+e.target.value)}
+              className="input input-bordered w-full text-center"
+            />
             <input
               id="weight"
               type="number"
-              value={weight}
+              value={weight ?? ""}
               onChange={(e) => setWeight(+e.target.value)}
               className="input input-bordered w-full text-center"
             />
@@ -154,8 +169,8 @@ const App = () => {
 
           <CV text={text} />
           <button
-            className="btn btn-success btn-lg font-semibold text-white w-fit"
-            disabled={collect}
+            className="btn btn-success btn-lg font-semibold text-white w-fit disabled:opacity-40 disabled:cursor-not-allowed"
+            disabled={!paramsEntered}
             onClick={run}
           >
             Start
