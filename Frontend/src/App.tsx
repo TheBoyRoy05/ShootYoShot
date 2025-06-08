@@ -1,6 +1,6 @@
 import { useStore } from "./Hooks/useStore";
 import History from "./Components/History";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { sleep } from "./Utils/functions";
 import useHTTP from "./Hooks/useHTTP";
 import PlayerCard from "./Components/PlayerCard";
@@ -23,6 +23,7 @@ const App = () => {
   const [text, setText] = useState("");
   const { collect, setCollect, userPoseRef } = useStore();
   const [closestPlayers, setClosestPlayers] = useState<Record<string, PlayerData>>({});
+  const [predictedPosition, setPredictedPosition] = useState<string>("");
 
   const [inputs, setInputs] = useState({
     gender: "",
@@ -34,6 +35,19 @@ const App = () => {
     inputs.gender !== "" && inputs.height !== 0 && inputs.weight !== 0 && !collect;
 
   const run = async () => {
+    // First get position prediction
+    await http({
+      url: "/predict_position",
+      method: "POST",
+      body: inputs,
+      handleData: (data) => {
+        if (data.position) {
+          setPredictedPosition(data.position);
+        }
+      },
+    });
+
+    // Then start the shooting sequence
     setText("Ready...");
     await sleep(1000);
     setText("Set...");
@@ -121,6 +135,11 @@ const App = () => {
 
         <div className="flex flex-col items-center gap-4 w-full" ref={visualRef}>
           <Inputs inputs={inputs} setInputs={setInputs} />
+          {predictedPosition && (
+            <div className="text-xl font-semibold text-center">
+              Predicted Position: {predictedPosition}
+            </div>
+          )}
           <CV text={text} />
 
           <button

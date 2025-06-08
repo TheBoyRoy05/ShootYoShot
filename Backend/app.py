@@ -4,6 +4,7 @@ from typing import List, Dict, Tuple
 import numpy as np
 import json
 import os
+from Scripts.predict_position import predict_position
 
 Pose = Dict[str, List[float]]
 Move = Dict[float, Pose]
@@ -22,6 +23,26 @@ app.add_middleware(
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+
+@app.post("/predict_position")
+def predict_player_position(payload: dict = Body(...)):
+    height = payload.get("height")
+    weight = payload.get("weight")
+    gender = payload.get("gender")
+    
+    if not all([height, weight, gender]):
+        return {"error": "height, weight, and gender are required"}
+    
+    try:
+        position = predict_position(
+            height=float(height), 
+            weight=float(weight), 
+            is_male=(gender.lower() == "male")
+        )
+        return {"position": position}
+    except Exception as e:
+        return {"error": str(e)}
 
 
 BONES = (
