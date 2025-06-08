@@ -28,7 +28,9 @@ const App = () => {
   const [height, setHeight] = useState<number | null>(null);
   const [weight, setWeight] = useState<number | null>(null);
 
-  const paramsEntered = gender !== "" && height !== null && weight !== null && !collect;
+  const [processing, setProcessing] = useState(false);
+  const paramsEntered =
+    gender !== "" && height !== null && weight !== null && !collect;
 
   const run = async () => {
     setText("Ready...");
@@ -143,7 +145,9 @@ const App = () => {
               onChange={(e) => setGender(e.target.value as "Male" | "Female")}
               className="select select-bordered w-full text-center"
             >
-              <option value="" disabled hidden>Select...</option>
+              <option value="" disabled hidden>
+                Select...
+              </option>
               <option value="male">Male</option>
               <option value="female">Female</option>
             </select>
@@ -177,11 +181,15 @@ const App = () => {
           </button>
         </div>
 
-        {
+        {processing && (
+          <span className="loading loading-spinner loading-lg mt-4"></span>
+        )}
+
+        {userFT && (
           <p className="text-center mt-6 text-3xl sporting-outline">
             Your Archetype Is Most Similar To:
           </p>
-        }
+        )}
 
         <div className="flex flex-wrap justify-around gap-4 w-full mt-10">
           {Object.entries(closestPlayers).map(([name, data], index) => (
