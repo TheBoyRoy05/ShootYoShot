@@ -174,7 +174,7 @@ const ShotChart: React.FC<ShotChartProps> = ({ defaultPlayer }) => {
               Math.round(
                 (Math.sqrt(shot.loc_x * shot.loc_x + shot.loc_y * shot.loc_y) /
                   14.4) *
-                  100
+                  150
               ) / 100
             } feet from the basket`
           );
