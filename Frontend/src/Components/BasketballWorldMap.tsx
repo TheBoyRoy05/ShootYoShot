@@ -179,7 +179,7 @@ const BasketballWorldMap: React.FC = () => {
       try {
         console.log('Starting to load map data...');
 
-        const worldResponse = await fetch('/ShootYoShot/data/countries-110m.json');
+        const worldResponse = await fetch('/ShootYoShot/Data/countries-110m.json');
         console.log('Fetch response status:', worldResponse.status);
         
         if (!worldResponse.ok) {
@@ -219,8 +219,9 @@ const BasketballWorldMap: React.FC = () => {
 
     // Create projection
     const projection = d3.geoNaturalEarth1()
-      .scale(115)
-      .translate([width / 2, height / 2]);
+      .scale(150)
+      .translate([width / 2, height / 2])
+      .center([0, 20]);  // Center the map vertically by shifting it up
 
     const path = d3.geoPath().projection(projection);
 
@@ -314,9 +315,9 @@ const BasketballWorldMap: React.FC = () => {
         )}
         
         {/* World Map container and Top Countries side by side - responsive */}
-        <div className="flex flex-col xl:flex-row justify-center items-start gap-4 xl:gap-8 mb-6 w-full">
+        <div className="flex flex-col xl:flex-row justify-center items-center gap-4 xl:gap-8 mb-6 w-full">
           {/* Map - responsive sizing */}
-          <div className="flex-1 xl:flex-[2] w-full flex justify-center">
+          <div className="flex-1 xl:flex-[3] w-full flex justify-center">
             <svg
               ref={svgRef}
               width="100%"
