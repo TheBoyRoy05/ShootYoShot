@@ -24,20 +24,6 @@ def health():
     return {"status": "ok"}
 
 
-# --- Optimized scoring code ---
-PLAYERS = [
-    "Anthony",
-    "DeAndre",
-    "Giannis",
-    "Jeremy",
-    "Kobe",
-    "LeBron",
-    "Rudy",
-    "Shai",
-    "Shaq",
-    "Steph",
-]
-
 BONES = (
     ("LEFT_WRIST", "LEFT_ELBOW"),
     ("LEFT_ELBOW", "LEFT_SHOULDER"),
@@ -53,13 +39,13 @@ BONES = (
     ("RIGHT_KNEE", "RIGHT_ANKLE"),
 )
 
-LANDMARKS = [
+JOINTS = [
     f"{side}_{bodypart}"
     for side in ["LEFT", "RIGHT"]
     for bodypart in ["WRIST", "ELBOW", "SHOULDER", "HIP", "KNEE", "ANKLE"]
 ]
 
-BONE_INDICES = [(LANDMARKS.index(j1), LANDMARKS.index(j2)) for j1, j2 in BONES]
+BONE_INDICES = [(JOINTS.index(j1), JOINTS.index(j2)) for j1, j2 in BONES]
 
 
 def lerp(x: np.ndarray, y: np.ndarray, t: float) -> np.ndarray:
@@ -68,8 +54,8 @@ def lerp(x: np.ndarray, y: np.ndarray, t: float) -> np.ndarray:
 
 def lerp_pose(pose1: Pose, pose2: Pose, t: float) -> Pose:
     return {
-        lm: lerp(np.array(pose1[lm]), np.array(pose2[lm]), t).tolist()
-        for lm in LANDMARKS
+        joint: lerp(np.array(pose1[joint]), np.array(pose2[joint]), t).tolist()
+        for joint in JOINTS
     }
 
 
@@ -108,8 +94,8 @@ def cosine_similarity(a: np.ndarray, b: np.ndarray) -> float:
 
 
 def calculate_similarities(pose1: Pose, pose2: Pose) -> np.ndarray:
-    pose1_arr = np.array([pose1[lm] for lm in LANDMARKS])
-    pose2_arr = np.array([pose2[lm] for lm in LANDMARKS])
+    pose1_arr = np.array([pose1[lm] for lm in JOINTS])
+    pose2_arr = np.array([pose2[lm] for lm in JOINTS])
 
     similarities = np.zeros(len(BONES))
     for i, (idx1, idx2) in enumerate(BONE_INDICES):
@@ -150,6 +136,25 @@ def sliding_window_score(move1: Move, move2: Move) -> List[float]:
     return scores.tolist()
 
 
+# Load player metadata
+with open(os.path.join("Data", "stats.json"), "r") as f:
+    PLAYER_METADATA = json.load(f)
+
+# Map first names to full names
+PLAYERS = {
+    "Steph": "Steph Curry",
+    "Shai": "Shai Gilgeous-Alexander",
+    "Kobe": "Kobe Bryant",
+    "Jeremy": "Jeremy Lin",
+    "Anthony": "Anthony Edwards",
+    "LeBron": "LeBron James",
+    "Giannis": "Giannis Antetokounmpo",
+    "Rudy": "Rudy Gobert",
+    "Shaq": "Shaquille O'Neal",
+    "DeAndre": "DeAndre Jordan",
+}
+
+
 @app.post("/score")
 def score_endpoint(payload: dict = Body(...)):
     move = payload.get("move")
@@ -159,16 +164,27 @@ def score_endpoint(payload: dict = Body(...)):
     move = {float(k): v for k, v in move.items()}
 
     player_scores = {}
-    for player in PLAYERS:
+    for first_name, full_name in PLAYERS.items():
         try:
-            player_file = os.path.join("Data", f"{player}.json")
+            player_file = os.path.join("Data", f"{first_name}.json")
             with open(player_file, "r") as f:
                 player_data = {float(k): v for k, v in json.load(f).items()}
 
-            player_scores[player] = max(sliding_window_score(move, player_data))
+            player_scores[full_name] = max(sliding_window_score(move, player_data))
         except Exception as e:
-            print(f"Error processing {player}: {str(e)}")
-            player_scores[player] = 0.0
+            print(f"Error processing {full_name}: {str(e)}")
+            player_scores[full_name] = 0.0
 
-    sorted_scores = dict(sorted(player_scores.items(), key=lambda x: x[1]))
-    return {"scores": sorted_scores}
+    # Sort scores in descending order
+    sorted_scores = dict(
+        sorted(player_scores.items(), key=lambda x: x[1], reverse=True)
+    )
+
+    # Add full player data to response
+    response_data = {}
+    for player, score in sorted_scores.items():
+        player_data = PLAYER_METADATA[player].copy()
+        player_data["score"] = score
+        response_data[player] = player_data
+
+    return {"scores": response_data}

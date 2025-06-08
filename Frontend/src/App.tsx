@@ -3,12 +3,12 @@ import History from "./Components/History";
 import { useRef, useState } from "react";
 import { sleep } from "./Utils/functions";
 import useHTTP from "./Hooks/useHTTP";
-import playerData from "./Assets/tempPlayerData.json";
 import PlayerCard from "./Components/PlayerCard";
 import TableOfContents from "./Components/TableOfContents";
 import Frame from "./Components/Frame";
 import CV from "./Components/CV/CV";
 import ShotChart from "./Components/ShotChart";
+import Inputs from "./Components/Inputs";
 
 type PlayerData = {
   score?: number;
@@ -18,38 +18,20 @@ type PlayerData = {
   free_throw: number;
 };
 
-const getClosestPlayers = (userRate: number): [string, PlayerData][] =>
-  Object.entries(playerData as Record<string, PlayerData>)
-    .filter(([, p]) => typeof p.free_throw === "number") // safety
-    .sort(
-      ([, a], [, b]) =>
-        Math.abs(a.free_throw - userRate) - Math.abs(b.free_throw - userRate)
-    )
-    .slice(0, 3);
-
 const App = () => {
-  const { collect, setCollect, userPoseRef } = useStore();
-  const [text, setText] = useState("");
   const { http } = useHTTP();
-  const [userFT, setUserFT] = useState<number | null>(null);
-  const [closestPlayers, setClosestPlayers] = useState<[string, PlayerData][]>(
-    []
-  );
-  const [gender, setGender] = useState<"Male" | "Female" | "">("");
-  const [height, setHeight] = useState<number | null>(null);
-  const [weight, setWeight] = useState<number | null>(null);
+  const [text, setText] = useState("");
+  const { collect, setCollect, userPoseRef } = useStore();
+  const [closestPlayers, setClosestPlayers] = useState<Record<string, PlayerData>>({});
 
-  const [processing, setProcessing] = useState(false);
+  const [inputs, setInputs] = useState({
+    gender: "",
+    height: 0,
+    weight: 0,
+  });
+
   const paramsEntered =
-    gender !== "" && height !== null && weight !== null && !collect;
-
-  const choosePlayers = (rate: number) => {
-    const randomFT = Number(rate.toFixed(3));
-    setUserFT(randomFT);
-    const selectedPlayers = getClosestPlayers(randomFT);
-    selectedPlayers.sort((a, b) => (b[1].score || 0) - (a[1].score || 0));
-    setClosestPlayers(selectedPlayers);
-  };
+    inputs.gender !== "" && inputs.height !== 0 && inputs.weight !== 0 && !collect;
 
   const run = async () => {
     setText("Ready...");
@@ -61,26 +43,21 @@ const App = () => {
     setText("");
 
     setCollect(true);
-    await sleep(1000);
+    await sleep(3000);
+    console.log(userPoseRef.current);
     await http({
       url: "/score",
       method: "POST",
       body: { move: userPoseRef.current },
+      handleData: (data) => {
+        setClosestPlayers(data.scores);
+        console.log(data.scores);
+      },
       retries: 0,
     });
+
     setCollect(false);
-    console.log(userPoseRef.current);
     userPoseRef.current = [];
-
-    setProcessing(true);
-    // pretending that there are some calculations for user shot similarity behind the scenes
-    await sleep(3000);
-
-    // ranges from 0.5 to 0.95
-    const randomRate = 0.5 + Math.random() * 0.45;
-    choosePlayers(randomRate);
-
-    setProcessing(false);
   };
 
   const titleRef = useRef<HTMLDivElement>(null!);
@@ -93,7 +70,7 @@ const App = () => {
     title: titleRef,
     history: historyRef,
     instructions: instructionsRef,
-    visual: visualRef,
+    "Shot Visual": visualRef,
     "Shot Chart": shotChartRef,
   };
 
@@ -101,16 +78,10 @@ const App = () => {
     <div className="page-bg">
       <TableOfContents contents={contents} />
       <div className="flex flex-col items-center w-[70vw] mx-auto">
-        <div
-          className="fade-in-up flex flex-col items-center gap-4 pt-[10vh]"
-          ref={titleRef}
-        >
-          <h1 className="hero-text-shadow text-6xl sporting-outline">
-            Shoot Yo' Shot
-          </h1>
+        <div className="fade-in-up flex flex-col items-center gap-4 pt-[10vh]" ref={titleRef}>
+          <h1 className="hero-text-shadow text-6xl sporting-outline">Shoot Yo' Shot</h1>
           <p className="text-lg max-w-lg text-center">
-            Learn the history of good shooting form and how to shoot like the
-            best in the game.
+            Learn the history of good shooting form and how to shoot like the best in the game.
           </p>
         </div>
 
@@ -128,11 +99,11 @@ const App = () => {
           <History />
         </div>
 
-        <div className="w-full pt-16" ref={instructionsRef}>
+        <div className="w-full pt-16">
           <div className="h-[1px] w-full bg-gray-200/50" />
         </div>
 
-        <div className="flex flex-col items-center gap-4 w-full py-16">
+        <div className="flex flex-col items-center gap-4 w-full py-16" ref={instructionsRef}>
           <h1 className="text-6xl sporting-outline">Try it out!</h1>
           <div className="flex justify-around w-full gap-4 font-semibold text-lg">
             <div className="flex flex-col gap-2">
@@ -148,63 +119,10 @@ const App = () => {
           </div>
         </div>
 
-        <div
-          className="flex flex-col items-center gap-4 w-full"
-          ref={visualRef}
-        >
-          {/* Height & Weight controls */}
-          <div
-            className="grid  gap-y-2 gap-x-8
-                grid-cols-3
-                justify-center"
-          >
-            {/* ─────────── Row 1 – labels ─────────── */}
-            <label htmlFor="gender" className="font-semibold text-center">
-              Gender
-            </label>
-
-            <label htmlFor="height" className="font-semibold text-center">
-              Height&nbsp;(in)
-            </label>
-
-            <label htmlFor="weight" className="font-semibold text-center">
-              Weight&nbsp;(lbs)
-            </label>
-
-            {/* ─────────── Row 2 – inputs ─────────── */}
-            <select
-              id="gender"
-              value={gender}
-              onChange={(e) => setGender(e.target.value as "Male" | "Female")}
-              className="select select-bordered w-full text-center"
-            >
-              <option value="" disabled hidden>
-                Select...
-              </option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-
-            <input
-              id="height"
-              type="number"
-              min={48}
-              max={96}
-              step={1}
-              value={height ?? ""}
-              onChange={(e) => setHeight(+e.target.value)}
-              className="input input-bordered w-full text-center"
-            />
-            <input
-              id="weight"
-              type="number"
-              value={weight ?? ""}
-              onChange={(e) => setWeight(+e.target.value)}
-              className="input input-bordered w-full text-center"
-            />
-          </div>
-
+        <div className="flex flex-col items-center gap-4 w-full" ref={visualRef}>
+          <Inputs inputs={inputs} setInputs={setInputs} />
           <CV text={text} />
+
           <button
             className="btn btn-success btn-lg font-semibold text-white w-fit disabled:opacity-40 disabled:cursor-not-allowed"
             disabled={!paramsEntered}
@@ -214,31 +132,25 @@ const App = () => {
           </button>
         </div>
 
-        {processing && (
-          <span className="loading loading-spinner loading-lg mt-4"></span>
-        )}
-
-        {userFT && (
+        {Object.keys(closestPlayers).length > 0 && (
           <p className="text-center mt-6 text-3xl sporting-outline">
             Your Archetype Is Most Similar To:
           </p>
         )}
 
         <div className="flex flex-wrap justify-around gap-4 w-full mt-10">
-          {closestPlayers.map(([name, data], index) => (
-            <PlayerCard key={index} name={name} {...data} />
-          ))}
+          {Object.entries(closestPlayers)
+            .slice(0, 3)
+            .map(([name, data], index) => (
+              <PlayerCard key={index} name={name} {...data} />
+            ))}
         </div>
 
         <div className="h-[1px] w-full bg-gray-200/50 mt-16" />
 
         {/* Shot Chart Section */}
         <div className="w-full mt-16 mb-8" ref={shotChartRef}>
-          <ShotChart
-            defaultPlayer={
-              closestPlayers.length > 0 ? closestPlayers[0][0] : undefined
-            }
-          />
+          <ShotChart />
         </div>
       </div>
     </div>
