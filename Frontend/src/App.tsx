@@ -23,7 +23,9 @@ const App = () => {
   const { http } = useHTTP();
   const [text, setText] = useState("");
   const { collect, setCollect, userPoseRef } = useStore();
-  const [closestPlayers, setClosestPlayers] = useState<Record<string, PlayerData>>({});
+  const [closestPlayers, setClosestPlayers] = useState<
+    Record<string, PlayerData>
+  >({});
   const [predictedPosition, setPredictedPosition] = useState<string>("");
 
   const [inputs, setInputs] = useState<FormInputs>({
@@ -42,16 +44,14 @@ const App = () => {
 
   const run = async () => {
     // First get position prediction
-    // await http({
-    //   url: "/predict_position",
-    //   method: "POST",
-    //   body: inputs,
-    //   handleData: (data) => {
-    //     if (data.position) {
-    //       setPredictedPosition(data.position);
-    //     }
-    //   },
-    // });
+    http({
+      url: "/predict_position",
+      method: "POST",
+      body: inputs,
+      handleData: (data: { position: string }) => {
+        setPredictedPosition(data.position);
+      },
+    });
 
     // Then start the shooting sequence
     setText("Ready...");
@@ -98,10 +98,16 @@ const App = () => {
     <div className="page-bg">
       <TableOfContents contents={contents} />
       <div className="flex flex-col items-center w-[70vw] mx-auto">
-        <div className="fade-in-up flex flex-col items-center gap-4 pt-[10vh]" ref={titleRef}>
-          <h1 className="hero-text-shadow text-6xl sporting-outline">Shoot Yo' Shot</h1>
+        <div
+          className="fade-in-up flex flex-col items-center gap-4 pt-[10vh]"
+          ref={titleRef}
+        >
+          <h1 className="hero-text-shadow text-6xl sporting-outline">
+            Shoot Yo' Shot
+          </h1>
           <p className="text-lg max-w-lg text-center">
-            Learn the history of good shooting form and how to shoot like the best in the game.
+            Learn the history of good shooting form and how to shoot like the
+            best in the game.
           </p>
         </div>
 
@@ -123,7 +129,10 @@ const App = () => {
           <div className="h-[1px] w-full bg-gray-200/50" />
         </div>
 
-        <div className="flex flex-col items-center gap-4 w-full py-16" ref={instructionsRef}>
+        <div
+          className="flex flex-col items-center gap-4 w-full py-16"
+          ref={instructionsRef}
+        >
           <h1 className="text-6xl sporting-outline">Try it out!</h1>
           <div className="flex justify-around w-full gap-4 font-semibold text-lg">
             <div className="flex flex-col gap-2">
@@ -139,13 +148,11 @@ const App = () => {
           </div>
         </div>
 
-        <div className="flex flex-col items-center gap-4 w-full" ref={visualRef}>
+        <div
+          className="flex flex-col items-center gap-4 w-full"
+          ref={visualRef}
+        >
           <Inputs inputs={inputs} setInputs={setInputs} />
-          {predictedPosition && (
-            <div className="text-xl font-semibold text-center">
-              Predicted Position: {predictedPosition}
-            </div>
-          )}
           <CV text={text} />
 
           <button
@@ -156,6 +163,12 @@ const App = () => {
             Start
           </button>
         </div>
+
+        {predictedPosition && (
+          <div className="text-xl font-semibold text-center">
+            Predicted Position: {predictedPosition}
+          </div>
+        )}
 
         {Object.keys(closestPlayers).length > 0 && (
           <p className="text-center mt-6 text-3xl sporting-outline">
