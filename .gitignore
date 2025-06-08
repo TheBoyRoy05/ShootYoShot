@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 
 .cursorignore
+
+# Python virtual environment
+venv/

@@ -7,11 +7,12 @@ interface HTTPProps {
   url: string;
   method: string;
   body?: object;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleData?: (data: any) => void;
   handleSuccess?: () => void;
   handleError?: (error: unknown) => void;
-  retries?: number; // NEW: number of retry attempts
-  retryDelay?: number; // NEW: delay in ms between retries
+  retries?: number;
+  retryDelay?: number;
 }
 
 const useHTTP = () => {

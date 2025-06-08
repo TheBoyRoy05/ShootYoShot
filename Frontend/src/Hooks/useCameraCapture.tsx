@@ -1,7 +1,6 @@
 import { useRef, useEffect } from "react";
 import { Pose, POSE_CONNECTIONS, POSE_LANDMARKS } from "@mediapipe/pose";
 import * as cam from "@mediapipe/camera_utils";
-import type { PoseType } from "../Utils/types";
 import { useStore } from "./useStore";
 
 const KEYPOINTS = [
@@ -17,12 +16,6 @@ const KEYPOINTS = [
   "RIGHT_KNEE",
   "LEFT_ANKLE",
   "RIGHT_ANKLE",
-  "LEFT_THUMB",
-  "RIGHT_THUMB",
-  "LEFT_INDEX",
-  "RIGHT_INDEX",
-  "LEFT_PINKY",
-  "RIGHT_PINKY",
 ];
 
 export function useCameraCapture() {
@@ -31,7 +24,6 @@ export function useCameraCapture() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const cameraRef = useRef<cam.Camera | null>(null);
-  const frameCounter = useRef(0);
   const startTime = useRef<number | null>(null);
 
   useEffect(() => {
@@ -87,7 +79,7 @@ export function useCameraCapture() {
       }
 
       if (worldLandmarks) {
-        const data: PoseType["landmarks"] = {};
+        const data: Record<string, number[]> = {};
         for (const key of KEYPOINTS) {
           const index = POSE_LANDMARKS[key as keyof typeof POSE_LANDMARKS];
           const lm = worldLandmarks[index];
@@ -98,22 +90,14 @@ export function useCameraCapture() {
           const now = performance.now();
           if (startTime.current === null) startTime.current = now;
           const timestamp = ((now - startTime.current) / 1000).toFixed(3);
-          
-          userPoseRef.current = [
-            ...userPoseRef.current,
-            {
-              frame: frameCounter.current++,
-              timestamp: parseFloat(timestamp),
-              landmarks: data,
-            },
-          ];
+
+          userPoseRef.current = { ...userPoseRef.current, [timestamp]: data };
         }
 
         setCurrentPose(data);
       }
 
       if (!collectRef.current) {
-        frameCounter.current = 0;
         startTime.current = null;
       }
     });
