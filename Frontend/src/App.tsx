@@ -44,7 +44,7 @@ const App = () => {
   const choosePlayers = (rate: number) => {
     const randomFT = Number(rate.toFixed(3));
     setUserFT(randomFT);
-    let selectedPlayers = getClosestPlayers(randomFT);
+    const selectedPlayers = getClosestPlayers(randomFT);
     selectedPlayers.sort((a, b) => (b[1].score || 0) - (a[1].score || 0));
     setClosestPlayers(selectedPlayers);
   };
@@ -59,14 +59,15 @@ const App = () => {
     setText("");
 
     setCollect(true);
-    await sleep(5000);
+    await sleep(1000);
     await http({
       url: "/score",
       method: "POST",
-      body: { pose: userPoseRef.current },
+      body: { move: userPoseRef.current },
       retries: 0,
     });
     setCollect(false);
+    console.log(userPoseRef.current);
     userPoseRef.current = [];
 
     // pretending that there are some calculations for user shot similarity behind the scenes
