@@ -9,6 +9,8 @@ import Frame from "./Components/Frame";
 import CV from "./Components/CV/CV";
 import ShotChart from "./Components/ShotChart";
 import Inputs from "./Components/Inputs";
+import PlayerStats from "../../Backend/Data/stats.json";
+import type { FormInputs } from "./Utils/types";
 
 type PlayerData = {
   score?: number;
@@ -24,14 +26,14 @@ const App = () => {
   const { collect, setCollect, userPoseRef } = useStore();
   const [closestPlayers, setClosestPlayers] = useState<Record<string, PlayerData>>({});
 
-  const [inputs, setInputs] = useState({
+  const [inputs, setInputs] = useState<FormInputs>({
     gender: "",
-    height: 0,
-    weight: 0,
+    height: null,
+    weight: null,
   });
 
   const paramsEntered =
-    inputs.gender !== "" && inputs.height !== 0 && inputs.weight !== 0 && !collect;
+    inputs.gender !== "" && inputs.height !== null && inputs.weight !== null && !collect;
 
   const run = async () => {
     setText("Ready...");
