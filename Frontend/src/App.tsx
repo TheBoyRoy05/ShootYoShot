@@ -28,25 +28,30 @@ const App = () => {
 
   const [inputs, setInputs] = useState<FormInputs>({
     gender: "",
+    hand: "",
     height: null,
     weight: null,
   });
 
   const paramsEntered =
-    inputs.gender !== "" && inputs.height !== null && inputs.weight !== null && !collect;
+    inputs.gender !== "" &&
+    inputs.height !== null &&
+    inputs.weight !== null &&
+    inputs.hand !== "" &&
+    !collect;
 
   const run = async () => {
     // First get position prediction
-    await http({
-      url: "/predict_position",
-      method: "POST",
-      body: inputs,
-      handleData: (data) => {
-        if (data.position) {
-          setPredictedPosition(data.position);
-        }
-      },
-    });
+    // await http({
+    //   url: "/predict_position",
+    //   method: "POST",
+    //   body: inputs,
+    //   handleData: (data) => {
+    //     if (data.position) {
+    //       setPredictedPosition(data.position);
+    //     }
+    //   },
+    // });
 
     // Then start the shooting sequence
     setText("Ready...");
@@ -57,21 +62,21 @@ const App = () => {
     await sleep(1000);
     setText("");
 
-    setCollect(true);
+    setCollect(inputs.hand);
     await sleep(3000);
-    console.log(userPoseRef.current);
+    setText("Analyzing...");
     await http({
       url: "/score",
       method: "POST",
       body: { move: userPoseRef.current },
       handleData: (data) => {
         setClosestPlayers(data.scores);
-        console.log(data.scores);
       },
       retries: 0,
     });
 
-    setCollect(false);
+    setText("");
+    setCollect("");
     userPoseRef.current = [];
   };
 

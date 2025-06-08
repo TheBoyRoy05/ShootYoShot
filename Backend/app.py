@@ -30,15 +30,15 @@ def predict_player_position(payload: dict = Body(...)):
     height = payload.get("height")
     weight = payload.get("weight")
     gender = payload.get("gender")
-    
+
     if not all([height, weight, gender]):
         return {"error": "height, weight, and gender are required"}
-    
+
     try:
         position = predict_position(
-            height=float(height), 
-            weight=float(weight), 
-            is_male=(gender.lower() == "male")
+            height=float(height),
+            weight=float(weight),
+            is_male=(gender.lower() == "male"),
         )
         return {"position": position}
     except Exception as e:
@@ -81,8 +81,8 @@ def lerp_pose(pose1: Pose, pose2: Pose, t: float) -> Pose:
 
 
 def fill_values(move1: Move, move2: Move) -> Tuple[Move, Move]:
-    times1 = np.array(list(move1.keys())) - move1.keys()[0]
-    times2 = np.array(list(move2.keys())) - move2.keys()[0]
+    times1 = np.array(list(move1.keys())) - list(move1.keys())[0]
+    times2 = np.array(list(move2.keys())) - list(move2.keys())[0]
     all_times = np.sort(np.unique(np.concatenate([times1, times2])))
 
     def fill(move: Move, times: np.ndarray) -> Move:
@@ -152,7 +152,7 @@ def sliding_window_score(move1: Move, move2: Move) -> List[float]:
     for i in range(len(move1), len(move2) + 1):
         window = dict(move2_items[i - len(move1) : i])
         scores[i - len(move1)] = rescale(
-            similarity_score(*fill_values(move1, window)), 0.9, 0.95
+            similarity_score(*fill_values(move1, window)), 0.5, 1
         )
     return scores.tolist()
 
@@ -163,16 +163,17 @@ with open(os.path.join("Data", "stats.json"), "r") as f:
 
 # Map first names to full names
 PLAYERS = {
-    "Steph": "Steph Curry",
-    "Shai": "Shai Gilgeous-Alexander",
-    "Kobe": "Kobe Bryant",
-    "Jeremy": "Jeremy Lin",
     "Anthony": "Anthony Edwards",
-    "LeBron": "LeBron James",
-    "Giannis": "Giannis Antetokounmpo",
-    "Rudy": "Rudy Gobert",
-    "Shaq": "Shaquille O'Neal",
     "DeAndre": "DeAndre Jordan",
+    "Giannis": "Giannis Antetokounmpo",
+    "Jeremy": "Jeremy Lin",
+    "Kobe": "Kobe Bryant",
+    "LeBron": "LeBron James",
+    "Rudy": "Rudy Gobert",
+    "Shai": "Shai Gilgeous-Alexander",
+    "Shaq": "Shaquille O'Neal",
+    "Steph": "Steph Curry",
+    "Tatum": "Jayson Tatum",
 }
 
 
@@ -191,7 +192,9 @@ def score_endpoint(payload: dict = Body(...)):
             with open(player_file, "r") as f:
                 player_data = {float(k): v for k, v in json.load(f).items()}
 
-            player_scores[full_name] = max(sliding_window_score(move, player_data))
+            # Convert score to percentage and round to 2 decimal places
+            score = max(sliding_window_score(move, player_data))
+            player_scores[full_name] = round(score * 100, 2)
         except Exception as e:
             print(f"Error processing {full_name}: {str(e)}")
             player_scores[full_name] = 0.0
