@@ -118,6 +118,14 @@ const App = () => {
           <p className="text-2xl max-w-lg text-center">
             Analyze Your Form, Match with NBA Players, and Level Up Your Court IQ
           </p>
+          <a 
+            href="https://youtu.be/4Iy9rS-rDEI" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-lg font-semibold text-blue-400 hover:text-blue-300 underline transition-colors"
+          >
+            Video Link
+          </a>
           <div className="flex flex-wrap justify-center gap-6 mt-4 mb-6">
             <div className="text-lg font-semibold text-white bg-slate-700/80 px-4 py-2 rounded-lg">
               Issac Roy
