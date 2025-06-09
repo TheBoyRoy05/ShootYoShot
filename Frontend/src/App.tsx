@@ -103,7 +103,7 @@ const App = () => {
         <div className="fade-in-up flex flex-col items-center gap-4 pt-[10vh]" ref={titleRef}>
           <h1 className="hero-text-shadow text-6xl sporting-outline">Shoot Yo' Shot</h1>
           <p className="text-2xl max-w-lg text-center">
-            Learn the history of good shooting form and how to shoot like the best in the game.
+            Analyze Your Form, Match with NBA Players, and Level Up Your Court IQ
           </p>
           <div className="flex flex-wrap justify-center gap-6 mt-4 mb-6">
             <div className="text-lg font-semibold text-white bg-slate-700/80 px-4 py-2 rounded-lg">
