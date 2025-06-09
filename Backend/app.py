@@ -15,6 +15,8 @@ Move = Dict[float, Pose]
 app = FastAPI()
 
 app.mount("/assets", StaticFiles(directory="static/assets"), name="assets")
+app.mount("/Images", StaticFiles(directory="static/Images"), name="images")
+app.mount("/Video", StaticFiles(directory="static/Video"), name="video")
 
 @app.get("/health")
 def health():
