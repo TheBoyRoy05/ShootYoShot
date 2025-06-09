@@ -25,5 +25,5 @@ dist-ssr
 
 .cursorignore
 
-# Python virtual environment
 venv/
+.env

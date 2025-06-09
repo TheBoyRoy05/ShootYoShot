@@ -53,14 +53,14 @@ const App = () => {
     console.log("Starting pose collection for hand:", inputs.hand);
     setCollect(inputs.hand);
     await sleep(3000);
-    
+
     console.log("Pose data collected:", userPoseRef.current);
     console.log("Number of pose frames:", Object.keys(userPoseRef.current).length);
-    
+
     setText("Analyzing...");
 
     console.log("Sending score request with data:", { move: userPoseRef.current });
-    
+
     await http({
       url: "/score",
       method: "POST",
@@ -73,7 +73,7 @@ const App = () => {
     });
 
     console.log("Sending position prediction request with:", inputs);
-    
+
     http({
       url: "/predict_position",
       method: "POST",
@@ -115,31 +115,26 @@ const App = () => {
       <div className="flex flex-col items-center w-[70vw] mx-auto">
         <div className="fade-in-up flex flex-col items-center gap-4 pt-[10vh]" ref={titleRef}>
           <h1 className="hero-text-shadow text-6xl sporting-outline">Shoot Yo' Shot</h1>
-          <p className="text-2xl max-w-lg text-center">
+          <p className="text-xl max-w-md text-center">
             Analyze Your Form, Match with NBA Players, and Level Up Your Court IQ
           </p>
-          <a 
-            href="https://youtu.be/4Iy9rS-rDEI" 
-            target="_blank" 
+
+          <a
+            href="https://youtu.be/4Iy9rS-rDEI"
+            target="_blank"
             rel="noopener noreferrer"
             className="text-lg font-semibold text-blue-400 hover:text-blue-300 underline transition-colors"
           >
-            Video Link
+            Watch the Demo
           </a>
           <div className="flex flex-wrap justify-center gap-6 mt-4 mb-6">
-            <div className="text-lg font-semibold text-white bg-slate-700/80 px-4 py-2 rounded-lg">
-              Issac Roy
-            </div>
-            <div className="text-lg font-semibold text-white bg-slate-700/80 px-4 py-2 rounded-lg">
-              Noah Golder
-            </div>
-            <div className="text-lg font-semibold text-white bg-slate-700/80 px-4 py-2 rounded-lg">
-              Ty Albao
-            </div>
-            <div className="text-lg font-semibold text-white bg-slate-700/80 px-4 py-2 rounded-lg">
-              Rushyendra Katabathuni
-            </div>
+            {["Issac Roy", "Noah Golder", "Ty Albao", "Rushyendra Katabathuni"].map((name) => (
+              <div className="text-lg font-semibold text-white bg-slate-700/80 px-4 py-2 rounded-lg">
+                {name}
+              </div>
+            ))}
           </div>
+
           <Frame midClass={"w-full min-w-[325px]"}>
             <div className="glare w-1/3" />
             <img
@@ -154,7 +149,10 @@ const App = () => {
         </div>
 
         {/* Global Basketball Popularity Section */}
-        <div className="fade-in-up pt-16 flex flex-col items-center gap-10 w-full" ref={globalPopularityRef}>
+        <div
+          className="fade-in-up pt-16 flex flex-col items-center gap-10 w-full"
+          ref={globalPopularityRef}
+        >
           <div className="text-center max-w-4xl">
             <h1 className="text-5xl sporting-outline mb-8">Basketball Worldwide</h1>
             <p className="text-2xl font-semibold mb-8">
@@ -164,8 +162,9 @@ const App = () => {
               </span>
             </p>
             <p className="text-2xl mb-12">
-              From the streets of Manila to the courts of Lithuania, basketball has become a global phenomenon. 
-              Explore how the sport's popularity varies across different countries and regions.
+              From the streets of Manila to the courts of Lithuania, basketball has become a global
+              phenomenon. Explore how the sport's popularity varies across different countries and
+              regions.
             </p>
           </div>
           <BasketballWorldMap />
@@ -176,23 +175,26 @@ const App = () => {
         </div>
 
         {/* The Cost of Training Section */}
-        <div className="fade-in-up pt-16 flex flex-col items-center gap-10 w-full" ref={whatWeDoRef}>
+        <div
+          className="fade-in-up pt-16 flex flex-col items-center gap-10 w-full"
+          ref={whatWeDoRef}
+        >
           <div className="text-center max-w-4xl">
             <h1 className="text-5xl sporting-outline mb-8">The Cost of Training</h1>
             <p className="text-2xl font-small mb-4 text-white">
-              BUT, basketball training can cost from $50 to $150 per hour. 
-              Furthermore, most players don't know how to optimize their own abilities — their form, their strengths, their role.
+              BUT, basketball training can cost from $50 to $150 per hour. Furthermore, most players
+              don't know how to optimize their own abilities — their form, their strengths, their
+              role.
             </p>
-            <p className="text-lg text-white mb-8">
-              (Source: europrobasket.com)
-            </p>
+            <p className="text-lg text-white mb-8">(Source: europrobasket.com)</p>
           </div>
-          
+
           <div className="text-center max-w-4xl">
             <h2 className="text-5xl sporting-outline mb-6">What We Do</h2>
             <p className="text-2xl font-small text-white">
-              THEREFORE, we personalize basketball training by comparing your shooting form and body measurements to NBA players 
-              in order to help you understand your player archetype and improve your game, all on a free website.
+              THEREFORE, we personalize basketball training by comparing your shooting form and body
+              measurements to NBA players in order to help you understand your player archetype and
+              improve your game, all on a free website.
             </p>
           </div>
         </div>
@@ -270,39 +272,31 @@ const App = () => {
 
         <div className="h-[1px] w-full bg-gray-200/50 mt-16" />
 
-        <div
-          className="fade-in-up w-full py-20 flex flex-col items-center"
-          ref={takeawayRef}
-        >
+        <div className="fade-in-up w-full py-20 flex flex-col items-center" ref={takeawayRef}>
           <h2 className="text-5xl sporting-outline mb-4">Takeaways</h2>
 
           <div className="flex items-center gap-8">
             <p className="flex-1 font-light leading-relaxed">
-              Great shooters share three things: balanced <strong>base</strong>,
-              consistent <strong>release point</strong>, and a smooth
-              <strong> follow-through</strong>. Our model compares your motion
-              frame-by-frame against the best of the best, because who better is
-              there to learn from? Use the model to tweak your stance, record
-              another attempt, and watch your similarity score climb. By
-              suggesting your best position and displaying the NBA players that
-              you are most similar to, our project aims to help you learn how to
-              optimize your basketball skills and be the best basketball player
-              you can be.
+              Great shooters share three things: balanced <strong>base</strong>, consistent{" "}
+              <strong>release point</strong>, and a smooth
+              <strong> follow-through</strong>. Our model compares your motion frame-by-frame
+              against the best of the best, because who better is there to learn from? Use the model
+              to tweak your stance, record another attempt, and watch your similarity score climb.
+              By suggesting your best position and displaying the NBA players that you are most
+              similar to, our project aims to help you learn how to optimize your basketball skills
+              and be the best basketball player you can be.
             </p>
             <p className="flex-1 font-light leading-relaxed">
-              Once you've found your most similar players and your recommended
-              position, you can use the shot chart to identify what types of
-              shots and what areas of the court those players work best in. This
-              can help you understand what skills and shots to focus on in order
-              to maximize your potential. Whether you are a hardcore basketball
-              fan or you've never been interested before, with the tools present
-              in this project, anyone can quickly learn how to improve their
-              skills.
+              Once you've found your most similar players and your recommended position, you can use
+              the shot chart to identify what types of shots and what areas of the court those
+              players work best in. This can help you understand what skills and shots to focus on
+              in order to maximize your potential. Whether you are a hardcore basketball fan or
+              you've never been interested before, with the tools present in this project, anyone
+              can quickly learn how to improve their skills.
             </p>
           </div>
           <p className="flex-1 font-light leading-relaxed italic">
-            "Don't practice until you get it right; practice until you can't get
-            it wrong."
+            "Don't practice until you get it right; practice until you can't get it wrong."
           </p>
         </div>
       </div>
