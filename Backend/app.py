@@ -25,7 +25,7 @@ app.add_middleware(
 )
 
 # Serve static frontend files
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
 
 # Serve index.html on root
 @app.get("/")
