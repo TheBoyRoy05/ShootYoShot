@@ -25,6 +25,7 @@ app.add_middleware(
 app.mount("/assets", StaticFiles(directory="static/assets"), name="assets")
 app.mount("/Images", StaticFiles(directory="static/Images"), name="images")
 app.mount("/Videos", StaticFiles(directory="static/Videos"), name="videos")
+app.mount("/Data", StaticFiles(directory="static/Data"), name="data")
 
 @app.get("/health")
 def health():

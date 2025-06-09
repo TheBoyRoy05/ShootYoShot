@@ -67,7 +67,7 @@ const ShotChart: React.FC<ShotChartProps> = ({ defaultPlayer }) => {
   useEffect(() => {
     const loadZoneBreakdownData = async () => {
       try {
-        const response = await fetch("/src/Assets/Data/shots_breakdown.csv");
+        const response = await fetch("/Data/shots_breakdown.csv");
         const csvText = await response.text();
         const data = d3.csvParse(csvText, (d) => ({
           PLAYER_NAME: d.PLAYER_NAME?.trim(),
@@ -108,7 +108,7 @@ const ShotChart: React.FC<ShotChartProps> = ({ defaultPlayer }) => {
 
       setLoading(true);
       try {
-        const response = await fetch("/src/Assets/Data/all_players_shots.csv");
+        const response = await fetch("/Data/all_players_shots.csv");
         const csvText = await response.text();
         const data = d3.csvParse(csvText, (d) => ({
           player_name: d.PLAYER_NAME?.trim(),
