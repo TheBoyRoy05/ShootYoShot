@@ -14,17 +14,7 @@ Move = Dict[float, Pose]
 
 app = FastAPI()
 
-# Update CORS middleware to be more permissive during development
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # More permissive for development
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-    expose_headers=["*"]
-)
-
-app.mount("/", StaticFiles(directory="static", html=True), name="static")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/health")
 def health():
