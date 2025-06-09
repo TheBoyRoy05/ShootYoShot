@@ -291,7 +291,7 @@ const ShotChart: React.FC<ShotChartProps> = ({ defaultPlayer }) => {
   return (
     <div className="flex flex-col items-center gap-4">
       <h3 className="text-5xl sporting-outline">Basketball Shot Chart</h3>
-      <div className="text-lg font-semibold">
+      <div className="text-xl font-semibold">
         Learn more about your similar players!
       </div>
 
@@ -322,7 +322,7 @@ const ShotChart: React.FC<ShotChartProps> = ({ defaultPlayer }) => {
       </div>
 
       {shotData.length > 0 && (
-        <div className="text-lg font-semibold">
+        <div className="text-xl font-semibold">
           {loading
             ? "Loading shot data..."
             : visualizationMode === "zones"

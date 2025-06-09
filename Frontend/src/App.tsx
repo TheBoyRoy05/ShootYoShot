@@ -181,7 +181,7 @@ const App = () => {
 
         <div className="flex flex-col items-center gap-4 w-full py-16" ref={instructionsRef}>
           <h1 className="text-6xl sporting-outline">Try it out!</h1>
-          <div className="flex justify-around w-full gap-4 font-semibold text-lg">
+          <div className="flex justify-around w-full gap-4 font-semibold text-xl">
             <div className="flex flex-col gap-2">
               <p>1. Allow the website to access your camera</p>
               <p>2. Enter your gender, height, and weight</p>

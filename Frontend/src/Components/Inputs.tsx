@@ -13,19 +13,19 @@ const Inputs = ({ inputs, setInputs }: InputsProps) => {
                 justify-center"
     >
       {/* ─────────── Row 1 – labels ─────────── */}
-      <label htmlFor="gender" className="font-semibold text-center">
+      <label htmlFor="gender" className="font-semibold text-center text-xl">
         Gender
       </label>
 
-      <label htmlFor="hand" className="font-semibold text-center">
+      <label htmlFor="hand" className="font-semibold text-center text-xl">
         Dominant Hand
       </label>
 
-      <label htmlFor="height" className="font-semibold text-center">
+      <label htmlFor="height" className="font-semibold text-center text-xl">
         Height&nbsp;(in)
       </label>
 
-      <label htmlFor="weight" className="font-semibold text-center">
+      <label htmlFor="weight" className="font-semibold text-center text-xl">
         Weight&nbsp;(lbs)
       </label>
 
