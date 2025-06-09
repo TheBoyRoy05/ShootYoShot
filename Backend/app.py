@@ -222,3 +222,7 @@ def score_endpoint(payload: dict = Body(...)):
         response_data[player] = player_data
 
     return {"scores": response_data}
+
+@app.get("/{full_path:path}")
+async def serve_spa():
+    return FileResponse(os.path.join("static", "index.html"))
