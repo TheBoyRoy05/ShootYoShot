@@ -1,6 +1,6 @@
 [
   {
-    "videoSrc": "/ShootYoShot/Videos/60sShots.mp4",
+    "videoSrc": "/Videos/60sShots.mp4",
     "title": "1960s - The First Jump Shots",
     "description": [
       "In the 1960s, the league was still young, and players were just starting to experiment with the jump shot. This was a time of innovation, where athletes began to realize the potential of elevating their shots for better accuracy and style.",
@@ -9,7 +9,7 @@
     ]
   },
   {
-    "videoSrc": "/ShootYoShot/Videos/90sShots.mp4",
+    "videoSrc": "/Videos/90sShots.mp4",
     "title": "1990s - Developing the Jump Shot",
     "description": [
       "The 1990s marked a turning point in basketball, as the jump shot became a fundamental skill for players. This decade saw the emergence of iconic shooters like Ray Allen and Reggie Miller, who mastered the art of the jump shot.",
@@ -18,7 +18,7 @@
     ]
   },
   {
-    "videoSrc": "/ShootYoShot/Videos/2010sShots.mp4",
+    "videoSrc": "/Videos/2010sShots.mp4",
     "title": "2020s - The Modern Jump Shot",
     "description": [
       "The 2020s saw the jump shot evolve into a powerful weapon, with players like Stephen Curry and Klay Thompson redefining what it meant to be a shooter. This era was characterized by the rise of the 3-point shot, as teams began to prioritize spacing and shooting over traditional post play.",

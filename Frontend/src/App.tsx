@@ -139,7 +139,7 @@ const App = () => {
           <Frame midClass={"w-full min-w-[325px]"}>
             <div className="glare w-1/3" />
             <img
-              src={"/ShootYoShot/Images/ShootYoShot.png"}
+              src={"/Images/ShootYoShot.png"}
               className="border border-slate-500 rounded-xl"
             />
           </Frame>

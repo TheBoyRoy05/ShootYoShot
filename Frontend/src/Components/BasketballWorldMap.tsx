@@ -181,7 +181,7 @@ const BasketballWorldMap: React.FC = () => {
         console.log("Starting to load map data...");
 
         // Load GeoJSON world data from local file
-        const worldResponse = await fetch("/ShootYoShot/Data/countries-110m.json");
+        const worldResponse = await fetch("/Data/countries-110m.json");
         console.log("Fetch response status:", worldResponse.status);
 
         if (!worldResponse.ok) {

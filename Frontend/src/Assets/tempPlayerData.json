@@ -1,112 +1,112 @@
 {
   "Steph Curry": {
     "score": 80,
-    "image": "/ShootYoShot/Images/Steph.webp",
+    "image": "/Images/Steph.webp",
     "stats": {
       "Points": "25",
       "Rebounds": "5",
       "Assists": "6"
     },
-    "video": "/ShootYoShot/Videos/Steph.mp4",
+    "video": "/Videos/Steph.mp4",
     "free_throw": 0.911
   },
   "Shai Gilgeous-Alexander": {
     "score": 85,
-    "image": "/ShootYoShot/Images/Shai.webp",
+    "image": "/Images/Shai.webp",
     "stats": {
       "Points": "24",
       "Rebounds": "5",
       "Assists": "5"
     },
-    "video": "/ShootYoShot/Videos/Shai.mp4",
+    "video": "/Videos/Shai.mp4",
     "free_throw": 0.862
   },
   "Kobe Bryant": {
     "score": 75,
-    "image": "/ShootYoShot/Images/Kobe.jpg",
+    "image": "/Images/Kobe.jpg",
     "stats": {
       "Points": "25",
       "Rebounds": "5",
       "Assists": "5"
     },
-    "video": "/ShootYoShot/Videos/Kobe.mp4",
+    "video": "/Videos/Kobe.mp4",
     "free_throw": 0.837
   },
   "Jeremy Lin": {
     "score": 85,
-    "image": "/ShootYoShot/Images/Jeremy.jpg",
+    "image": "/Images/Jeremy.jpg",
     "stats": {
       "Points": "12",
       "Rebounds": "3",
       "Assists": "4"
     },
-    "video": "/ShootYoShot/Videos/Jeremy.mp4",
+    "video": "/Videos/Jeremy.mp4",
     "free_throw": 0.809
   },
   "Anthony Edwards": {
     "score": 80,
-    "image": "/ShootYoShot/Images/Ant.webp",
+    "image": "/Images/Ant.webp",
     "stats": {
       "Points": "24",
       "Rebounds": "5",
       "Assists": "4"
     },
-    "video": "/ShootYoShot/Videos/Anthony.mp4",
+    "video": "/Videos/Anthony.mp4",
     "free_throw": 0.804
   },
   "LeBron James": {
     "score": 85,
-    "image": "/ShootYoShot/Images/Lebron.webp",
+    "image": "/Images/Lebron.webp",
     "stats": {
       "Points": "27",
       "Rebounds": "8",
       "Assists": "7"
     },
-    "video": "/ShootYoShot/Videos/Lebron.mp4",
+    "video": "/Videos/Lebron.mp4",
     "free_throw": 0.737
   },
   "Giannis Antetokounmpo": {
     "score": 75,
-    "image": "/ShootYoShot/Images/Giannis.webp",
+    "image": "/Images/Giannis.webp",
     "stats": {
       "Points": "24",
       "Rebounds": "10",
       "Assists": "5"
     },
-    "video": "/ShootYoShot/Videos/Giannis.mp4",
+    "video": "/Videos/Giannis.mp4",
     "free_throw": 0.693
   },
   "Rudy Gobert": {
     "score": 60,
-    "image": "/ShootYoShot/Images/Rudy.jpg",
+    "image": "/Images/Rudy.jpg",
     "stats": {
       "Points": "13",
       "Rebounds": "12",
       "Assists": "1"
     },
-    "video": "/ShootYoShot/Videos/Rudy.mp4",
+    "video": "/Videos/Rudy.mp4",
     "free_throw": 0.641
   },
   "Shaquille O'Neal": {
     "score": 30,
-    "image": "/ShootYoShot/Images/Shaq.webp",
+    "image": "/Images/Shaq.webp",
     "stats": {
       "Points": "24",
       "Rebounds": "11",
       "Assists": "3"
     },
-    "video": "/ShootYoShot/Videos/Shaq.mp4",
+    "video": "/Videos/Shaq.mp4",
     "free_throw": 0.527
   },
   "DeAndre Jordan": {
     "score": 70,
-    "image": "/ShootYoShot/Images/DeAndre.jpg",
+    "image": "/Images/DeAndre.jpg",
     "stats": {
       "Points": "9",
       "Rebounds": "10",
       "Assists": "1"
     },
-    "video": "/ShootYoShot/Videos/DeAndre.mp4",
+    "video": "/Videos/DeAndre.mp4",
     "free_throw": 0.475
   }
 }
