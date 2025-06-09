@@ -24,11 +24,11 @@ app.add_middleware(
     expose_headers=["*"]
 )
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
 
-@app.get("/")
-def read_index():
-    return FileResponse("static/index.html")
+@app.get("/{full_path:path}")
+async def serve_spa():
+    return FileResponse(os.path.join("static", "index.html"))
 
 @app.get("/health")
 def health():
