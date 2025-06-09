@@ -130,7 +130,9 @@ const App = () => {
           ref={globalPopularityRef}
         >
           <div className="text-center max-w-4xl">
-            <h1 className="text-5xl sporting-outline mb-8">Basketball Worldwide</h1>
+            <h1 className="text-5xl sporting-outline mb-8">
+              Basketball Worldwide
+            </h1>
             <p className="text-lg mb-8">
               Across the world, over 610 million people play basketball.
               <span className="font-light text-sm block mt-2 text-white">
@@ -148,20 +150,26 @@ const App = () => {
         {/* The Cost of Training Section */}
         <div className="fade-in-up pt-16 flex flex-col items-center gap-4 w-full">
           <div className="text-center max-w-4xl">
-            <h1 className="text-5xl sporting-outline mb-8">The Cost of Training</h1>
+            <h1 className="text-5xl sporting-outline mb-8">
+              The Cost of Training
+            </h1>
             <p className="text-lg mb-4 text-white">
-              BUT, basketball training can cost from $50 to $150 per hour. And training sessions
-              don't incorporate NBA player data to help users understand their player archetypes.
+              BUT, basketball training can cost from $50 to $150 per hour. And
+              training sessions don't incorporate NBA player data to help users
+              understand their player archetypes.
             </p>
-            <p className="text-sm font-light text-white mb-8">(Source: europrobasket.com)</p>
+            <p className="text-sm font-light text-white mb-8">
+              (Source: europrobasket.com)
+            </p>
           </div>
 
           <div className="text-center max-w-4xl">
             <h2 className="text-5xl sporting-outline mb-6">What We Do</h2>
             <p className="text-lg text-white">
-              THEREFORE, we personalize basketball training by comparing your shooting form and body
-              measurements to NBA players in order to help you understand your player archetype and
-              improve your game, all on a free website.
+              THEREFORE, we personalize basketball training by comparing your
+              shooting form and body measurements to NBA players in order to
+              help you understand your player archetype and improve your game,
+              all on a free website.
             </p>
           </div>
         </div>
@@ -182,7 +190,10 @@ const App = () => {
           <div className="h-[1px] w-full bg-gray-200/50" />
         </div>
 
-        <div className="flex flex-col items-center gap-4 w-full py-16" ref={visualRef}>
+        <div
+          className="flex flex-col items-center gap-4 w-full py-16"
+          ref={visualRef}
+        >
           <h1 className="text-6xl sporting-outline">Try it out!</h1>
           <div className="flex justify-around w-full gap-4 font-semibold text-lg">
             <div className="flex flex-col gap-2">
@@ -238,30 +249,43 @@ const App = () => {
         </div>
 
         <div className="h-[1px] w-full bg-gray-200/50 mt-16" />
+      </div>
 
-        <div className="fade-in-up w-full py-20 flex flex-col items-center" ref={takeawayRef}>
-          <h2 className="text-5xl sporting-outline mb-4">Takeaways</h2>
+      <div
+        className="fade-in-up w-full py-20 flex flex-col items-center"
+        ref={takeawayRef}
+      >
+        <h2 className="text-5xl sporting-outline mb-4">Takeaways</h2>
 
-          <div className="flex items-center gap-8">
-            <p className="flex-1 font-light leading-relaxed">
-              Great shooters share three things: balanced <strong>base</strong>, consistent{" "}
-              <strong>release point</strong>, and a smooth
-              <strong> follow-through</strong>. Our model compares your motion against the best,
-              because who better is there? Use the model to tweak your stance, record another
-              attempt, and watch your score climb.
-            </p>
+        <div className="flex items-center gap-8">
+          <p className="flex-1 font-light leading-relaxed">
+            Great shooters share three things: balanced <strong>base</strong>,
+            consistent <strong>release point</strong>, and a smooth
+            <strong> follow-through</strong>. Our model compares your motion
+            frame-by-frame against the best of the best, because who better is
+            there to learn from? Use the model to tweak your stance, record
+            another attempt, and watch your similarity score climb. By
+            suggesting your best position and displaying the NBA players that
+            you are most similar to, our project aims to help you learn how to
+            optimize your basketball skills and be the best basketball player
+            you can be.
+          </p>
+          <p className="flex-1 font-light leading-relaxed">
+            Once you've found your most similar players and your recommended
+            position, you can use the shot chart to identify what types of shots
+            and what areas of the court those players work best in. This can
+            help you understand what skills and shots to focus on in order to
+            maximize your potential.
 
-            <p className="flex-1 font-light leading-relaxed">
-              Keep experimenting with your shot! Minor adjustments in elbow alignment or release
-              speed can move you closer to your favorite archetype and favorite players. Don't
-              forget to get <em> real-court reps</em>. No algorithm can replace muscle memory.
-            </p>
-          </div>
-
-          <p className="italic mt-8 text-center">
-            "Don't practice until you get it right; practice until you can't get it wrong."
+            Whether you are a hardcore basketball fan or you've never been
+            interested before, with the tools present in this project, anyone
+            can quickly learn how to improve their skills.
           </p>
         </div>
+                  <p className="flex-1 font-light leading-relaxed italic">
+            "Don't practice until you get it right; practice until you can't get
+            it wrong."
+          </p> 
       </div>
     </div>
   );
