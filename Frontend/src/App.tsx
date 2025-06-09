@@ -158,7 +158,7 @@ const App = () => {
         <div className="fade-in-up pt-16 flex flex-col items-center gap-10 w-full">
           <div className="text-center max-w-4xl">
             <h1 className="text-5xl sporting-outline mb-8">The Cost of Training</h1>
-            <p className="text-2xl font-medium mb-4 text-white">
+            <p className="text-2xl font-small mb-4 text-white">
               BUT, basketball training can cost from $50 to $150 per hour. 
               Furthermore, most players don't know how to optimize their own abilities — their form, their strengths, their role.
             </p>
@@ -169,7 +169,7 @@ const App = () => {
           
           <div className="text-center max-w-4xl">
             <h2 className="text-5xl sporting-outline mb-6">What We Do</h2>
-            <p className="text-2xl font-medium text-white">
+            <p className="text-2xl font-small text-white">
               THEREFORE, we personalize basketball training by comparing your shooting form and body measurements to NBA players 
               in order to help you understand your player archetype and improve your game, all on a free website.
             </p>
