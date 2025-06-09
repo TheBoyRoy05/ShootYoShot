@@ -26,10 +26,6 @@ app.add_middleware(
 
 app.mount("/", StaticFiles(directory="static", html=True), name="static")
 
-@app.get("/{full_path:path}")
-async def serve_spa():
-    return FileResponse(os.path.join("static", "index.html"))
-
 @app.get("/health")
 def health():
     return {"status": "ok"}
