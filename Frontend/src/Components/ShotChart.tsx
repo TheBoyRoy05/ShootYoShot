@@ -277,7 +277,7 @@ const ShotChart: React.FC<ShotChartProps> = ({ defaultPlayer }) => {
     "Shai Gilgeous-Alexander":
       "Shai Gilgeous-Alexander loves to attack the basket and take shots from every pocket of the midrange, but he's not afraid to launch from 3 either.",
     "Jeremy Lin":
-      "A dynamic scorer, Jeremy Lin was able to get a bucket from all over the court whenever he wanted.",
+      "A dynamic shooter, Jeremy Lin was able to get a bucket from all over the court whenever he wanted.",
     "DeAndre Jordan":
       "An elite rebounder, DeAndre Jordan mostly gets his buckets from within the paint.",
     "Giannis Antetokounmpo":
@@ -290,7 +290,7 @@ const ShotChart: React.FC<ShotChartProps> = ({ defaultPlayer }) => {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <h3 className="text-5xl sporting-outline">Basketball Shot Chart</h3>
+      <h3 className="text-5xl sporting-outline hero-text-shadow">Basketball Shot Chart</h3>
       <div className="text-xl font-semibold">
         Learn more about your similar players!
       </div>

@@ -91,29 +91,25 @@ const App = () => {
 
   const titleRef = useRef<HTMLDivElement>(null!);
   const historyRef = useRef<HTMLDivElement>(null!);
-  const globalPopularityRef = useRef<HTMLDivElement>(null!);
-  const whatWeDoRef = useRef<HTMLDivElement>(null!);
-  const instructionsRef = useRef<HTMLDivElement>(null!);
+  const introductionRef = useRef<HTMLDivElement>(null!);
   const visualRef = useRef<HTMLDivElement>(null!);
   const shotChartRef = useRef<HTMLDivElement>(null!);
-  const takeawayRef = useRef<HTMLDivElement>(null!);
+  const conclusionRef = useRef<HTMLDivElement>(null!);
 
   const contents = {
     title: titleRef,
-    "Global Popularity": globalPopularityRef,
-    "What We Do": whatWeDoRef,
+    introduction: introductionRef,
     history: historyRef,
-    instructions: instructionsRef,
     "Shot Visual": visualRef,
     "Shot Chart": shotChartRef,
-    takeaway: takeawayRef,
+    conclusion: conclusionRef,
   };
 
   return (
     <div className="page-bg">
       <TableOfContents contents={contents} />
       <div className="flex flex-col items-center w-[70vw] mx-auto">
-        <div className="fade-in-up flex flex-col items-center gap-4 pt-[10vh]" ref={titleRef}>
+        <div className="fade-in-up flex flex-col items-center gap-4 pt-[5vh]" ref={titleRef}>
           <h1 className="hero-text-shadow text-6xl sporting-outline">Shoot Yo' Shot</h1>
           <p className="text-xl max-w-md text-center">
             Analyze Your Form, Match with NBA Players, and Level Up Your Court IQ
@@ -128,11 +124,16 @@ const App = () => {
             Watch the Demo
           </a>
           <div className="flex flex-wrap justify-center gap-6 mt-4 mb-6">
-            {["Issac Roy", "Noah Golder", "Ty Albao", "Rushyendra Katabathuni"].map((name) => (
-              <div className="text-lg font-semibold text-white bg-slate-700/80 px-4 py-2 rounded-lg">
-                {name}
-              </div>
-            ))}
+            {["Issac Roy", "Noah Golder", "Ty Albao", "Rushyendra Katabathuni"].map(
+              (name, index) => (
+                <div
+                  key={index}
+                  className="text-lg font-semibold text-white bg-slate-700/80 px-4 py-2 rounded-lg"
+                >
+                  {name}
+                </div>
+              )
+            )}
           </div>
 
           <Frame midClass={"w-full min-w-[325px]"}>
@@ -151,17 +152,17 @@ const App = () => {
         {/* Global Basketball Popularity Section */}
         <div
           className="fade-in-up pt-16 flex flex-col items-center gap-10 w-full"
-          ref={globalPopularityRef}
+          ref={introductionRef}
         >
-          <div className="text-center max-w-4xl">
-            <h1 className="text-5xl sporting-outline mb-8">Basketball Worldwide</h1>
-            <p className="text-2xl font-semibold mb-8">
-              Across the world, over 610 million people play basketball.
-              <span className="text-lg font-normal block mt-2 text-white">
-                (Source: FIBA Basketball)
-              </span>
+          <div className="text-center max-w-4xl flex flex-col gap-4 text-xl text-gray-200">
+            <h1 className="text-5xl sporting-outline text-white hero-text-shadow">
+              Basketball Worldwide
+            </h1>
+            <p>
+              Across the world, over 610 million people play basketball{" "}
+              <span className="font-light italic">(FIBA Basketball)</span>.
             </p>
-            <p className="text-2xl mb-12">
+            <p>
               From the streets of Manila to the courts of Lithuania, basketball has become a global
               phenomenon. Explore how the sport's popularity varies across different countries and
               regions.
@@ -170,31 +171,28 @@ const App = () => {
           <BasketballWorldMap />
         </div>
 
-        <div className="w-full pt-16">
-          <div className="h-[1px] w-full bg-gray-200/50" />
-        </div>
-
         {/* The Cost of Training Section */}
-        <div
-          className="fade-in-up pt-16 flex flex-col items-center gap-10 w-full"
-          ref={whatWeDoRef}
-        >
-          <div className="text-center max-w-4xl">
-            <h1 className="text-5xl sporting-outline mb-8">The Cost of Training</h1>
-            <p className="text-2xl font-small mb-4 text-white">
-              BUT, basketball training can cost from $50 to $150 per hour. Furthermore, most players
-              don't know how to optimize their own abilities — their form, their strengths, their
-              role.
+        <div className="fade-in-up pt-16 flex gap-10 w-full">
+          <div className="flex-1 max-w-4xl">
+            <h1 className="text-5xl sporting-outline mb-8 text-center hero-text-shadow">
+              The Cost of Training
+            </h1>
+            <p className="text-xl font-light mb-4 indent-8">
+              <span className="font-semibold text-white">BUT</span>, basketball training can cost
+              from $50 to $150 per hour. Most players don't know how to optimize their own abilities
+              — their form, their strengths, their role.
+              <span className="font-light italic">(Source: europrobasket.com)</span>
             </p>
-            <p className="text-lg text-white mb-8">(Source: europrobasket.com)</p>
           </div>
 
-          <div className="text-center max-w-4xl">
-            <h2 className="text-5xl sporting-outline mb-6">What We Do</h2>
-            <p className="text-2xl font-small text-white">
-              THEREFORE, we personalize basketball training by comparing your shooting form and body
-              measurements to NBA players in order to help you understand your player archetype and
-              improve your game, all on a free website.
+          <div className="flex-1 max-w-4xl">
+            <h2 className="text-5xl sporting-outline mb-8 text-center hero-text-shadow">
+              What We Do
+            </h2>
+            <p className="text-xl font-light indent-8">
+              <span className="font-semibold text-white">THEREFORE</span>, we personalize basketball
+              training by comparing your shooting form and body measurements to NBA players to help
+              you understand your player archetype and improve your game.
             </p>
           </div>
         </div>
@@ -215,12 +213,12 @@ const App = () => {
           <div className="h-[1px] w-full bg-gray-200/50" />
         </div>
 
-        <div className="flex flex-col items-center gap-4 w-full py-16" ref={instructionsRef}>
-          <h1 className="text-6xl sporting-outline">Try it out!</h1>
-          <div className="flex justify-around w-full gap-4 font-semibold text-xl">
+        <div className="flex flex-col items-center gap-4 w-full py-16" ref={visualRef}>
+          <h1 className="text-6xl sporting-outline hero-text-shadow">Try it out!</h1>
+          <div className="flex justify-around gap-20 font-semibold text-xl">
             <div className="flex flex-col gap-2">
               <p>1. Allow the website to access your camera</p>
-              <p>2. Enter your gender, height, and weight</p>
+              <p>2. Enter your data (gender, height, weight, and hand)</p>
               <p>3. Make sure you are fully in the frame</p>
             </div>
             <div className="flex flex-col gap-2">
@@ -231,7 +229,7 @@ const App = () => {
           </div>
         </div>
 
-        <div className="flex flex-col items-center gap-4 w-full" ref={visualRef}>
+        <div className="flex flex-col items-center gap-4 w-full">
           <Inputs inputs={inputs} setInputs={setInputs} />
           <CV text={text} />
 
@@ -272,21 +270,20 @@ const App = () => {
 
         <div className="h-[1px] w-full bg-gray-200/50 mt-16" />
 
-        <div className="fade-in-up w-full py-20 flex flex-col items-center" ref={takeawayRef}>
-          <h2 className="text-5xl sporting-outline mb-4">Takeaways</h2>
+        <div className="fade-in-up w-full py-20 flex flex-col items-center gap-8" ref={conclusionRef}>
+          <h2 className="text-5xl sporting-outline mb-4 hero-text-shadow">Conclusion</h2>
 
           <div className="flex items-center gap-8">
-            <p className="flex-1 font-light leading-relaxed">
+            <p className="flex-1 font-light text-xl indent-8">
               Great shooters share three things: balanced <strong>base</strong>, consistent{" "}
               <strong>release point</strong>, and a smooth
               <strong> follow-through</strong>. Our model compares your motion frame-by-frame
-              against the best of the best, because who better is there to learn from? Use the model
-              to tweak your stance, record another attempt, and watch your similarity score climb.
-              By suggesting your best position and displaying the NBA players that you are most
-              similar to, our project aims to help you learn how to optimize your basketball skills
-              and be the best basketball player you can be.
+              against the best of the best? Use the model to tweak your stance, record another
+              attempt, and watch your score climb. By suggesting your best position and displaying
+              the NBA players that you are most similar to, our project aims to help you learn how
+              to optimize your basketball skills and be the best basketball player you can be.
             </p>
-            <p className="flex-1 font-light leading-relaxed">
+            <p className="flex-1 font-light text-xl indent-8">
               Once you've found your most similar players and your recommended position, you can use
               the shot chart to identify what types of shots and what areas of the court those
               players work best in. This can help you understand what skills and shots to focus on
@@ -295,7 +292,7 @@ const App = () => {
               can quickly learn how to improve their skills.
             </p>
           </div>
-          <p className="flex-1 font-light leading-relaxed italic">
+          <p className="flex-1 font-semibold italic text-xl">
             "Don't practice until you get it right; practice until you can't get it wrong."
           </p>
         </div>
