@@ -179,7 +179,8 @@ const BasketballWorldMap: React.FC = () => {
       try {
         console.log('Starting to load map data...');
 
-        const worldResponse = await fetch('/ShootYoShot/Data/countries-110m.json');
+        // Load GeoJSON world data from local file
+        const worldResponse = await fetch('/ShootYoShot/data/countries-110m.json');
         console.log('Fetch response status:', worldResponse.status);
         
         if (!worldResponse.ok) {
@@ -317,11 +318,11 @@ const BasketballWorldMap: React.FC = () => {
         {/* World Map container and Top Countries side by side - responsive */}
         <div className="flex flex-col xl:flex-row justify-center items-center gap-4 xl:gap-8 mb-6 w-full">
           {/* Map - responsive sizing */}
-          <div className="flex-1 xl:flex-[3] w-full flex justify-center">
+          <div className="flex-1 xl:flex-[2] w-full flex justify-center">
             <svg
               ref={svgRef}
               width="100%"
-              height="auto"
+              height="450"
               viewBox="0 0 720 450"
               className="border border-gray-200 rounded max-w-full h-auto"
               style={{ background: '#f8fafc', minWidth: '600px' }}

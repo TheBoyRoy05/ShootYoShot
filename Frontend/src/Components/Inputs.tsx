@@ -1,4 +1,4 @@
-import type { FormInputs } from "../Utils/types"
+import type { FormInputs } from "../Utils/types";
 
 interface InputsProps {
   inputs: FormInputs;
@@ -13,19 +13,19 @@ const Inputs = ({ inputs, setInputs }: InputsProps) => {
                 justify-center"
     >
       {/* ─────────── Row 1 – labels ─────────── */}
-      <label htmlFor="gender" className="font-semibold text-center">
+      <label htmlFor="gender" className="font-semibold text-center text-xl">
         Gender
       </label>
 
-      <label htmlFor="hand" className="font-semibold text-center">
+      <label htmlFor="hand" className="font-semibold text-center text-xl">
         Dominant Hand
       </label>
 
-      <label htmlFor="height" className="font-semibold text-center">
+      <label htmlFor="height" className="font-semibold text-center text-xl">
         Height&nbsp;(in)
       </label>
 
-      <label htmlFor="weight" className="font-semibold text-center">
+      <label htmlFor="weight" className="font-semibold text-center text-xl">
         Weight&nbsp;(lbs)
       </label>
 
@@ -33,7 +33,9 @@ const Inputs = ({ inputs, setInputs }: InputsProps) => {
       <select
         id="gender"
         value={inputs.gender}
-        onChange={(e) => setInputs({ ...inputs, gender: e.target.value as "Male" | "Female" })}
+        onChange={(e) =>
+          setInputs({ ...inputs, gender: e.target.value as "Male" | "Female" })
+        }
         className="select select-bordered w-full text-center"
       >
         <option value="" disabled hidden>
@@ -46,7 +48,9 @@ const Inputs = ({ inputs, setInputs }: InputsProps) => {
       <select
         id="hand"
         value={inputs.hand}
-        onChange={(e) => setInputs({ ...inputs, hand: e.target.value as "Left" | "Right" })}
+        onChange={(e) =>
+          setInputs({ ...inputs, hand: e.target.value as "Left" | "Right" })
+        }
         className="select select-bordered w-full text-center"
       >
         <option value="" disabled hidden>
@@ -62,15 +66,25 @@ const Inputs = ({ inputs, setInputs }: InputsProps) => {
         min={48}
         max={96}
         step={1}
-        value={inputs.height ?? ""}
-        onChange={(e) => setInputs({ ...inputs, height: +e.target.value })}
+        value={inputs.height === null ? "" : inputs.height}
+        onChange={(e) =>
+          setInputs((prev) => ({
+            ...prev,
+            height: e.target.value === "" ? null : Number(e.target.value),
+          }))
+        }
         className="input input-bordered w-full text-center"
       />
       <input
         id="weight"
         type="number"
         value={inputs.weight ?? ""}
-        onChange={(e) => setInputs({ ...inputs, weight: +e.target.value })}
+        onChange={(e) =>
+          setInputs((prev) => ({
+            ...prev,
+            weight: e.target.value === "" ? null : Number(e.target.value),
+          }))
+        }
         className="input input-bordered w-full text-center"
       />
     </div>

@@ -279,7 +279,7 @@ const ShotChart: React.FC<ShotChartProps> = ({ defaultPlayer }) => {
     "Jeremy Lin":
       "A dynamic scorer, Jeremy Lin was able to get a bucket from all over the court whenever he wanted.",
     "DeAndre Jordan":
-      "An elite rebounder, DeAndre Jordan mostly gets his buckets from within the paint",
+      "An elite rebounder, DeAndre Jordan mostly gets his buckets from within the paint.",
     "Giannis Antetokounmpo":
       "An extremely strong and aggresive attacker, Giannis Antetokounmpo focuses his energy on driving hard to the paint, taking a majority of his shots from this area.",
     "Rudy Gobert":
@@ -291,7 +291,7 @@ const ShotChart: React.FC<ShotChartProps> = ({ defaultPlayer }) => {
   return (
     <div className="flex flex-col items-center gap-4">
       <h3 className="text-5xl sporting-outline">Basketball Shot Chart</h3>
-      <div className="text-lg font-semibold">
+      <div className="text-xl font-semibold">
         Learn more about your similar players!
       </div>
 
@@ -322,7 +322,7 @@ const ShotChart: React.FC<ShotChartProps> = ({ defaultPlayer }) => {
       </div>
 
       {shotData.length > 0 && (
-        <div className="text-lg font-semibold">
+        <div className="text-xl font-semibold">
           {loading
             ? "Loading shot data..."
             : visualizationMode === "zones"
@@ -347,7 +347,7 @@ const ShotChart: React.FC<ShotChartProps> = ({ defaultPlayer }) => {
         {annotation && (
           <div
             className="
-              absolute top-4 right-4                /* anchor in corner  */
+              absolute top-12 right-12               /* moved even closer to center  */
               max-w-xs w-60                         /* fixed-ish width  */
               bg-yellow-200/90                      /* post-it color    */
               rounded-lg p-3 shadow-xl ring-1 ring-black/10

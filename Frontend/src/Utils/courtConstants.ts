@@ -1,22 +1,22 @@
 // Store court dimensions for zone calculations (NBA dimensions scaled to 14.4px per foot)
 export const COURT_DIMENSIONS = {
-  width: 720, // 50 feet -> 720px
-  height: 600, // 47 feet -> 677px (adjusted)
-  paintWidth: 230, // 16 feet -> 230px
-  paintHeight: 274, // 19 feet -> 274px
-  freeThrowLineDistance: 216, // 15 feet -> 216px
-  threePointRadius: 342, // 23'9" -> 342px
-  threePointStraightDistance: 43, // 3 feet -> 43px
-  restrictedAreaRadius: 58, // 4 feet -> 58px
-  basketRadius: 11, // 0.75 feet -> 11px
-  backboardWidth: 86, // 6 feet -> 86px
-  basketX: 360, // Center of court width
-  basketY: 601, // At baseline
+  width: 864, // 50 feet -> 864px (720 * 1.2)
+  height: 720, // 47 feet -> 720px (600 * 1.2)
+  paintWidth: 276, // 16 feet -> 276px (230 * 1.2)
+  paintHeight: 329, // 19 feet -> 329px (274 * 1.2)
+  freeThrowLineDistance: 259, // 15 feet -> 259px (216 * 1.2)
+  threePointRadius: 410, // 23'9" -> 410px (342 * 1.2)
+  threePointStraightDistance: 52, // 3 feet -> 52px (43 * 1.2)
+  restrictedAreaRadius: 70, // 4 feet -> 70px (58 * 1.2)
+  basketRadius: 13, // 0.75 feet -> 13px (11 * 1.2)
+  backboardWidth: 103, // 6 feet -> 103px (86 * 1.2)
+  basketX: 432, // Center of court width (360 * 1.2)
+  basketY: 721, // At baseline (601 * 1.2)
 };
 
 export const SVG_DIMENSIONS = {
-  width: 780,
-  height: 650,
+  width: 936,
+  height: 780,
 };
 
 export const PLAYERS = [
@@ -42,10 +42,10 @@ export const ZONE_ORDER = [
 ];
 
 export const ZONE_LABELS = [
-  { zone: 'Above the Break 3', displayName: 'Above the Break 3', x: 360, y: 90, anchor: 'middle' },
-  { zone: 'Mid-Range', displayName: 'Mid-Range', x: 360, y: 300, anchor: 'middle' },
-  { zone: 'In The Paint (Non-RA)', displayName: 'The Paint', x: 360, y: 420, anchor: 'middle' },
-  { zone: 'Restricted Area', displayName: 'Restricted Area', x: 360, y: 510, anchor: 'middle' },
-  { zone: 'Left Corner 3', displayName: 'Left Corner 3', x: 10, y: 400, anchor: 'start' },
-  { zone: 'Right Corner 3', displayName: 'Right Corner 3', x: 710, y: 400, anchor: 'end' }
+  { zone: 'Above the Break 3', displayName: 'Above the Break 3', x: 432, y: 108, anchor: 'middle' },
+  { zone: 'Mid-Range', displayName: 'Mid-Range', x: 432, y: 360, anchor: 'middle' },
+  { zone: 'In The Paint (Non-RA)', displayName: 'The Paint', x: 432, y: 504, anchor: 'middle' },
+  { zone: 'Restricted Area', displayName: 'Restricted Area', x: 432, y: 612, anchor: 'middle' },
+  { zone: 'Left Corner 3', displayName: 'Left Corner 3', x: 12, y: 480, anchor: 'start' },
+  { zone: 'Right Corner 3', displayName: 'Right Corner 3', x: 852, y: 480, anchor: 'end' }
 ]; 

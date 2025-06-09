@@ -43,14 +43,17 @@ const PlayerCard = ({ name, score, stats, image, video }: PlayerCardProps) => {
           <div className="relative z-10 text-center px-8 h-[95%] flex flex-col justify-start w-full">
             <h3 className="text-2xl font-bold">{name}</h3>
             <p className="text-lg">{score}% Similarity</p>
-            <ul className="flex flex-col gap-2 mt-auto">
-              {Object.entries(stats).map(([key, value]) => (
-                <li key={key}>
-                  <span className="font-bold">{key}: </span>
-                  {value}
-                </li>
-              ))}
-            </ul>
+            <div className="mt-auto">
+              <p className="text-sm font-semibold mb-2 text-gray-300">Averages per Game:</p>
+              <ul className="flex flex-col gap-2">
+                {Object.entries(stats).map(([key, value]) => (
+                  <li key={key}>
+                    <span className="font-bold">{key}: </span>
+                    {value}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
 
