@@ -50,25 +50,36 @@ const App = () => {
     await sleep(1000);
     setText("");
 
+    console.log("Starting pose collection for hand:", inputs.hand);
     setCollect(inputs.hand);
     await sleep(3000);
+    
+    console.log("Pose data collected:", userPoseRef.current);
+    console.log("Number of pose frames:", Object.keys(userPoseRef.current).length);
+    
     setText("Analyzing...");
 
+    console.log("Sending score request with data:", { move: userPoseRef.current });
+    
     await http({
       url: "/score",
       method: "POST",
       body: { move: userPoseRef.current },
       handleData: (data) => {
+        console.log("Score response received:", data);
         setClosestPlayers(data.scores);
       },
       retries: 0,
     });
 
+    console.log("Sending position prediction request with:", inputs);
+    
     http({
       url: "/predict_position",
       method: "POST",
       body: inputs,
       handleData: (data: { position: string }) => {
+        console.log("Position prediction received:", data);
         setPredictedPosition(data.position);
       },
     });
@@ -81,6 +92,7 @@ const App = () => {
   const titleRef = useRef<HTMLDivElement>(null!);
   const historyRef = useRef<HTMLDivElement>(null!);
   const globalPopularityRef = useRef<HTMLDivElement>(null!);
+  const whatWeDoRef = useRef<HTMLDivElement>(null!);
   const instructionsRef = useRef<HTMLDivElement>(null!);
   const visualRef = useRef<HTMLDivElement>(null!);
   const shotChartRef = useRef<HTMLDivElement>(null!);
@@ -88,8 +100,9 @@ const App = () => {
 
   const contents = {
     title: titleRef,
-    history: historyRef,
     "Global Popularity": globalPopularityRef,
+    "What We Do": whatWeDoRef,
+    history: historyRef,
     instructions: instructionsRef,
     "Shot Visual": visualRef,
     "Shot Chart": shotChartRef,
@@ -155,10 +168,10 @@ const App = () => {
         </div>
 
         {/* The Cost of Training Section */}
-        <div className="fade-in-up pt-16 flex flex-col items-center gap-10 w-full">
+        <div className="fade-in-up pt-16 flex flex-col items-center gap-10 w-full" ref={whatWeDoRef}>
           <div className="text-center max-w-4xl">
             <h1 className="text-5xl sporting-outline mb-8">The Cost of Training</h1>
-            <p className="text-2xl font-medium mb-4 text-white">
+            <p className="text-2xl font-semibold mb-4 text-white">
               BUT, basketball training can cost from $50 to $150 per hour. 
               Furthermore, most players don't know how to optimize their own abilities — their form, their strengths, their role.
             </p>
@@ -169,7 +182,7 @@ const App = () => {
           
           <div className="text-center max-w-4xl">
             <h2 className="text-5xl sporting-outline mb-6">What We Do</h2>
-            <p className="text-2xl font-medium text-white">
+            <p className="text-2xl font-semibold text-white">
               THEREFORE, we personalize basketball training by comparing your shooting form and body measurements to NBA players 
               in order to help you understand your player archetype and improve your game, all on a free website.
             </p>
