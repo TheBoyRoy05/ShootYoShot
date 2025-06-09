@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Body
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
 from typing import List, Dict, Tuple
 import numpy as np
 import json
@@ -12,6 +13,16 @@ Pose = Dict[str, List[float]]
 Move = Dict[float, Pose]
 
 app = FastAPI()
+
+# Update CORS middleware to be more permissive during development
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # More permissive for development
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+    expose_headers=["*"]
+)
 
 # Serve static frontend files
 app.mount("/static", StaticFiles(directory="static"), name="static")
