@@ -138,10 +138,7 @@ const App = () => {
 
           <Frame midClass={"w-full min-w-[325px]"}>
             <div className="glare w-1/3" />
-            <img
-              src={"/Images/ShootYoShot.png"}
-              className="border border-slate-500 rounded-xl"
-            />
+            <img src={"/Images/ShootYoShot.png"} className="border border-slate-500 rounded-xl" />
           </Frame>
         </div>
 
@@ -175,7 +172,7 @@ const App = () => {
         <div className="fade-in-up pt-16 flex gap-10 w-full">
           <div className="flex-1 max-w-4xl">
             <h1 className="text-5xl sporting-outline mb-8 text-center hero-text-shadow">
-              The Cost of Training
+              Cost of Training
             </h1>
             <p className="text-xl font-light mb-4 indent-8">
               <span className="font-semibold text-white">BUT</span>, basketball training can cost
@@ -270,20 +267,23 @@ const App = () => {
 
         <div className="h-[1px] w-full bg-gray-200/50 mt-16" />
 
-        <div className="fade-in-up w-full py-20 flex flex-col items-center gap-8" ref={conclusionRef}>
+        <div
+          className="fade-in-up w-full py-20 flex flex-col items-center gap-8"
+          ref={conclusionRef}
+        >
           <h2 className="text-5xl sporting-outline mb-4 hero-text-shadow">Conclusion</h2>
 
-          <div className="flex items-center gap-8">
-            <p className="flex-1 font-light text-xl indent-8">
-              Great shooters share three things: balanced <strong>base</strong>, consistent{" "}
+          <div className="flex gap-10">
+            <p className="flex-1 font-light indent-8">
+              Great shooters share three things: a balanced <strong>base</strong>, a consistent{" "}
               <strong>release point</strong>, and a smooth
               <strong> follow-through</strong>. Our model compares your motion frame-by-frame
               against the best of the best? Use the model to tweak your stance, record another
               attempt, and watch your score climb. By suggesting your best position and displaying
-              the NBA players that you are most similar to, our project aims to help you learn how
-              to optimize your basketball skills and be the best basketball player you can be.
+              the NBA players that you are most similar to, our project helps you learn how to
+              optimize your basketball skills.
             </p>
-            <p className="flex-1 font-light text-xl indent-8">
+            <p className="flex-1 font-light indent-8">
               Once you've found your most similar players and your recommended position, you can use
               the shot chart to identify what types of shots and what areas of the court those
               players work best in. This can help you understand what skills and shots to focus on

@@ -36,8 +36,8 @@ const History = () => {
             </div>
 
             <div className="flex-1 w-full md:w-1/2 flex flex-col gap-4">
-              <h2 className="text-4xl font-semibold">{title}</h2>
-              <div className="leading-relaxed text-xl font-light flex flex-col gap-4">
+              <h2 className="text-3xl font-semibold">{title}</h2>
+              <div className="leading-relaxed text-lg font-light flex flex-col gap-4">
                 {description.map((paragraph, i) => (
                   <p key={i}>{paragraph}</p>
                 ))}
