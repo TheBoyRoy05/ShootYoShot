@@ -14,9 +14,17 @@ Move = Dict[float, Pose]
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.mount("/assets", StaticFiles(directory="static/assets"), name="assets")
 app.mount("/Images", StaticFiles(directory="static/Images"), name="images")
-app.mount("/Video", StaticFiles(directory="static/Video"), name="video")
+app.mount("/Videos", StaticFiles(directory="static/Videos"), name="videos")
 
 @app.get("/health")
 def health():
