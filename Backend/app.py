@@ -24,10 +24,8 @@ app.add_middleware(
     expose_headers=["*"]
 )
 
-# Serve static frontend files
-app.mount("/", StaticFiles(directory="static", html=True), name="static")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# Serve index.html on root
 @app.get("/")
 def read_index():
     return FileResponse("static/index.html")
