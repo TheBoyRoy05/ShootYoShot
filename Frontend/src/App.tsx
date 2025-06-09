@@ -1,6 +1,6 @@
 import { useStore } from "./Hooks/useStore";
 import History from "./Components/History";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { sleep } from "./Utils/functions";
 import useHTTP from "./Hooks/useHTTP";
 import PlayerCard from "./Components/PlayerCard";
@@ -10,6 +10,7 @@ import CV from "./Components/CV/CV";
 import ShotChart from "./Components/ShotChart";
 import Inputs from "./Components/Inputs";
 import BasketballWorldMap from "./Components/BasketballWorldMap";
+import PlayerStats from "../../Backend/Data/stats.json";
 import type { FormInputs } from "./Utils/types";
 
 type PlayerData = {
@@ -24,9 +25,7 @@ const App = () => {
   const { http } = useHTTP();
   const [text, setText] = useState("");
   const { collect, setCollect, userPoseRef } = useStore();
-  const [closestPlayers, setClosestPlayers] = useState<
-    Record<string, PlayerData>
-  >({});
+  const [closestPlayers, setClosestPlayers] = useState<Record<string, PlayerData>>({});
   const [predictedPosition, setPredictedPosition] = useState<string>("");
 
   const [inputs, setInputs] = useState<FormInputs>({
@@ -83,14 +82,16 @@ const App = () => {
   const titleRef = useRef<HTMLDivElement>(null!);
   const historyRef = useRef<HTMLDivElement>(null!);
   const globalPopularityRef = useRef<HTMLDivElement>(null!);
+  const instructionsRef = useRef<HTMLDivElement>(null!);
   const visualRef = useRef<HTMLDivElement>(null!);
   const shotChartRef = useRef<HTMLDivElement>(null!);
   const takeawayRef = useRef<HTMLDivElement>(null!);
 
   const contents = {
     title: titleRef,
-    "Global Popularity": globalPopularityRef,
     history: historyRef,
+    "Global Popularity": globalPopularityRef,
+    instructions: instructionsRef,
     "Shot Visual": visualRef,
     "Shot Chart": shotChartRef,
     takeaway: takeawayRef,
@@ -100,16 +101,10 @@ const App = () => {
     <div className="page-bg">
       <TableOfContents contents={contents} />
       <div className="flex flex-col items-center w-[70vw] mx-auto">
-        <div
-          className="fade-in-up flex flex-col items-center gap-4 pt-[10vh]"
-          ref={titleRef}
-        >
-          <h1 className="hero-text-shadow text-6xl sporting-outline">
-            Shoot Yo' Shot
-          </h1>
-          <p className="text-lg max-w-lg text-center">
-            Learn the history of good shooting form and how to shoot like the
-            best in the game.
+        <div className="fade-in-up flex flex-col items-center gap-4 pt-[10vh]" ref={titleRef}>
+          <h1 className="hero-text-shadow text-6xl sporting-outline">Shoot Yo' Shot</h1>
+          <p className="text-2xl max-w-lg text-center">
+            Learn the history of good shooting form and how to shoot like the best in the game.
           </p>
           <Frame midClass={"w-full min-w-[325px]"}>
             <div className="glare w-1/3" />
@@ -125,17 +120,18 @@ const App = () => {
         </div>
 
         {/* Global Basketball Popularity Section */}
-        <div
-          className="fade-in-up pt-16 flex flex-col items-center gap-4 w-full"
-          ref={globalPopularityRef}
-        >
+        <div className="fade-in-up pt-16 flex flex-col items-center gap-10 w-full" ref={globalPopularityRef}>
           <div className="text-center max-w-4xl">
             <h1 className="text-5xl sporting-outline mb-8">Basketball Worldwide</h1>
-            <p className="text-lg mb-8">
+            <p className="text-2xl font-semibold mb-8">
               Across the world, over 610 million people play basketball.
-              <span className="font-light text-sm block mt-2 text-white">
+              <span className="text-lg font-normal block mt-2 text-white">
                 (Source: FIBA Basketball)
               </span>
+            </p>
+            <p className="text-2xl mb-12">
+              From the streets of Manila to the courts of Lithuania, basketball has become a global phenomenon. 
+              Explore how the sport's popularity varies across different countries and regions.
             </p>
           </div>
           <BasketballWorldMap />
@@ -146,22 +142,23 @@ const App = () => {
         </div>
 
         {/* The Cost of Training Section */}
-        <div className="fade-in-up pt-16 flex flex-col items-center gap-4 w-full">
+        <div className="fade-in-up pt-16 flex flex-col items-center gap-10 w-full">
           <div className="text-center max-w-4xl">
             <h1 className="text-5xl sporting-outline mb-8">The Cost of Training</h1>
-            <p className="text-lg mb-4 text-white">
-              BUT, basketball training can cost from $50 to $150 per hour. And training sessions
-              don't incorporate NBA player data to help users understand their player archetypes.
+            <p className="text-2xl font-semibold mb-4 text-white">
+              BUT, basketball training can cost from $50 to $150 per hour. 
+              Furthermore, most players don't know how to optimize their own abilities — their form, their strengths, their role.
             </p>
-            <p className="text-sm font-light text-white mb-8">(Source: europrobasket.com)</p>
+            <p className="text-lg text-white mb-8">
+              (Source: europrobasket.com)
+            </p>
           </div>
-
+          
           <div className="text-center max-w-4xl">
             <h2 className="text-5xl sporting-outline mb-6">What We Do</h2>
-            <p className="text-lg text-white">
-              THEREFORE, we personalize basketball training by comparing your shooting form and body
-              measurements to NBA players in order to help you understand your player archetype and
-              improve your game, all on a free website.
+            <p className="text-2xl font-semibold text-white">
+              THEREFORE, we personalize basketball training by comparing your shooting form and body measurements to NBA players 
+              in order to help you understand your player archetype and improve your game, all on a free website.
             </p>
           </div>
         </div>
@@ -182,7 +179,7 @@ const App = () => {
           <div className="h-[1px] w-full bg-gray-200/50" />
         </div>
 
-        <div className="flex flex-col items-center gap-4 w-full py-16" ref={visualRef}>
+        <div className="flex flex-col items-center gap-4 w-full py-16" ref={instructionsRef}>
           <h1 className="text-6xl sporting-outline">Try it out!</h1>
           <div className="flex justify-around w-full gap-4 font-semibold text-lg">
             <div className="flex flex-col gap-2">
@@ -198,7 +195,7 @@ const App = () => {
           </div>
         </div>
 
-        <div className="flex flex-col items-center gap-4 w-full">
+        <div className="flex flex-col items-center gap-4 w-full" ref={visualRef}>
           <Inputs inputs={inputs} setInputs={setInputs} />
           <CV text={text} />
 
@@ -233,33 +230,34 @@ const App = () => {
         <div className="h-[1px] w-full bg-gray-200/50 mt-16" />
 
         {/* Shot Chart Section */}
-        <div className="w-full pt-16 mb-8" ref={shotChartRef}>
+        <div className="w-full mt-16 mb-8" ref={shotChartRef}>
           <ShotChart />
         </div>
 
-        <div className="h-[1px] w-full bg-gray-200/50 mt-16" />
+        <div
+          className="fade-in-up w-full pb-20 flex flex-col items-center"
+          ref={takeawayRef}
+        >
+          <h2 className="text-4xl sporting-outline mb-4">Takeaways</h2>
 
-        <div className="fade-in-up w-full py-20 flex flex-col items-center" ref={takeawayRef}>
-          <h2 className="text-5xl sporting-outline mb-4">Takeaways</h2>
+          <p className="max-w-2xl text-center text-lg leading-relaxed">
+            Great shooters share three things: balanced <strong>base</strong>,
+            consistent <strong>release point</strong>, and a smooth
+            <strong> follow-through</strong>. Our model compares your motion
+            frame-by-frame against the best of the best, because who better is there
+            to learn from? Use the model to tweak your stance, record
+            another attempt, and watch your similarity score climb.
+          </p>
 
-          <div className="flex items-center gap-8">
-            <p className="flex-1 font-light leading-relaxed">
-              Great shooters share three things: balanced <strong>base</strong>, consistent{" "}
-              <strong>release point</strong>, and a smooth
-              <strong> follow-through</strong>. Our model compares your motion against the best,
-              because who better is there? Use the model to tweak your stance, record another
-              attempt, and watch your score climb.
-            </p>
-
-            <p className="flex-1 font-light leading-relaxed">
-              Keep experimenting with your shot! Minor adjustments in elbow alignment or release
-              speed can move you closer to your favorite archetype and favorite players. Don't
-              forget to get <em> real-court reps</em>. No algorithm can replace muscle memory.
-            </p>
-          </div>
+          <p className="max-w-2xl text-center text-lg leading-relaxed mt-6">
+            Keep experimenting with your shot! Minor adjustments in elbow alignment or release
+            speed can move you closer to your favorite archetype and favorite players. Don't forget
+            to get <em> real-court reps</em>. No algorithm can replace muscle memory.
+          </p>
 
           <p className="italic mt-8 text-center">
-            "Don't practice until you get it right; practice until you can't get it wrong."
+            "Don't practice until you get it right; practice until you can't get
+            it wrong."
           </p>
         </div>
       </div>

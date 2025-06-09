@@ -347,7 +347,7 @@ const ShotChart: React.FC<ShotChartProps> = ({ defaultPlayer }) => {
         {annotation && (
           <div
             className="
-              absolute top-4 right-4                /* anchor in corner  */
+              absolute top-12 right-12               /* moved even closer to center  */
               max-w-xs w-60                         /* fixed-ish width  */
               bg-yellow-200/90                      /* post-it color    */
               rounded-lg p-3 shadow-xl ring-1 ring-black/10

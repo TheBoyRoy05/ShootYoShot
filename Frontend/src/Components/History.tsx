@@ -3,8 +3,8 @@ import historySections from "../Assets/historySections.json";
 const History = () => {
   return (
     <div className="flex flex-col gap-4 mt-4">
-      <h2 className="text-5xl sporting-outline text-center">History of Shooting Form</h2>
-      <div className="flex gap-8 font-light">
+      <h2 className="text-5xl sporting-outline text-center">A Quick Background on Shooting Form History</h2>
+      <div className="flex gap-8 text-xl font-light">
         <p className="flex-1">
           From the early days of the sport, players have experimented with different techniques to
           improve their shooting accuracy. In the early 20th century, players like Naismith and
@@ -37,8 +37,8 @@ const History = () => {
             </div>
 
             <div className="flex-1 w-full md:w-1/2 flex flex-col gap-4">
-              <h2 className="text-2xl font-semibold">{title}</h2>
-              <div className="leading-relaxed font-light flex flex-col gap-4">
+              <h2 className="text-4xl font-semibold">{title}</h2>
+              <div className="leading-relaxed text-xl font-light flex flex-col gap-4">
                 {description.map((paragraph, i) => (
                   <p key={i}>{paragraph}</p>
                 ))}
