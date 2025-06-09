@@ -105,6 +105,20 @@ const App = () => {
           <p className="text-2xl max-w-lg text-center">
             Learn the history of good shooting form and how to shoot like the best in the game.
           </p>
+          <div className="flex flex-wrap justify-center gap-6 mt-4 mb-6">
+            <div className="text-lg font-semibold text-white bg-slate-700/80 px-4 py-2 rounded-lg">
+              Issac Roy
+            </div>
+            <div className="text-lg font-semibold text-white bg-slate-700/80 px-4 py-2 rounded-lg">
+              Noah Golder
+            </div>
+            <div className="text-lg font-semibold text-white bg-slate-700/80 px-4 py-2 rounded-lg">
+              Ty Albao
+            </div>
+            <div className="text-lg font-semibold text-white bg-slate-700/80 px-4 py-2 rounded-lg">
+              Rushyendra Katabathuni
+            </div>
+          </div>
           <Frame midClass={"w-full min-w-[325px]"}>
             <div className="glare w-1/3" />
             <img
@@ -144,7 +158,7 @@ const App = () => {
         <div className="fade-in-up pt-16 flex flex-col items-center gap-10 w-full">
           <div className="text-center max-w-4xl">
             <h1 className="text-5xl sporting-outline mb-8">The Cost of Training</h1>
-            <p className="text-2xl font-semibold mb-4 text-white">
+            <p className="text-2xl font-medium mb-4 text-white">
               BUT, basketball training can cost from $50 to $150 per hour. 
               Furthermore, most players don't know how to optimize their own abilities — their form, their strengths, their role.
             </p>
@@ -155,7 +169,7 @@ const App = () => {
           
           <div className="text-center max-w-4xl">
             <h2 className="text-5xl sporting-outline mb-6">What We Do</h2>
-            <p className="text-2xl font-semibold text-white">
+            <p className="text-2xl font-medium text-white">
               THEREFORE, we personalize basketball training by comparing your shooting form and body measurements to NBA players 
               in order to help you understand your player archetype and improve your game, all on a free website.
             </p>

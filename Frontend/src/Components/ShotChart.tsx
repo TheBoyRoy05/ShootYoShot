@@ -279,7 +279,7 @@ const ShotChart: React.FC<ShotChartProps> = ({ defaultPlayer }) => {
     "Jeremy Lin":
       "A dynamic scorer, Jeremy Lin was able to get a bucket from all over the court whenever he wanted.",
     "DeAndre Jordan":
-      "An elite rebounder, DeAndre Jordan mostly gets his buckets from within the paint",
+      "An elite rebounder, DeAndre Jordan mostly gets his buckets from within the paint.",
     "Giannis Antetokounmpo":
       "An extremely strong and aggresive attacker, Giannis Antetokounmpo focuses his energy on driving hard to the paint, taking a majority of his shots from this area.",
     "Rudy Gobert":
