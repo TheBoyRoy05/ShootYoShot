@@ -234,28 +234,39 @@ const App = () => {
           <ShotChart />
         </div>
 
+        <div className="h-[1px] w-full bg-gray-200/50 mt-16" />
+
         <div
-          className="fade-in-up w-full pb-20 flex flex-col items-center"
+          className="fade-in-up w-full py-20 flex flex-col items-center"
           ref={takeawayRef}
         >
-          <h2 className="text-4xl sporting-outline mb-4">Takeaways</h2>
+          <h2 className="text-5xl sporting-outline mb-4">Takeaways</h2>
 
-          <p className="max-w-2xl text-center text-lg leading-relaxed">
-            Great shooters share three things: balanced <strong>base</strong>,
-            consistent <strong>release point</strong>, and a smooth
-            <strong> follow-through</strong>. Our model compares your motion
-            frame-by-frame against the best of the best, because who better is there
-            to learn from? Use the model to tweak your stance, record
-            another attempt, and watch your similarity score climb.
-          </p>
-
-          <p className="max-w-2xl text-center text-lg leading-relaxed mt-6">
-            Keep experimenting with your shot! Minor adjustments in elbow alignment or release
-            speed can move you closer to your favorite archetype and favorite players. Don't forget
-            to get <em> real-court reps</em>. No algorithm can replace muscle memory.
-          </p>
-
-          <p className="italic mt-8 text-center">
+          <div className="flex items-center gap-8">
+            <p className="flex-1 font-light leading-relaxed">
+              Great shooters share three things: balanced <strong>base</strong>,
+              consistent <strong>release point</strong>, and a smooth
+              <strong> follow-through</strong>. Our model compares your motion
+              frame-by-frame against the best of the best, because who better is
+              there to learn from? Use the model to tweak your stance, record
+              another attempt, and watch your similarity score climb. By
+              suggesting your best position and displaying the NBA players that
+              you are most similar to, our project aims to help you learn how to
+              optimize your basketball skills and be the best basketball player
+              you can be.
+            </p>
+            <p className="flex-1 font-light leading-relaxed">
+              Once you've found your most similar players and your recommended
+              position, you can use the shot chart to identify what types of
+              shots and what areas of the court those players work best in. This
+              can help you understand what skills and shots to focus on in order
+              to maximize your potential. Whether you are a hardcore basketball
+              fan or you've never been interested before, with the tools present
+              in this project, anyone can quickly learn how to improve their
+              skills.
+            </p>
+          </div>
+          <p className="flex-1 font-light leading-relaxed italic">
             "Don't practice until you get it right; practice until you can't get
             it wrong."
           </p>
