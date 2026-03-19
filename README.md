@@ -1,5 +1,7 @@
 # Shoot Yo' Shot
 
+<img src="/Frontend/public/Images/ShootYoShot.png" width="100%" alt="Shoot Yo Shot">
+
 ## Getting Started
 ### Running the backend scripts
 
@@ -12,3 +14,7 @@ Now you can run your backend server using ```uvicorn app:app --reload```.
 ### Running the frontend
 
 Simply `cd Frontend` and run `npm install` and `npm run dev` to run the frontend in development mode.
+
+## Demo
+
+<a href="https://www.youtube.com/watch?v=RCSR5on3lGg"><img src="https://img.youtube.com/vi/RCSR5on3lGg/0.jpg" width="100%" alt="Shoot Yo Shot Demo"></a>
